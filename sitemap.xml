@@ -3,34 +3,29 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://liuchang0812.com/posts/review-2018/</loc>
+    <loc>http://blog.liuchang0812.com/posts/review-2018/</loc>
     <lastmod>2019-01-29T17:20:01+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/posts/my-first-post/</loc>
-    <lastmod>2019-01-29T15:16:46+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://liuchang0812.com/categories/</loc>
+    <loc>http://blog.liuchang0812.com/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/</loc>
+    <loc>http://blog.liuchang0812.com/</loc>
     <lastmod>2019-01-29T17:20:01+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/posts/</loc>
+    <loc>http://blog.liuchang0812.com/posts/</loc>
     <lastmod>2019-01-29T17:20:01+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/tags/</loc>
+    <loc>http://blog.liuchang0812.com/tags/</loc>
     <priority>0</priority>
   </url>
   

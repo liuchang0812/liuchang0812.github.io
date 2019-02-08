@@ -2,36 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on My Blog</title>
-    <link>http://liuchang0812.com/posts/</link>
+    <link>http://blog.liuchang0812.com/posts/</link>
     <description>Recent content in Posts on My Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 29 Jan 2019 17:20:01 +0800</lastBuildDate>
     
-	<atom:link href="http://liuchang0812.com/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.liuchang0812.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Review 2018</title>
-      <link>http://liuchang0812.com/posts/review-2018/</link>
+      <link>http://blog.liuchang0812.com/posts/review-2018/</link>
       <pubDate>Tue, 29 Jan 2019 17:20:01 +0800</pubDate>
       
-      <guid>http://liuchang0812.com/posts/review-2018/</guid>
+      <guid>http://blog.liuchang0812.com/posts/review-2018/</guid>
       <description>年的分隔，一般情况下都是按照阳历。但是，中国人从情感上更倾向于阴历，比如公司办年会是放在阴历年前，大家接需求也是“年前不接需求，年后再说”。所以在这个时间点来总结一下2018年也不晚。
 18 年算是比较平淡的一年，不同于17年买了房，18年买入最贵的就是一辆小破车，大部分时间都停在地下负二层的停车场里，一年也只开了不到2000公里。然后，最明显的变化可能就是养了一只猫，一只重点色的布偶猫，贼凶也贼皮，天生基因决定它特别大一只，又像狗一样特别粘人，所以就叫它大狼狗了。
 说到这个名字，记得第一次带它去宠物医院，前台小姑娘给它挂号，问它叫什么名字，妹子答道“大狼狗”。然后，小姑娘又问下一个人的小猫叫什么名字，那个小猫的主人说“大狗子”。可能今年流行给猫起狗相关的名字，这样心理上相当于同时养了狗和猫吧。
 过年回家，没办法带狗子回家，只能让人隔天上门铲屎，看着它晚上蹲在门后等我们回家的样子，还是挺心疼的。再过两天回深圳了，给它多买几条小鱼干！
 &amp;lt;此处应该带一张猫片&amp;gt;
 总的来说，18年还是过的挺累的，上半年996了两个月，接手了别人搞到一半不搞了然后要求我们一个月搞完的烂摊子，烂摊子后来看起来还算靠谱，又被别人要回去。下半年，下定决心终于开始搞 ceph rgw 的索引问题。花了一个月调研、做原型。又花了一个月实现了第一期，效果还行，基本上达到了我的预期。希望今年可以把这个产品化，真正用起来吧。</description>
-    </item>
-    
-    <item>
-      <title>My First Post</title>
-      <link>http://liuchang0812.com/posts/my-first-post/</link>
-      <pubDate>Tue, 29 Jan 2019 15:16:46 +0800</pubDate>
-      
-      <guid>http://liuchang0812.com/posts/my-first-post/</guid>
-      <description></description>
     </item>
     
   </channel>
