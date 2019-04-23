@@ -3,12 +3,24 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://blog.liuchang0812.com/posts/how-to-patch-one-pr/</loc>
+    <lastmod>2019-04-23T10:42:03+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.liuchang0812.com/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://blog.liuchang0812.com/</loc>
+    <lastmod>2019-04-23T10:42:03+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.liuchang0812.com/posts/</loc>
+    <lastmod>2019-04-23T10:42:03+08:00</lastmod>
     <priority>0</priority>
   </url>
   
