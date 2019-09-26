@@ -2,27 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on My Blog</title>
-    <link>http://blog.liuchang0812.com/posts/</link>
+    <link>http://liuchang0812.com/posts/</link>
     <description>Recent content in Posts on My Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Apr 2019 10:42:03 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 26 Sep 2019 11:49:09 +0800</lastBuildDate>
     
-	<atom:link href="http://blog.liuchang0812.com/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://liuchang0812.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>How to Patch One Pr</title>
-      <link>http://blog.liuchang0812.com/posts/how-to-patch-one-pr/</link>
-      <pubDate>Tue, 23 Apr 2019 10:42:03 +0800</pubDate>
+      <title>Build and Link with SeaStar library</title>
+      <link>http://liuchang0812.com/posts/install-seastar/</link>
+      <pubDate>Thu, 26 Sep 2019 11:49:09 +0800</pubDate>
       
-      <guid>http://blog.liuchang0812.com/posts/how-to-patch-one-pr/</guid>
-      <description>对于开源项目，因为各方面的原因，公司会维护一个内部版本。当社区有人实现了新的特性或者重要的bugfix时，我们就需要将对应的修改引入到内部版本上。
-对于改动较小的，只有很少的commits的情况，最简单的还是 git cherry-pick 依次将 commit 打到本地分支。
-对于改动较大的，有特别多的 commits 的情况, 对每一个 commit 执行 cherry-pick 就比较繁琐了。这个时候我习惯于采用 am 打入 patch 的方式。
-步骤如下：
- 下载对应 PR 的 patch 文件，方法是在 github 的 url 后面加上 .patch 后缀。例如我们要用https://github.com/ceph/ceph/pull/27707,可以通过 wget https://github.com/ceph/ceph/pull/27707.patch 命令得到该PR对应的 patch 文件。 执行 git am --reject &amp;lt;path/to/patch&amp;gt;，如果没有冲突，就万事大吉。 如果 git 提示有冲突，就手动的打开冲突文件和对应的 rej 文件，解决冲突后 git add冲突文件。然后，执行 git am --continue 继续合并。  这种方式会保留原始的提交信息和代码树，可以比较快速的合并上游社区的代码修改。
-如果大家有更好的方法，欢迎交流。</description>
+      <guid>http://liuchang0812.com/posts/install-seastar/</guid>
+      <description> Build Seastar git clone https://github.com/scylladb/seastar.git cd seastar git submodule update --init --recursive apt udpate &amp;amp;&amp;amp; ./install-dependencies.sh ./configure.py --mode=release --cook fmt  Link with Seastar apt install libunistring-dev export seastar_dir=`pwd` g++ my_app.cc $(pkg-config --libs --cflags --static $seastar_dir/build/release/seastar.pc) -o my_app ./my_app  </description>
+    </item>
+    
+    <item>
+      <title>My First Post</title>
+      <link>http://liuchang0812.com/posts/my-first-post/</link>
+      <pubDate>Tue, 29 Jan 2019 15:16:46 +0800</pubDate>
+      
+      <guid>http://liuchang0812.com/posts/my-first-post/</guid>
+      <description></description>
     </item>
     
   </channel>

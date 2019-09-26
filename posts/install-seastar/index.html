@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>My Blog  | Build and Link with SeaStar library</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.58.3" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.955516233bcafa4d2a1c13cea63c7b50.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Build and Link with SeaStar library" />
+<meta property="og:description" content=" Build Seastar git clone https://github.com/scylladb/seastar.git cd seastar git submodule update --init --recursive apt udpate &amp;&amp; ./install-dependencies.sh ./configure.py --mode=release --cook fmt  Link with Seastar apt install libunistring-dev export seastar_dir=`pwd` g&#43;&#43; my_app.cc $(pkg-config --libs --cflags --static $seastar_dir/build/release/seastar.pc) -o my_app ./my_app  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://liuchang0812.com/posts/install-seastar/" />
+<meta property="article:published_time" content="2019-09-26T11:49:09+08:00" />
+<meta property="article:modified_time" content="2019-09-26T11:49:09+08:00" />
+<meta itemprop="name" content="Build and Link with SeaStar library">
+<meta itemprop="description" content=" Build Seastar git clone https://github.com/scylladb/seastar.git cd seastar git submodule update --init --recursive apt udpate &amp;&amp; ./install-dependencies.sh ./configure.py --mode=release --cook fmt  Link with Seastar apt install libunistring-dev export seastar_dir=`pwd` g&#43;&#43; my_app.cc $(pkg-config --libs --cflags --static $seastar_dir/build/release/seastar.pc) -o my_app ./my_app  ">
+
+
+<meta itemprop="datePublished" content="2019-09-26T11:49:09&#43;08:00" />
+<meta itemprop="dateModified" content="2019-09-26T11:49:09&#43;08:00" />
+<meta itemprop="wordCount" content="38">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Build and Link with SeaStar library"/>
+<meta name="twitter:description" content=" Build Seastar git clone https://github.com/scylladb/seastar.git cd seastar git submodule update --init --recursive apt udpate &amp;&amp; ./install-dependencies.sh ./configure.py --mode=release --cook fmt  Link with Seastar apt install libunistring-dev export seastar_dir=`pwd` g&#43;&#43; my_app.cc $(pkg-config --libs --cflags --static $seastar_dir/build/release/seastar.pc) -o my_app ./my_app  "/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://liuchang0812.com/" class="f3 fw2 hover-white no-underline white-90 dib">
+      My Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Build and Link with SeaStar library</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-09-26T11:49:09&#43;08:00">September 26, 2019</time>      
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<h2 id="build-seastar">Build Seastar</h2>
+
+<pre><code>git clone https://github.com/scylladb/seastar.git
+cd seastar
+git submodule update --init --recursive
+apt udpate &amp;&amp; ./install-dependencies.sh
+./configure.py --mode=release --cook fmt
+</code></pre>
+
+<h2 id="link-with-seastar">Link with Seastar</h2>
+
+<pre><code>apt install libunistring-dev
+export seastar_dir=`pwd`
+g++ my_app.cc $(pkg-config --libs --cflags --static $seastar_dir/build/release/seastar.pc) -o my_app
+./my_app
+
+</code></pre>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://liuchang0812.com/" >
+    &copy; 2019 My Blog
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

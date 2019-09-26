@@ -9,7 +9,7 @@
     <meta name="MobileOptimized" content="320">
 
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.58.3" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -27,16 +27,16 @@
     
 
     
-      <link href="http://blog.liuchang0812.com/posts/index.xml" rel="alternate" type="application/rss+xml" title="My Blog" />
-      <link href="http://blog.liuchang0812.com/posts/index.xml" rel="feed" type="application/rss+xml" title="My Blog" />
+      <link href="http://liuchang0812.com/posts/index.xml" rel="alternate" type="application/rss+xml" title="My Blog" />
+      <link href="http://liuchang0812.com/posts/index.xml" rel="feed" type="application/rss+xml" title="My Blog" />
     
 
     <meta property="og:title" content="Posts" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://blog.liuchang0812.com/posts/" />
-<meta property="og:updated_time" content="2019-04-23T10:42:03&#43;08:00"/>
+<meta property="og:url" content="http://liuchang0812.com/posts/" />
 
+<meta property="og:updated_time" content="2019-09-26T11:49:09+08:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="">
 
@@ -54,7 +54,7 @@
     <div class="pb3-m pb6-l bg-black">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
-    <a href="http://blog.liuchang0812.com/" class="f3 fw2 hover-white no-underline white-90 dib">
+    <a href="http://liuchang0812.com/" class="f3 fw2 hover-white no-underline white-90 dib">
       My Blog
     </a>
     <div class="flex-l items-center">
@@ -95,29 +95,40 @@
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/how-to-patch-one-pr/" class="link black dim">
-        How to Patch One Pr
+      <a href="/posts/install-seastar/" class="link black dim">
+        Build and Link with SeaStar library
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      对于开源项目，因为各方面的原因，公司会维护一个内部版本。当社区有人实现了新的特性或者重要的bugfix时，我们就需要将对应的修改引入到内部版本上。
-对于改动较小的，只有很少的commits的情况，最简单的还是 git cherry-pick 依次将 commit 打到本地分支。
-对于改动较大的，有特别多的 commits 的情况, 对每一个 commit 执行 cherry-pick 就比较繁琐了。这个时候我习惯于采用 am 打入 patch 的方式。
-步骤如下：
- 下载对应 PR 的 patch 文件，方法是在 github 的 url 后面加上 .patch 后缀。例如我们要用https://github.com/ceph/ceph/pull/27707,可以通过 wget https://github.com/ceph/ceph/pull/27707.patch 命令得到该PR对应的 patch 文件。 执行 git am --reject &lt;path/to/patch&gt;，如果没有冲突，就万事大吉。 如果 git 提示有冲突，就手动的打开冲突文件和对应的 rej 文件，解决冲突后 git add冲突文件。然后，执行 git am --continue 继续合并。  这种方式会保留原始的提交信息和代码树，可以比较快速的合并上游社区的代码修改。
-如果大家有更好的方法，欢迎交流。
+       Build Seastar git clone https://github.com/scylladb/seastar.git cd seastar git submodule update --init --recursive apt udpate &amp;&amp; ./install-dependencies.sh ./configure.py --mode=release --cook fmt  Link with Seastar apt install libunistring-dev export seastar_dir=`pwd` g++ my_app.cc $(pkg-config --libs --cflags --static $seastar_dir/build/release/seastar.pc) -o my_app ./my_app  
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/my-first-post/" class="link black dim">
+        My First Post
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      
     </div>
   </div>
 </div>
 </div>
       
     </section>
+
 </article>
 
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
-  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://blog.liuchang0812.com/" >
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://liuchang0812.com/" >
     &copy; 2019 My Blog
   </a>
     <div>
