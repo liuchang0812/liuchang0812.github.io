@@ -3,68 +3,68 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://liuchang0812.com/2019/11/etcd-client-election/</loc>
+    <loc>http://liuchang0812.github.io/2019/11/etcd-client-election/</loc>
     <lastmod>2019-11-18T16:04:19+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/</loc>
+    <loc>http://liuchang0812.github.io/</loc>
     <lastmod>2019-11-18T16:04:19+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/posts/</loc>
+    <loc>http://liuchang0812.github.io/posts/</loc>
     <lastmod>2019-11-18T16:04:19+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/2019/10/raft-paper-notes/</loc>
+    <loc>http://liuchang0812.github.io/2019/10/raft-paper-notes/</loc>
     <lastmod>2019-10-28T10:57:14+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/2019/09/install-seastar/</loc>
+    <loc>http://liuchang0812.github.io/2019/09/install-seastar/</loc>
     <lastmod>2019-09-26T11:49:09+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/about/</loc>
+    <loc>http://liuchang0812.github.io/about/</loc>
     <lastmod>2019-02-28T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/2019/01/my-first-post/</loc>
+    <loc>http://liuchang0812.github.io/2019/01/my-first-post/</loc>
     <lastmod>2019-01-29T15:16:46+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/categories/</loc>
+    <loc>http://liuchang0812.github.io/categories/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/series/</loc>
+    <loc>http://liuchang0812.github.io/series/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://liuchang0812.com/tags/</loc>
+    <loc>http://liuchang0812.github.io/tags/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
