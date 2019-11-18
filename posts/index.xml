@@ -1,44 +1,48 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on My Blog</title>
+    <title>Posts on Make Blog Great Again</title>
     <link>http://liuchang0812.com/posts/</link>
-    <description>Recent content in Posts on My Blog</description>
+    <description>Recent content in Posts on Make Blog Great Again</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Mon, 28 Oct 2019 10:57:14 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 18 Nov 2019 16:04:19 +0800</lastBuildDate>
     
-	<atom:link href="http://liuchang0812.com/posts/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://liuchang0812.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Etcd SDK 中的选主实现</title>
+      <link>http://liuchang0812.com/2019/11/etcd-client-election/</link>
+      <pubDate>Mon, 18 Nov 2019 16:04:19 +0800</pubDate>
+      
+      <guid>http://liuchang0812.com/2019/11/etcd-client-election/</guid>
+      <description>&lt;p&gt;一句话总结就是：每个会话在指定目录下创建一个键值对，谁先创建成功谁就是主。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Raft Paper Notes</title>
-      <link>http://liuchang0812.com/posts/raft-paper-notes/</link>
+      <link>http://liuchang0812.com/2019/10/raft-paper-notes/</link>
       <pubDate>Mon, 28 Oct 2019 10:57:14 +0800</pubDate>
       
-      <guid>http://liuchang0812.com/posts/raft-paper-notes/</guid>
-      <description>为什么要发明 RAFT 一致性协议？ 因为 paxos 过于复杂，难以理解。同时，paxos 是面向学术和理论证明，没有在论文中介绍工程上的实现。如果要实现一个工业级的 paxos，要做很多优化拓展，例如 multi-paxos。为了解决这些问题， raft 是一个把可理解性、明确工程实现方法放在首要考虑地位的算法。
-RAFT 算法细节 raft 算法主要分为两个部分: 1)Leader Election; 2)Log Replication。
-基本概念  term, 每次 leader 变更时就增长1。每个 term 内只会有一个 leader。时间的逻辑划分，用于 leader election。 RPC，不同结点之间通过 RPC 来通信，在 raft 中有两个 RPC: 1)RequestVote;2)AppendEntries。  Leader Election 空的 AppendEntries RPC 被用来作为心跳包，由 Leader 发送给其它 Server，同时维持其的Leader角色（Leader Authority）。当一个 Server 在超过一定时间(election timeout)没有收来自Leader的心跳包，就认为 Leader 不存在，开始新一轮的选举。
-选举的策略比较简单，每个 Server 在每个 Term 只给一个人投票，遵循先到先得的策略。为了尽量避免出现 split 投不出大多数的情况，每个 Server 都有一个随机的election timeout配置，来避免多个 Server 在同时发出 RequestVote 请求。
-Log Replication committed log: 保证持久化的日志，不会因为机器故障等各类原因丢失该日志。并且该日志最终会被所有可用机器执行。</description>
+      <guid>http://liuchang0812.com/2019/10/raft-paper-notes/</guid>
+      <description>为什么要发明 RAFT 一致性协议？ 因为 paxos 过于复杂，难以理解。同时，paxos 是面向学术和理论证明，没有在论文中介绍工程上的实现。如果要实现一个工业级</description>
     </item>
     
     <item>
       <title>Build and Link with SeaStar library</title>
-      <link>http://liuchang0812.com/posts/install-seastar/</link>
+      <link>http://liuchang0812.com/2019/09/install-seastar/</link>
       <pubDate>Thu, 26 Sep 2019 11:49:09 +0800</pubDate>
       
-      <guid>http://liuchang0812.com/posts/install-seastar/</guid>
+      <guid>http://liuchang0812.com/2019/09/install-seastar/</guid>
       <description> Build Seastar git clone https://github.com/scylladb/seastar.git cd seastar git submodule update --init --recursive apt udpate &amp;amp;&amp;amp; ./install-dependencies.sh ./configure.py --mode=release --cook fmt  Link with Seastar apt install libunistring-dev export seastar_dir=`pwd` g++ my_app.cc $(pkg-config --libs --cflags --static $seastar_dir/build/release/seastar.pc) -o my_app ./my_app  </description>
     </item>
     
     <item>
       <title>My First Post</title>
-      <link>http://liuchang0812.com/posts/my-first-post/</link>
+      <link>http://liuchang0812.com/2019/01/my-first-post/</link>
       <pubDate>Tue, 29 Jan 2019 15:16:46 +0800</pubDate>
       
-      <guid>http://liuchang0812.com/posts/my-first-post/</guid>
+      <guid>http://liuchang0812.com/2019/01/my-first-post/</guid>
       <description></description>
     </item>
     
