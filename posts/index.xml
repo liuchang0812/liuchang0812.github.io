@@ -5,10 +5,19 @@
     <link>https://liuchang0812.github.io/posts/</link>
     <description>Recent content in Posts on Make Blog Great Again</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 18 Nov 2019 16:04:19 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 13 Jan 2020 15:50:31 +0800</lastBuildDate>
     
         <atom:link href="https://liuchang0812.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>最近在 Ceph KStore 上的一些工作（2020-01-13）</title>
+      <link>https://liuchang0812.github.io/2020/01/recent-works-on-ceph-kstore/</link>
+      <pubDate>Mon, 13 Jan 2020 15:50:31 +0800</pubDate>
+      
+      <guid>https://liuchang0812.github.io/2020/01/recent-works-on-ceph-kstore/</guid>
+      <description>前景 Ceph 目前自带了一些单机存储引擎，包括 基于文件的FileStore; 基于KV的KStore； 基于RocksDB+裸盘的BlueStore； 基</description>
+    </item>
     
     <item>
       <title>Etcd SDK 中的选主实现</title>
