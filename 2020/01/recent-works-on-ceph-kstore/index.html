@@ -23,7 +23,7 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <meta name="description" content="前景 Ceph 目前自带了一些单机存储引擎，包括 基于文件的FileStore; 基于KV的KStore； 基于RocksDB&#43;裸盘的BlueStore； 基" />
+  <meta name="description" content="背景 Ceph 目前自带了一些单机存储引擎，包括 基于文件的FileStore; 基于KV的KStore； 基于RocksDB&#43;裸盘的BlueStore； 基" />
   <meta name="generator" content="Hugo 0.58.3 with theme pure" />
   <title>最近在 Ceph KStore 上的一些工作（2020-01-13） - Make Blog Great Again</title>
   
@@ -31,13 +31,13 @@
   <link rel="stylesheet" href="https://liuchang0812.github.io/css/style.css">
   <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css">
   <meta property="og:title" content="最近在 Ceph KStore 上的一些工作（2020-01-13）" />
-<meta property="og:description" content="前景 Ceph 目前自带了一些单机存储引擎，包括 基于文件的FileStore; 基于KV的KStore； 基于RocksDB&#43;裸盘的BlueStore； 基" />
+<meta property="og:description" content="背景 Ceph 目前自带了一些单机存储引擎，包括 基于文件的FileStore; 基于KV的KStore； 基于RocksDB&#43;裸盘的BlueStore； 基" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://liuchang0812.github.io/2020/01/recent-works-on-ceph-kstore/" />
 <meta property="article:published_time" content="2020-01-13T15:50:31+08:00" />
 <meta property="article:modified_time" content="2020-01-13T15:50:31+08:00" />
 <meta itemprop="name" content="最近在 Ceph KStore 上的一些工作（2020-01-13）">
-<meta itemprop="description" content="前景 Ceph 目前自带了一些单机存储引擎，包括 基于文件的FileStore; 基于KV的KStore； 基于RocksDB&#43;裸盘的BlueStore； 基">
+<meta itemprop="description" content="背景 Ceph 目前自带了一些单机存储引擎，包括 基于文件的FileStore; 基于KV的KStore； 基于RocksDB&#43;裸盘的BlueStore； 基">
 
 
 <meta itemprop="datePublished" content="2020-01-13T15:50:31&#43;08:00" />
@@ -49,7 +49,7 @@
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="最近在 Ceph KStore 上的一些工作（2020-01-13）"/>
-<meta name="twitter:description" content="前景 Ceph 目前自带了一些单机存储引擎，包括 基于文件的FileStore; 基于KV的KStore； 基于RocksDB&#43;裸盘的BlueStore； 基"/>
+<meta name="twitter:description" content="背景 Ceph 目前自带了一些单机存储引擎，包括 基于文件的FileStore; 基于KV的KStore； 基于RocksDB&#43;裸盘的BlueStore； 基"/>
 
   <!--[if lte IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -215,7 +215,7 @@
         <h3 class="toc-title">Catalogue</h3>
         <div class="toc-content always-active"><nav id="TableOfContents">
 <ul>
-<li><a href="#前景">前景</a></li>
+<li><a href="#背景">背景</a></li>
 <li><a href="#让-rocksdb-支持-blob-存储">让 RocksDB 支持 Blob 存储</a></li>
 <li><a href="#read-stripe-cache-导致的内存泄漏">Read Stripe Cache 导致的内存泄漏</a></li>
 <li><a href="#onode-cache-导致的内存泄漏">Onode Cache 导致的内存泄漏</a></li>
@@ -256,7 +256,7 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       
 
-<h1 id="前景">前景</h1>
+<h1 id="背景">背景</h1>
 
 <p>Ceph 目前自带了一些单机存储引擎，包括</p>
 

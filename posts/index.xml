@@ -16,7 +16,7 @@
       <pubDate>Mon, 13 Jan 2020 15:50:31 +0800</pubDate>
       
       <guid>https://liuchang0812.github.io/2020/01/recent-works-on-ceph-kstore/</guid>
-      <description>前景 Ceph 目前自带了一些单机存储引擎，包括 基于文件的FileStore; 基于KV的KStore； 基于RocksDB+裸盘的BlueStore； 基</description>
+      <description>背景 Ceph 目前自带了一些单机存储引擎，包括 基于文件的FileStore; 基于KV的KStore； 基于RocksDB+裸盘的BlueStore； 基</description>
     </item>
     
     <item>
