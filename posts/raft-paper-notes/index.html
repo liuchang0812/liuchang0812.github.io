@@ -1,203 +1,166 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    
-    <title>My Blog  | Raft Paper Notes</title>
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-
-    <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.58.3" />
-    
-    
-      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-    
-
-    
-    
-      <link href="/dist/css/app.955516233bcafa4d2a1c13cea63c7b50.css" rel="stylesheet">
-    
-
-    
-
-    
-      
-    
-
-    
-
-    <meta property="og:title" content="Raft Paper Notes" />
-<meta property="og:description" content="为什么要发明 RAFT 一致性协议？ 因为 paxos 过于复杂，难以理解。同时，paxos 是面向学术和理论证明，没有在论文中介绍工程上的实现。如果要实现一个工业级的 paxos，要做很多优化拓展，例如 multi-paxos。为了解决这些问题， raft 是一个把可理解性、明确工程实现方法放在首要考虑地位的算法。
-RAFT 算法细节 raft 算法主要分为两个部分: 1)Leader Election; 2)Log Replication。
-基本概念  term, 每次 leader 变更时就增长1。每个 term 内只会有一个 leader。时间的逻辑划分，用于 leader election。 RPC，不同结点之间通过 RPC 来通信，在 raft 中有两个 RPC: 1)RequestVote;2)AppendEntries。  Leader Election 空的 AppendEntries RPC 被用来作为心跳包，由 Leader 发送给其它 Server，同时维持其的Leader角色（Leader Authority）。当一个 Server 在超过一定时间(election timeout)没有收来自Leader的心跳包，就认为 Leader 不存在，开始新一轮的选举。
-选举的策略比较简单，每个 Server 在每个 Term 只给一个人投票，遵循先到先得的策略。为了尽量避免出现 split 投不出大多数的情况，每个 Server 都有一个随机的election timeout配置，来避免多个 Server 在同时发出 RequestVote 请求。
-Log Replication committed log: 保证持久化的日志，不会因为机器故障等各类原因丢失该日志。并且该日志最终会被所有可用机器执行。" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://liuchang0812.com/posts/raft-paper-notes/" />
-<meta property="article:published_time" content="2019-10-28T10:57:14+08:00" />
-<meta property="article:modified_time" content="2019-10-28T10:57:14+08:00" />
-<meta itemprop="name" content="Raft Paper Notes">
-<meta itemprop="description" content="为什么要发明 RAFT 一致性协议？ 因为 paxos 过于复杂，难以理解。同时，paxos 是面向学术和理论证明，没有在论文中介绍工程上的实现。如果要实现一个工业级的 paxos，要做很多优化拓展，例如 multi-paxos。为了解决这些问题， raft 是一个把可理解性、明确工程实现方法放在首要考虑地位的算法。
-RAFT 算法细节 raft 算法主要分为两个部分: 1)Leader Election; 2)Log Replication。
-基本概念  term, 每次 leader 变更时就增长1。每个 term 内只会有一个 leader。时间的逻辑划分，用于 leader election。 RPC，不同结点之间通过 RPC 来通信，在 raft 中有两个 RPC: 1)RequestVote;2)AppendEntries。  Leader Election 空的 AppendEntries RPC 被用来作为心跳包，由 Leader 发送给其它 Server，同时维持其的Leader角色（Leader Authority）。当一个 Server 在超过一定时间(election timeout)没有收来自Leader的心跳包，就认为 Leader 不存在，开始新一轮的选举。
-选举的策略比较简单，每个 Server 在每个 Term 只给一个人投票，遵循先到先得的策略。为了尽量避免出现 split 投不出大多数的情况，每个 Server 都有一个随机的election timeout配置，来避免多个 Server 在同时发出 RequestVote 请求。
-Log Replication committed log: 保证持久化的日志，不会因为机器故障等各类原因丢失该日志。并且该日志最终会被所有可用机器执行。">
+    <meta charset="utf-8" />
+<title>Raft Paper Notes</title>
 
 
-<meta itemprop="datePublished" content="2019-10-28T10:57:14&#43;08:00" />
-<meta itemprop="dateModified" content="2019-10-28T10:57:14&#43;08:00" />
-<meta itemprop="wordCount" content="218">
-
-
-
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Raft Paper Notes"/>
-<meta name="twitter:description" content="为什么要发明 RAFT 一致性协议？ 因为 paxos 过于复杂，难以理解。同时，paxos 是面向学术和理论证明，没有在论文中介绍工程上的实现。如果要实现一个工业级的 paxos，要做很多优化拓展，例如 multi-paxos。为了解决这些问题， raft 是一个把可理解性、明确工程实现方法放在首要考虑地位的算法。
-RAFT 算法细节 raft 算法主要分为两个部分: 1)Leader Election; 2)Log Replication。
-基本概念  term, 每次 leader 变更时就增长1。每个 term 内只会有一个 leader。时间的逻辑划分，用于 leader election。 RPC，不同结点之间通过 RPC 来通信，在 raft 中有两个 RPC: 1)RequestVote;2)AppendEntries。  Leader Election 空的 AppendEntries RPC 被用来作为心跳包，由 Leader 发送给其它 Server，同时维持其的Leader角色（Leader Authority）。当一个 Server 在超过一定时间(election timeout)没有收来自Leader的心跳包，就认为 Leader 不存在，开始新一轮的选举。
-选举的策略比较简单，每个 Server 在每个 Term 只给一个人投票，遵循先到先得的策略。为了尽量避免出现 split 投不出大多数的情况，每个 Server 都有一个随机的election timeout配置，来避免多个 Server 在同时发出 RequestVote 请求。
-Log Replication committed log: 保证持久化的日志，不会因为机器故障等各类原因丢失该日志。并且该日志最终会被所有可用机器执行。"/>
-
-  </head>
-
-  <body class="ma0 avenir bg-near-white">
-
-    
-   
+  
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXX-XX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-XXXXXXXX-XX');
+  </script>
   
 
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="alternate" type="application/rss+xml" href="https://example.com/index.xml" title="Hugo Themes">
+
+<link id="dark-mode-theme" rel="stylesheet" href="https://example.com/css/dark.css" />
+<link rel="stylesheet" href="https://example.com/fontawesome/css/all.min.css" />
+
+<script src="https://example.com/js/bundle.js"></script>
+<script src="https://example.com/js/instantpage.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.68.3" />
+  </head>
+  <body>
+    
+  
+
+
+
+
   <header>
-    <div class="bg-black">
-      <nav class="pv3 ph3 ph4-ns" role="navigation">
-  <div class="flex-l justify-between items-center center">
-    <a href="http://liuchang0812.com/" class="f3 fw2 hover-white no-underline white-90 dib">
-      My Blog
-    </a>
-    <div class="flex-l items-center">
+    <nav class="navbar">
+  <div class="nav">
+    
+      <a href="https://example.com/" class="nav-logo">
+      <img src="https://example.com/images/icon.png"
+           width="50"
+           height="50"
+           alt="Logo">
+      </a>
+    
+
+    <ul class="nav-links">
       
-
+        
+          <li><a href="/about/" name="About"><i class="fas fa-user fa-lg"></i></a></li>
+        
       
+        
+          <li><a href="/tags" name="Tags"><i class="fas fa-tag fa-lg"></i></a></li>
+        
       
-
-
-
-
-
-
-
-
-
-    </div>
+        
+          <li><a href="/categories" name="Category"><i class="fas fa-folder-open fa-lg"></i></a></li>
+        
+      
+        
+          <li><a href="/search" name="Search"><i class="fas fa-search fa-lg"></i></a></li>
+        
+      
+        
+          <li><a href="/archives" name="Archives"><i class="fas fa-archive fa-lg"></i></a></li>
+        
+      
+    </ul>
   </div>
 </nav>
 
+    <div class="intro-header">
+      <div class="container">
+        <div class="posts-heading">
+          
+            <h1>Raft Paper Notes</h1>
+          
+          
+        </div>
+      </div>
     </div>
   </header>
 
 
-
-    <main class="pb7" role="main">
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
       
-  
-  <article class="flex-l flex-wrap justify-between mw8 center ph3">
-
-    <header class="mt4 w-100">
-      <p class="f6 b helvetica tracked">
-          
-        POSTS
-      </p>
-      <h1 class="f1 athelas mb1">Raft Paper Notes</h1>
-      
-      <time class="f6 mv4 dib tracked" datetime="2019-10-28T10:57:14&#43;08:00">October 28, 2019</time>      
-      
-      
-    </header>
-
-    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
-
-<h3 id="为什么要发明-raft-一致性协议">为什么要发明 RAFT 一致性协议？</h3>
-
+    <h3 id="为什么要发明-raft-一致性协议">为什么要发明 RAFT 一致性协议？</h3>
 <p>因为 paxos 过于复杂，难以理解。同时，paxos 是面向学术和理论证明，没有在论文中介绍工程上的实现。如果要实现一个工业级的 paxos，要做很多优化拓展，例如 multi-paxos。为了解决这些问题， raft 是一个把可理解性、明确工程实现方法放在首要考虑地位的算法。</p>
-
 <h1 id="raft-算法细节">RAFT 算法细节</h1>
-
 <p>raft 算法主要分为两个部分: 1)Leader Election; 2)Log Replication。</p>
-
 <h2 id="基本概念">基本概念</h2>
-
 <ol>
 <li>term, 每次 leader 变更时就增长1。每个 term 内只会有一个 leader。时间的逻辑划分，用于 leader election。</li>
 <li>RPC，不同结点之间通过 RPC 来通信，在 raft 中有两个 RPC: 1)RequestVote;2)AppendEntries。</li>
 </ol>
-
 <h2 id="leader-election">Leader Election</h2>
-
 <p>空的 AppendEntries RPC 被用来作为心跳包，由 Leader 发送给其它 Server，同时维持其的Leader角色（Leader Authority）。当一个 Server 在超过一定时间(election timeout)没有收来自Leader的心跳包，就认为 Leader 不存在，开始新一轮的选举。</p>
-
 <p>选举的策略比较简单，每个 Server 在每个 Term 只给一个人投票，遵循先到先得的策略。为了尽量避免出现 split 投不出大多数的情况，每个 Server 都有一个随机的election timeout配置，来避免多个 Server 在同时发出 RequestVote 请求。</p>
-
 <h2 id="log-replication">Log Replication</h2>
-
 <p>committed log: 保证持久化的日志，不会因为机器故障等各类原因丢失该日志。并且该日志最终会被所有可用机器执行。</p>
-
 <p>日志满足一个特性 Log Matching Property，类似于归纳法。对于不同的日志，只有他们的term和index相同,他们的内容一定相同。同时他们之前日志的内容也相同。</p>
-
 <p>Consistency Check: When send- ing an AppendEntries RPC, the leader includes the index and term of the entry in its log that immediately precedes the new entries. If the follower does not find an entry in its log with the same index and term, then it refuses the new entries.</p>
-
 <p>Leader 日志是immutable的，follower 的日志是可以覆盖的：</p>
-
 <p>a leader creates at most one entry with a given log index in a given term, and log entries never change their position in the log.
-  the leader handles inconsistencies by forcing the followers’ logs to duplicate its own. This means that conflicting entries in follower logs will be overwritten with entries from the leader’s log.</p>
-
+the leader handles inconsistencies by forcing the followers’ logs to duplicate its own. This means that conflicting entries in follower logs will be overwritten with entries from the leader’s log.</p>
 <p>Leader 通过给 Follower 不停的发送 AppendEntries RPC 来找到 follower 的日志起点（term和index都相同）。</p>
-
 <h2 id="safety">Safety</h2>
-
 <p>Leader Completeness Property: the leader for any given term con- tains all of the entries committed in previous terms
 Leader Completeness Property: Leader Completeness Prop</p>
-<ul class="pa0">
-  
-</ul>
-<div class="mt6">
-        
-      </div>
-    </section>
-
-    <aside class="w-30-l mt6-l">
 
 
 
+      
+    </article>
+    
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        (function() {
+            
+            
+            if (window.location.hostname == "localhost") return;
 
-</aside>
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            var disqus_shortname = 'yourdisqusshortname';
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="https://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-  </article>
+  </div>
 
-    </main>
-    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
-  <div class="flex justify-between">
-  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://liuchang0812.com/" >
-    &copy; 2019 My Blog
-  </a>
-    <div>
+    <footer>
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://example.com/about">Hugo Author</a>
+      &nbsp;&copy;
+      2020
 
+      
+        &nbsp;/&nbsp;
+        <a href="https://example.com/">Hugo Themes</a>
+      
 
+      &nbsp;&ndash;&nbsp;
+      <i class="fas fa-moon" id="dark-mode-toggle"></i>
 
-
-
-
-
-
-</div>
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;Theme <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+      </p>
+    </p>
   </div>
 </footer>
-
-    
-
-  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
-
 
   </body>
 </html>

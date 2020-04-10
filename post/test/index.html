@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-<title>Build and Link with SeaStar library</title>
+<title>Test</title>
 
 
   
@@ -75,10 +75,16 @@
 
     <div class="intro-header">
       <div class="container">
-        <div class="posts-heading">
+        <div class="post-heading">
           
-            <h1>Build and Link with SeaStar library</h1>
+            <h1>Test</h1>
           
+          
+            <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>&nbsp;Apr 10, 2020
+  
+</span>
+
           
         </div>
       </div>
@@ -90,19 +96,8 @@
   <div class="container" role="main">
     <article class="article" class="blog-post">
       
-    <h2 id="build-seastar">Build Seastar</h2>
-<pre><code>git clone https://github.com/scylladb/seastar.git
-cd seastar
-git submodule update --init --recursive
-apt udpate &amp;&amp; ./install-dependencies.sh
-./configure.py --mode=release --cook fmt
-</code></pre><h2 id="link-with-seastar">Link with Seastar</h2>
-<pre><code>apt install libunistring-dev
-export seastar_dir=`pwd`
-g++ my_app.cc $(pkg-config --libs --cflags --static $seastar_dir/build/release/seastar.pc) -o my_app
-./my_app
+    <p>Hello World</p>
 
-</code></pre>
 
 
       

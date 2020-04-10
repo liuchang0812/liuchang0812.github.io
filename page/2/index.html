@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-<title>Build and Link with SeaStar library</title>
+<title>Hugo Themes</title>
 
 
   
@@ -26,9 +26,11 @@
 
 <script src="https://example.com/js/bundle.js"></script>
 <script src="https://example.com/js/instantpage.js" type="module" defer></script>
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.58.3" />
   </head>
   <body>
+    
+  
     
   
 
@@ -75,9 +77,9 @@
 
     <div class="intro-header">
       <div class="container">
-        <div class="posts-heading">
+        <div class="page-heading">
           
-            <h1>Build and Link with SeaStar library</h1>
+            <h1>Hugo Themes</h1>
           
           
         </div>
@@ -87,47 +89,61 @@
 
 
     
-  <div class="container" role="main">
-    <article class="article" class="blog-post">
+<div class="container" role="main">
+    <div class="posts-list">
       
-    <h2 id="build-seastar">Build Seastar</h2>
-<pre><code>git clone https://github.com/scylladb/seastar.git
-cd seastar
-git submodule update --init --recursive
-apt udpate &amp;&amp; ./install-dependencies.sh
-./configure.py --mode=release --cook fmt
-</code></pre><h2 id="link-with-seastar">Link with Seastar</h2>
-<pre><code>apt install libunistring-dev
-export seastar_dir=`pwd`
-g++ my_app.cc $(pkg-config --libs --cflags --static $seastar_dir/build/release/seastar.pc) -o my_app
-./my_app
-
-</code></pre>
-
+        
+      
 
       
-    </article>
+        <article class="post-preview">
+  <a href="https://example.com/posts/install-seastar/">
+      <h2 class="post-title">Build and Link with SeaStar library</h2>
+  </a>
+  <div class="post-entry">
     
-    
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        (function() {
-            
-            
-            if (window.location.hostname == "localhost") return;
+  </div>
 
-            var dsq = document.createElement('script');
-            dsq.type = 'text/javascript';
-            dsq.async = true;
-            var disqus_shortname = 'yourdisqusshortname';
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="https://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>&nbsp;Sep 26, 2019
+  
+</span>
 
   </div>
+</article>
+
+      
+        <article class="post-preview">
+  <a href="https://example.com/posts/my-first-post/">
+      <h2 class="post-title">My First Post</h2>
+  </a>
+  <div class="post-entry">
+    
+  </div>
+
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>&nbsp;Jan 29, 2019
+  
+</span>
+
+  </div>
+</article>
+
+      
+      </div>
+    
+    <ul class="pager">
+      
+        <li class="previous">
+          <a href="https://example.com/page/1/">&larr; Newer</a>
+        </li>
+      
+      
+    </ul>
+  
+</div>
 
     <footer>
   <div class="container">
