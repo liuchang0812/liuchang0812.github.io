@@ -101,7 +101,7 @@
 
       
         <article class="post-preview">
-  <a href="https://blog.liuchang0812.com/posts/raft-paper-notes/">
+  <a href="https://blog.liuchang0812.com/post/raft-paper-notes/">
       <h2 class="post-title">Raft Paper Notes</h2>
   </a>
   <div class="post-entry">
@@ -111,7 +111,7 @@ RAFT 算法细节 raft 算法主要分为两个部分: 1)Leader Election; 2)Log 
 基本概念  term, 每次 leader 变更时就增长1。每个 term 内只会有一个 leader。时间的逻辑划分，用于 leader election。 RPC，不同结点之间通过 RPC 来通信，在 raft 中有两个 RPC: 1)RequestVote;2)AppendEntries。  Leader Election 空的 AppendEntries RPC 被用来作为心跳包，由 Leader 发送给其它 Server，同时维持其的Leader角色（Leader Authority）。当一个 Server 在超过一定时间(election timeout)没有收来自Leader的心跳包，就认为 Leader 不存在，开始新一轮的选举。
 选举的策略比较简单，每个 Server 在每个 Term 只给一个人投票，遵循先到先得的策略。为了尽量避免出现 split 投不出大多数的情况，每个 Server 都有一个随机的election timeout配置，来避免多个 Server 在同时发出 RequestVote 请求。
 Log Replication committed log: 保证持久化的日志，不会因为机器故障等各类原因丢失该日志。并且该日志最终会被所有可用机器执行。</p>
-        <a href="https://blog.liuchang0812.com/posts/raft-paper-notes/" class="post-read-more">Read More</a>
+        <a href="https://blog.liuchang0812.com/post/raft-paper-notes/" class="post-read-more">Read More</a>
     
   </div>
 
@@ -126,7 +126,7 @@ Log Replication committed log: 保证持久化的日志，不会因为机器故�
 
       
         <article class="post-preview">
-  <a href="https://blog.liuchang0812.com/posts/install-seastar/">
+  <a href="https://blog.liuchang0812.com/post/install-seastar/">
       <h2 class="post-title">Build and Link with SeaStar library</h2>
   </a>
   <div class="post-entry">
@@ -144,7 +144,7 @@ Log Replication committed log: 保证持久化的日志，不会因为机器故�
 
       
         <article class="post-preview">
-  <a href="https://blog.liuchang0812.com/posts/my-first-post/">
+  <a href="https://blog.liuchang0812.com/post/my-first-post/">
       <h2 class="post-title">My First Post</h2>
   </a>
   <div class="post-entry">

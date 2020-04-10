@@ -119,7 +119,7 @@
 
       
         <article class="post-preview">
-  <a href="https://blog.liuchang0812.com/posts/recent-works-on-ceph-kstore/">
+  <a href="https://blog.liuchang0812.com/post/recent-works-on-ceph-kstore/">
       <h2 class="post-title">最近在 Ceph KStore 上的一些工作（2020-01-13）</h2>
   </a>
   <div class="post-entry">
@@ -131,7 +131,7 @@
 目前，PingCAP 公司基于 RocksDB 和 Wisckey 实现了一个 RocksDB 的插件 TitanDB. 上层程序可以简单的通过 Titan::DB 的命名空间来使用。因此，我们将Titan 替换原生的 RocksDB，使得 KStore 可以较好的存储大文件。
 理论上，KStore 层面的代码完全不用修改，性能也不会有损耗。相对于 FileStore，没有 Double Write 的过程，性能更好。相对于 BlueStore，实现上更简单更易维护，对小文件更友善，性能类似。具体的性能报告待整理完善。
 Read Stripe Cache 导致的内存泄漏  issue地址 PR地址 与社区讨论地址  这个问题在19年5月分的时候就已经提交到社区，中间因为同事转岗以及社区对read-cache是否有意义有分歧，拖到最近才合并到主线。</p>
-        <a href="https://blog.liuchang0812.com/posts/recent-works-on-ceph-kstore/" class="post-read-more">Read More</a>
+        <a href="https://blog.liuchang0812.com/post/recent-works-on-ceph-kstore/" class="post-read-more">Read More</a>
     
   </div>
 
@@ -146,13 +146,13 @@ Read Stripe Cache 导致的内存泄漏  issue地址 PR地址 与社区讨论地
 
       
         <article class="post-preview">
-  <a href="https://blog.liuchang0812.com/posts/etcd-client-election/">
+  <a href="https://blog.liuchang0812.com/post/etcd-client-election/">
       <h2 class="post-title">Etcd SDK 中的选主实现</h2>
   </a>
   <div class="post-entry">
     
       <p><p>一句话总结就是：每个会话在指定目录下创建一个键值对，谁先创建成功谁就是主。</p></p>
-        <a href="https://blog.liuchang0812.com/posts/etcd-client-election/" class="post-read-more">Read More</a>
+        <a href="https://blog.liuchang0812.com/post/etcd-client-election/" class="post-read-more">Read More</a>
     
   </div>
 
