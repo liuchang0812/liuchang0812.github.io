@@ -1,21 +1,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Categories on Hugo Themes</title>
-		<link>https://example.com/categories/</link>
+		<link>https://liuchang0812.github.io/categories/</link>
 		<description>Recent content in Categories on Hugo Themes</description>
 		<generator>Hugo -- gohugo.io</generator>
 		
-  		<language>en</language>
+  		<language>zh</language>
 		
 		<managingEditor>Page(/categories) (Hugo Author)</managingEditor>
     	
-		<atom:link href="https://example.com/categories/" rel="self" type="application/rss+xml" />
+		<atom:link href="https://liuchang0812.github.io/categories/" rel="self" type="application/rss+xml" />
 		
 		<item>
 			<title>Test</title>
-			<link>https://example.com/post/test/</link>
+			<link>https://liuchang0812.github.io/post/test/</link>
 			<pubDate>Fri, 10 Apr 2020 21:30:12 +0800</pubDate>
-			<guid>https://example.com/post/test/</guid>
+			<guid>https://liuchang0812.github.io/post/test/</guid>
 			<description>Hello World</description>
 		</item>
       	
