@@ -1,7 +1,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Tags on Hugo Themes</title>
-		<link>https://liuchang0812.github.io/tags/</link>
+		<link>https://blog.liuchang0812.com/tags/</link>
 		<description>Recent content in Tags on Hugo Themes</description>
 		<generator>Hugo -- gohugo.io</generator>
 		
@@ -9,13 +9,13 @@
 		
 		<managingEditor>Page(/tags) (Hugo Author)</managingEditor>
     	
-		<atom:link href="https://liuchang0812.github.io/tags/" rel="self" type="application/rss+xml" />
+		<atom:link href="https://blog.liuchang0812.com/tags/" rel="self" type="application/rss+xml" />
 		
 		<item>
 			<title>Test</title>
-			<link>https://liuchang0812.github.io/post/test/</link>
+			<link>https://blog.liuchang0812.com/post/test/</link>
 			<pubDate>Fri, 10 Apr 2020 21:30:12 +0800</pubDate>
-			<guid>https://liuchang0812.github.io/post/test/</guid>
+			<guid>https://blog.liuchang0812.com/post/test/</guid>
 			<description>Hello World</description>
 		</item>
       	
