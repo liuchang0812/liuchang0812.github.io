@@ -3,77 +3,61 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://liuchang0812.github.io/</loc>
-    <lastmod>2020-01-13T15:50:31+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://example.com/</loc>
+    <lastmod>2020-04-10T21:30:12+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/posts/</loc>
-    <lastmod>2020-01-13T15:50:31+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://example.com/post/</loc>
+    <lastmod>2020-04-10T21:30:12+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/2020/01/recent-works-on-ceph-kstore/</loc>
-    <lastmod>2020-01-13T15:50:31+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://example.com/post/test/</loc>
+    <lastmod>2020-04-10T21:30:12+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/2019/11/etcd-client-election/</loc>
+    <loc>https://example.com/posts/</loc>
+    <lastmod>2020-01-13T15:50:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/posts/recent-works-on-ceph-kstore/</loc>
+    <lastmod>2020-01-13T15:50:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/posts/etcd-client-election/</loc>
     <lastmod>2019-11-18T16:04:19+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/2019/10/raft-paper-notes/</loc>
+    <loc>https://example.com/posts/raft-paper-notes/</loc>
     <lastmod>2019-10-28T10:57:14+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/2019/09/install-seastar/</loc>
+    <loc>https://example.com/posts/install-seastar/</loc>
     <lastmod>2019-09-26T11:49:09+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/about/</loc>
+    <loc>https://example.com/about/</loc>
     <lastmod>2019-02-28T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/2019/01/my-first-post/</loc>
+    <loc>https://example.com/posts/my-first-post/</loc>
     <lastmod>2019-01-29T15:16:46+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/categories/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://example.com/categories/</loc>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/series/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://liuchang0812.github.io/tags/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://example.com/tags/</loc>
   </url>
   
 </urlset>
