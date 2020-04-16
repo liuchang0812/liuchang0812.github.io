@@ -1,89 +1,129 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en-us">
   <head>
-    <meta charset="utf-8" />
-<title>Etcd SDK 中的选主实现</title>
-
-
-  
-
-
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="alternate" type="application/rss+xml" href="https://blog.liuchang0812.com/index.xml" title="烂笔头">
-
-<link id="dark-mode-theme" rel="stylesheet" href="https://blog.liuchang0812.com/css/dark.css" />
-<link rel="stylesheet" href="https://blog.liuchang0812.com/fontawesome/css/all.min.css" />
-
-<script src="https://blog.liuchang0812.com/js/bundle.js"></script>
-<script src="https://blog.liuchang0812.com/js/instantpage.js" type="module" defer></script>
-<meta name="generator" content="Hugo 0.68.3" />
-  </head>
-  <body>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
+    <title>Notes  | Etcd SDK 中的选主实现</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.68.3" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="https://liuchang0812.github.io/dist/css/app.955516233bcafa4d2a1c13cea63c7b50.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Etcd SDK 中的选主实现" />
+<meta property="og:description" content="一句话总结就是：每个会话在指定目录下创建一个键值对，谁先创建成功谁就是主。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://liuchang0812.github.io/post/etcd-client-election/" />
+<meta property="article:published_time" content="2019-11-18T16:04:19+08:00" />
+<meta property="article:modified_time" content="2019-11-18T16:04:19+08:00" />
+<meta itemprop="name" content="Etcd SDK 中的选主实现">
+<meta itemprop="description" content="一句话总结就是：每个会话在指定目录下创建一个键值对，谁先创建成功谁就是主。">
+<meta itemprop="datePublished" content="2019-11-18T16:04:19&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-18T16:04:19&#43;08:00" />
+<meta itemprop="wordCount" content="59">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Etcd SDK 中的选主实现"/>
+<meta name="twitter:description" content="一句话总结就是：每个会话在指定目录下创建一个键值对，谁先创建成功谁就是主。"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
   
-
-
-
 
   <header>
-    <nav class="navbar">
-  <div class="nav">
-    
-      <a href="https://blog.liuchang0812.com/" class="nav-logo">
-      <img src="https://blog.liuchang0812.com/images/icon.png"
-           width="50"
-           height="50"
-           alt="Logo">
-      </a>
-    
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://liuchang0812.github.io" class="f3 fw2 hover-white no-underline white-90 dib">
+      Notes
+    </a>
+    <div class="flex-l items-center">
+      
 
-    <ul class="nav-links">
       
-        
-          <li><a href="/about/" name="About"><i class="fas fa-user fa-lg"></i></a></li>
-        
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="https://liuchang0812.github.io/" title="Home page">
+              Home
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="https://github.com/liuchang0812" title="Works page">
+              Works
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="https://liuchang0812.github.io/tags/" title="Tags page">
+              Tags
+            </a>
+          </li>
+          
+        </ul>
       
-        
-          <li><a href="/tags" name="Tags"><i class="fas fa-tag fa-lg"></i></a></li>
-        
       
-        
-          <li><a href="/categories" name="Category"><i class="fas fa-folder-open fa-lg"></i></a></li>
-        
-      
-        
-          <li><a href="/archives" name="Archives"><i class="fas fa-archive fa-lg"></i></a></li>
-        
-      
-    </ul>
+
+
+
+
+
+
+
+
+
+    </div>
   </div>
 </nav>
 
-    <div class="intro-header">
-      <div class="container">
-        <div class="post-heading">
-          
-            <h1>Etcd SDK 中的选主实现</h1>
-          
-          
-            <span class="meta-post">
-  <i class="fa fa-calendar-alt"></i>&nbsp;Nov 18, 2019
-  
-</span>
-
-          
-        </div>
-      </div>
     </div>
   </header>
 
 
-    
-  <div class="container" role="main">
-    <article class="article" class="blog-post">
+
+    <main class="pb7" role="main">
       
-    <p>一句话总结就是：每个会话在指定目录下创建一个键值对，谁先创建成功谁就是主。</p>
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Etcd SDK 中的选主实现</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-11-18T16:04:19&#43;08:00">November 18, 2019</time>      
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>一句话总结就是：每个会话在指定目录下创建一个键值对，谁先创建成功谁就是主。</p>
 <h1 id="背景">背景</h1>
 <p>我们在使用 etcd 时，会利用 etcd 来实现进程抢主的逻辑。 etcd go 的SDK提供了封装好的 concurrency 模块来简化分布式选主的实现。如下，是一个忽略了错误处理的选主实现示例。</p>
 <script type="application/javascript" src="https://gist.github.com/liuchang0812/0f453b3976de5d927eed083ee93bc0cc.js?file=election.go"></script>
@@ -92,36 +132,46 @@
 <h1 id="内部实现">内部实现</h1>
 <p>etcd 维护了一个全局递增的版本号，对应于每次原子修改。这个版本号称之为 Version。相应的，对于每个保存在 etcd 中的 Key 也保存了这个 Key 是在哪一个 Version 时创建的信息，称之为 CreateRevision。</p>
 <p>当用户调用<code>Election.Campaign</code>方法时，etcd client 就会尝试创建一个 Key(如何已经存在，就不创建，直接取值)，并纪录下这个 Key 的 CreateRevision 。接着，etcd client会遍历指定目录下所有的版本小于 CreateRevision 的 Key。如果不存在小于 CreateRevision 的 Key，则说明当前创建的 Key 就是最早的 Key 了，该会话可以安全的成为 leader。否则，etcd client 会一直监听目录下这些小于 CreateRevision 的 Key，直到所有的 Key 都被删除。</p>
-<script type="application/javascript" src="https://gist.github.com/liuchang0812/0f453b3976de5d927eed083ee93bc0cc.js?file=waitDeletes.go"></script>
+<script type="application/javascript" src="https://gist.github.com/liuchang0812/0f453b3976de5d927eed083ee93bc0cc.js?file=waitDeletes.go"></script><ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
 
 
-      
-    </article>
-    
-    
-  </div>
 
-    <footer>
-  <div class="container">
-    <p class="credits copyright">
-      <a href="https://blog.liuchang0812.com/about">刘畅</a>
-      &nbsp;&copy;
-      2020
 
-      
-        &nbsp;/&nbsp;
-        <a href="https://blog.liuchang0812.com/">烂笔头</a>
-      
+</aside>
 
-      &nbsp;&ndash;&nbsp;
-      <i class="fas fa-moon" id="dark-mode-toggle"></i>
+  </article>
 
-      <p class="credits theme-by">
-        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;Theme <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
-      </p>
-    </p>
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://liuchang0812.github.io" >
+    &copy; 2020 Notes
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+</div>
   </div>
 </footer>
+
+    
+
+  <script src="https://liuchang0812.github.io/dist/js/app.3fc0f988d21662902933.js"></script>
+
 
   </body>
 </html>
