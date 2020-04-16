@@ -6,20 +6,11 @@
 
 
   
-  
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXX-XX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-XXXXXXXX-XX');
-  </script>
-  
 
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="alternate" type="application/rss+xml" href="https://blog.liuchang0812.com/index.xml" title="Hugo Themes">
+<link rel="alternate" type="application/rss+xml" href="https://blog.liuchang0812.com/index.xml" title="烂笔头">
 
 <link id="dark-mode-theme" rel="stylesheet" href="https://blog.liuchang0812.com/css/dark.css" />
 <link rel="stylesheet" href="https://blog.liuchang0812.com/fontawesome/css/all.min.css" />
@@ -59,10 +50,6 @@
       
         
           <li><a href="/categories" name="Category"><i class="fas fa-folder-open fa-lg"></i></a></li>
-        
-      
-        
-          <li><a href="/search" name="Search"><i class="fas fa-search fa-lg"></i></a></li>
         
       
         
@@ -166,6 +153,49 @@ Read Stripe Cache 导致的内存泄漏  issue地址 PR地址 与社区讨论地
 </article>
 
       
+        <article class="post-preview">
+  <a href="https://blog.liuchang0812.com/post/raft-paper-notes/">
+      <h2 class="post-title">Raft Paper Notes</h2>
+  </a>
+  <div class="post-entry">
+    
+      <p>为什么要发明 RAFT 一致性协议？ 因为 paxos 过于复杂，难以理解。同时，paxos 是面向学术和理论证明，没有在论文中介绍工程上的实现。如果要实现一个工业级的 paxos，要做很多优化拓展，例如 multi-paxos。为了解决这些问题， raft 是一个把可理解性、明确工程实现方法放在首要考虑地位的算法。
+RAFT 算法细节 raft 算法主要分为两个部分: 1)Leader Election; 2)Log Replication。
+基本概念  term, 每次 leader 变更时就增长1。每个 term 内只会有一个 leader。时间的逻辑划分，用于 leader election。 RPC，不同结点之间通过 RPC 来通信，在 raft 中有两个 RPC: 1)RequestVote;2)AppendEntries。  Leader Election 空的 AppendEntries RPC 被用来作为心跳包，由 Leader 发送给其它 Server，同时维持其的Leader角色（Leader Authority）。当一个 Server 在超过一定时间(election timeout)没有收来自Leader的心跳包，就认为 Leader 不存在，开始新一轮的选举。
+选举的策略比较简单，每个 Server 在每个 Term 只给一个人投票，遵循先到先得的策略。为了尽量避免出现 split 投不出大多数的情况，每个 Server 都有一个随机的election timeout配置，来避免多个 Server 在同时发出 RequestVote 请求。
+Log Replication committed log: 保证持久化的日志，不会因为机器故障等各类原因丢失该日志。并且该日志最终会被所有可用机器执行。</p>
+        <a href="https://blog.liuchang0812.com/post/raft-paper-notes/" class="post-read-more">Read More</a>
+    
+  </div>
+
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>&nbsp;Oct 28, 2019
+  
+</span>
+
+  </div>
+</article>
+
+      
+        <article class="post-preview">
+  <a href="https://blog.liuchang0812.com/post/install-seastar/">
+      <h2 class="post-title">Build and Link with SeaStar library</h2>
+  </a>
+  <div class="post-entry">
+    
+  </div>
+
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>&nbsp;Sep 26, 2019
+  
+</span>
+
+  </div>
+</article>
+
+      
       </div>
     
     <ul class="pager">
@@ -182,13 +212,13 @@ Read Stripe Cache 导致的内存泄漏  issue地址 PR地址 与社区讨论地
     <footer>
   <div class="container">
     <p class="credits copyright">
-      <a href="https://blog.liuchang0812.com/about">Hugo Author</a>
+      <a href="https://blog.liuchang0812.com/about">刘畅</a>
       &nbsp;&copy;
       2020
 
       
         &nbsp;/&nbsp;
-        <a href="https://blog.liuchang0812.com/">Hugo Themes</a>
+        <a href="https://blog.liuchang0812.com/">烂笔头</a>
       
 
       &nbsp;&ndash;&nbsp;
