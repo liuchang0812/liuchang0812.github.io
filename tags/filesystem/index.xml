@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>filesystem on Notes</title>
+    <link>https://liuchang0812.github.io/tags/filesystem/</link>
+    <description>Recent content in filesystem on Notes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
+    <lastBuildDate>Tue, 23 Jun 2020 17:03:29 +0800</lastBuildDate>
+    
+	<atom:link href="https://liuchang0812.github.io/tags/filesystem/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>FUSE 中的 readdirplus 优化</title>
+      <link>https://liuchang0812.github.io/post/readdirplus-in-fuse/</link>
+      <pubDate>Tue, 23 Jun 2020 17:03:29 +0800</pubDate>
+      
+      <guid>https://liuchang0812.github.io/post/readdirplus-in-fuse/</guid>
+      <description>&lt;p&gt;使用 FUSE 将一个存储系统映射到本地文件系统时，都会遇到一个问题：默认的 ls 操作耗时特别长，用户体验特别糟糕。这里介绍我们优化 FUSE 中目录遍历的方法：通过支持 readdirplus 调用来上百倍的提升 ls 命令耗时。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

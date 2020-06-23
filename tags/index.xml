@@ -7,9 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
+    <lastBuildDate>Tue, 23 Jun 2020 17:03:29 +0800</lastBuildDate>
     
 	<atom:link href="https://liuchang0812.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>filesystem</title>
+      <link>https://liuchang0812.github.io/tags/filesystem/</link>
+      <pubDate>Tue, 23 Jun 2020 17:03:29 +0800</pubDate>
+      
+      <guid>https://liuchang0812.github.io/tags/filesystem/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fuse</title>
+      <link>https://liuchang0812.github.io/tags/fuse/</link>
+      <pubDate>Tue, 23 Jun 2020 17:03:29 +0800</pubDate>
+      
+      <guid>https://liuchang0812.github.io/tags/fuse/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

@@ -6,7 +6,9 @@
 
   
   <title>
-  Tags | Notes
+  Tag → filesystem
+  
+   | Notes
 </title>
 
   
@@ -41,7 +43,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Notes">
   <meta property="og:description" content="Hugo is one of the most popular open-source static site generators. With its amazing speed and flexibility, Hugo makes building websites fun again.">
-  <meta property="og:url" content="https://liuchang0812.github.io/tags/">
+  <meta property="og:url" content="https://liuchang0812.github.io/tags/filesystem/">
   <meta property="og:image" content="/images/avatar.png">
 
 
@@ -50,8 +52,8 @@
 <meta name="generator" content="Hugo 0.68.3">
 
 
-<link rel="canonical" href="https://liuchang0812.github.io/tags/">
-<link rel="alternate" type="application/rss+xml" href="https://liuchang0812.github.io/tags/index.xml" title="Notes">
+<link rel="canonical" href="https://liuchang0812.github.io/tags/filesystem/">
+<link rel="alternate" type="application/rss+xml" href="https://liuchang0812.github.io/tags/filesystem/index.xml" title="Notes">
 
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -162,8 +164,8 @@
         </li>
       
         <li class="menu-item
-           is-active
           
+           is-active
           ">
           <a href="https://liuchang0812.github.io/tags/">Tags</a>
         </li>
@@ -176,20 +178,31 @@
   </nav>
 </header>
 
-  <section class="main post-detail terms-list">
-    <header class="post-header">
-      <h1 class="post-title">Tags</h1>
+  <section class="main post-list">
+    <header class="list-header offscreen">
+      <h2 class="list-label">Posts List</h2>
     </header>
-    <div class="tags-cloud">
+    
+    
       
+        <article class="post-entry">
+  <header class="post-header">
+    <h3 class="post-title"><a href="https://liuchang0812.github.io/post/readdirplus-in-fuse/" class="post-link">FUSE 中的 readdirplus 优化</a></h3>
+    <p class="post-meta">@Chang Liu · Jun 23, 2020 · 1 min read</p>
+  </header>
+  
+    <img class="post-cover" src="https://liuchang0812.github.io/images/cover.jpg" alt="FUSE 中的 readdirplus 优化" lazyload="on">
+  
+  <p class="post-summary">使用 FUSE 将一个存储系统映射到本地文件系统时，都会遇到一个问题：默认的 ls 操作耗时特别长，用户体验特别糟糕。这里介绍我们优化 FUSE 中目录遍历的方法：通过支持 readdirplus 调用来上百倍的提升 ls 命令耗时。
+</p>
+  <footer class="post-footer">
+    <a class="read-more" href="https://liuchang0812.github.io/post/readdirplus-in-fuse/">Read More →</a>
+  </footer>
+</article>
+
       
-        
-        <a href="https://liuchang0812.github.io/tags/filesystem/" class="tag-s">filesystem</a>
-      
-        
-        <a href="https://liuchang0812.github.io/tags/fuse/" class="tag-s">fuse</a>
-      
-    </div>
+    
+    
   </section>
   
 <footer class="site-footer">
