@@ -22,15 +22,6 @@
     </item>
     
     <item>
-      <title>memory order in cpp</title>
-      <link>https://liuchang0812.github.io/post/memory-order-in-cpp/</link>
-      <pubDate>Mon, 20 Apr 2020 20:16:46 +0800</pubDate>
-      
-      <guid>https://liuchang0812.github.io/post/memory-order-in-cpp/</guid>
-      <description>阅读列表  http://gcc.gnu.org/wiki/Atomic/GCCMM/AtomicSync  </description>
-    </item>
-    
-    <item>
       <title>最近在 Ceph KStore 上的一些工作（2020-01-13）</title>
       <link>https://liuchang0812.github.io/post/recent-works-on-ceph-kstore/</link>
       <pubDate>Mon, 13 Jan 2020 15:50:31 +0800</pubDate>
