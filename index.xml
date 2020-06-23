@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
-    <lastBuildDate>Mon, 13 Jan 2020 15:50:31 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2020 20:16:46 +0800</lastBuildDate>
     
 	<atom:link href="https://liuchang0812.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>memory order in cpp</title>
+      <link>https://liuchang0812.github.io/post/memory-order-in-cpp/</link>
+      <pubDate>Mon, 20 Apr 2020 20:16:46 +0800</pubDate>
+      
+      <guid>https://liuchang0812.github.io/post/memory-order-in-cpp/</guid>
+      <description>阅读列表  http://gcc.gnu.org/wiki/Atomic/GCCMM/AtomicSync  </description>
+    </item>
     
     <item>
       <title>最近在 Ceph KStore 上的一些工作（2020-01-13）</title>
