@@ -223,37 +223,37 @@
 <p>在 NFS 的<a href="https://tools.ietf.org/html/rfc1813#page-80">标准</a> 中，提出了 READDIRPLUS 的解决方案。</p>
 <blockquote>
 <pre><code>  Procedure READDIRPLUS retrieves a variable number of
+ entries from a file system directory and returns complete
+ information about each along with information to allow the
+ client to request additional directory entries in a
+ subsequent READDIRPLUS.  READDIRPLUS differs from READDIR
+ only in the amount of information returned for each
+ entry.  In READDIR, each entry returns the filename and
+ the fileid.  In READDIRPLUS, each entry returns the name,
+ the fileid, attributes (including the fileid), and file
+ handle. 
 </code></pre>
 </blockquote>
-<pre><code>  entries from a file system directory and returns complete
-  information about each along with information to allow the
-  client to request additional directory entries in a
-  subsequent READDIRPLUS.  READDIRPLUS differs from READDIR
-  only in the amount of information returned for each
-  entry.  In READDIR, each entry returns the filename and
-  the fileid.  In READDIRPLUS, each entry returns the name,
-  the fileid, attributes (including the fileid), and file
-  handle. 
-</code></pre>
 <p>同样的，FUSE 也从 x.x.x 版本开始支持了 readdirplus 。只需要实现 readdirplus 回调，就可以大大的优化 FUSE 的目录遍历体验。遗憾的是，文件和示例非常非常稀缺，对于实现 readdirplus 的细节描述的很不清晰。</p>
 <h1 id="实现细节">实现细节</h1>
 <h2 id="普通-readdir-的实现简介">普通 readdir 的实现简介</h2>
 <p>在实现普通的 readdir 时，是通过向 fuse 注册一个回调函数实现的。当用户在目录下执行 ls 命令时，fuse 会调用你设置的回调函数。其中，有一个参数为名字为fuse_fill_dir_t的函数指针，你通过这个函数指针填充文件列表。完整的函数声明如下</p>
-<pre><code>typedef int(* fuse_fill_dir_t) (void *buf, const char *name, const struct stat *stbuf, off_t off, enum fuse_fill_dir_flags flags)
-
-Function to add an entry in a readdir() operation
-
-The off parameter can be any non-zero value that enables the filesystem to identify the current point in the directory stream. It does not need to be the actual physical position. A value of zero is reserved to indicate that seeking in directories is not supported.
-
-Parameters
-buf	the buffer passed to the readdir() operation
-name	the file name of the directory entry
-stat	file attributes, can be NULL
-off	offset of the next entry or zero
-flags	fill flags
-Returns
-1 if buffer is full, zero otherwise
-</code></pre><p>这里要注意的细节是 off 参数。对于简单实现来说，你可以直接设置 off 为0，在一次readdir调用中将所有的文件列表填充，不关心 fuse_fill_dir_t 的返回值。也可以返回明确的 off !=0 ，并判断 fuse_fill_dir_t 的返回值，当返回 1 的时候退出。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">int</span>(<span style="color:#f92672">*</span> fuse_fill_dir_t) (<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>name, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">stat</span> <span style="color:#f92672">*</span>stbuf, off_t off, <span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">fuse_fill_dir_flags</span> flags)
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">Function to add an entry in a readdir() operation
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">The off parameter can be any non-zero value that enables the filesystem to identify the current point in the directory stream. It does not need to be the actual physical position. A value of zero is reserved to indicate that seeking in directories is not supported.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">Parameters
+</span><span style="color:#75715e">buf	the buffer passed to the readdir() operation
+</span><span style="color:#75715e">name	the file name of the directory entry
+</span><span style="color:#75715e">stat	file attributes, can be NULL
+</span><span style="color:#75715e">off	offset of the next entry or zero
+</span><span style="color:#75715e">flags	fill flags
+</span><span style="color:#75715e">Returns
+</span><span style="color:#75715e">1 if buffer is full, zero otherwise
+</span><span style="color:#75715e">*/</span>
+</code></pre></div><p>这里要注意的细节是 off 参数。对于简单实现来说，你可以直接设置 off 为0，在一次readdir调用中将所有的文件列表填充，不关心 fuse_fill_dir_t 的返回值。也可以返回明确的 off !=0 ，并判断 fuse_fill_dir_t 的返回值，当返回 1 的时候退出。</p>
 <h2 id="实现-readdirplus">实现 readdirplus</h2>
 <p>当你需要实现 readdirplus 时，有以下四个关键点：</p>
 <ol>
