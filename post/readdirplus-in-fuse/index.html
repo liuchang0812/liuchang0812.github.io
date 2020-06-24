@@ -196,7 +196,7 @@
   <section class="main post-detail">
     <header class="post-header">
       <h1 class="post-title">FUSE 中的 readdirplus 优化</h1>
-      <p class="post-meta">@Chang Liu · Jun 23, 2020 · 1 min read</p>
+      <p class="post-meta">@Chang Liu · Jun 23, 2020 · 2 min read</p>
     </header>
     <article class="post-content"><p>使用 FUSE 将一个存储系统映射到本地文件系统时，都会遇到一个问题：默认的 ls 操作耗时特别长，用户体验特别糟糕。这里介绍我们优化 FUSE 中目录遍历的方法：通过支持 readdirplus 调用来上百倍的提升 ls 命令耗时。</p>
 <h1 id="问题背景">问题背景</h1>
@@ -219,8 +219,50 @@
 <p>为了优化这个问题，思路也比较明确。就是要减少 getattr 的耗时。在内存中 cache 住文件的 st 信息，避免产生网络请求。</p>
 <p>实现上比较简单，但是需要用户指定最大cache数目，以及cache保留多久。需要用户来决定能接爱的多长时间的cache不一致性。</p>
 <h1 id="解决方案">解决方案</h1>
-<p>在日常运营过程，用户反馈比较集中的也是元数据操作，包括上文所说的 ls 卡顿、find 卡顿、无法 tab 补全。</p>
-<h1 id="实现细节">实现细节</h1></article>
+<p>理论上，在执行 readdir 的时候，可以同时把文件的ST信息也生成了。之后串行的对每个文件 getattr 是没有必要的。所以我们期望从机制上直接去掉 getattr 操作。</p>
+<p>在 NFS 的<a href="https://tools.ietf.org/html/rfc1813#page-80">标准</a> 中，提出了 READDIRPLUS 的解决方案。</p>
+<blockquote>
+<pre><code>  Procedure READDIRPLUS retrieves a variable number of
+</code></pre>
+</blockquote>
+<pre><code>  entries from a file system directory and returns complete
+  information about each along with information to allow the
+  client to request additional directory entries in a
+  subsequent READDIRPLUS.  READDIRPLUS differs from READDIR
+  only in the amount of information returned for each
+  entry.  In READDIR, each entry returns the filename and
+  the fileid.  In READDIRPLUS, each entry returns the name,
+  the fileid, attributes (including the fileid), and file
+  handle. 
+</code></pre>
+<p>同样的，FUSE 也从 x.x.x 版本开始支持了 readdirplus 。只需要实现 readdirplus 回调，就可以大大的优化 FUSE 的目录遍历体验。遗憾的是，文件和示例非常非常稀缺，对于实现 readdirplus 的细节描述的很不清晰。</p>
+<h1 id="实现细节">实现细节</h1>
+<h2 id="普通-readdir-的实现简介">普通 readdir 的实现简介</h2>
+<p>在实现普通的 readdir 时，是通过向 fuse 注册一个回调函数实现的。当用户在目录下执行 ls 命令时，fuse 会调用你设置的回调函数。其中，有一个参数为名字为fuse_fill_dir_t的函数指针，你通过这个函数指针填充文件列表。完整的函数声明如下</p>
+<pre><code>typedef int(* fuse_fill_dir_t) (void *buf, const char *name, const struct stat *stbuf, off_t off, enum fuse_fill_dir_flags flags)
+
+Function to add an entry in a readdir() operation
+
+The off parameter can be any non-zero value that enables the filesystem to identify the current point in the directory stream. It does not need to be the actual physical position. A value of zero is reserved to indicate that seeking in directories is not supported.
+
+Parameters
+buf	the buffer passed to the readdir() operation
+name	the file name of the directory entry
+stat	file attributes, can be NULL
+off	offset of the next entry or zero
+flags	fill flags
+Returns
+1 if buffer is full, zero otherwise
+</code></pre><p>这里要注意的细节是 off 参数。对于简单实现来说，你可以直接设置 off 为0，在一次readdir调用中将所有的文件列表填充，不关心 fuse_fill_dir_t 的返回值。也可以返回明确的 off !=0 ，并判断 fuse_fill_dir_t 的返回值，当返回 1 的时候退出。</p>
+<h2 id="实现-readdirplus">实现 readdirplus</h2>
+<p>当你需要实现 readdirplus 时，有以下四个关键点：</p>
+<ol>
+<li>fuse_fill_dir_t 中的 fuse_fill_dir_flags 应该为 FUSE_FILL_DIR_PLUS(2);</li>
+<li>fuse_fill_dir_t 中的 off 应该不为0，并且每个文件全局唯一；</li>
+<li>需要判断 fuse_fill_dir_t 调用的返回值，当返回1时，要正常退出；</li>
+<li>readdir 的参数 offset 可能会回退，要保证函数的可重入。</li>
+</ol>
+<p>当完成这些后，一次 ls 目录操作就会对应到FUSE层面的:opendir-&gt;readdir*N-&gt;releasedir。不会再对每个文件产生 getattr 操作。</p></article>
     <footer class="post-footer">
       
       <ul class="post-tags">

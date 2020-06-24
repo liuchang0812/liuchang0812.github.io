@@ -27,13 +27,8 @@
       <pubDate>Mon, 13 Jan 2020 15:50:31 +0800</pubDate>
       
       <guid>https://liuchang0812.github.io/post/recent-works-on-ceph-kstore/</guid>
-      <description>背景 Ceph 目前自带了一些单机存储引擎，包括
- 基于文件的FileStore; 基于KV的KStore； 基于RocksDB+裸盘的BlueStore； 基于内存的测试用MemStore； 基于seastar实现的全用户态SeaStore。  这些单机存储引擎都有适用的用户场景和读写模型。对于海量小文件的场景下，KStore 是一个很好的选择，LSM 架构的 KV 引擎天然的将数据聚合为大文件，顺序的存储到磁盘中。但是，KStore 一直以来应用较少，社区在上面维护的资源也较小。
-最近，我们希望在 Rocksdb 层面进行优化，让 Rocksdb 对 blob 写入进行优化。从而使得 KStore 不仅可以支持海量小文件，也可以较好的支持大文件。
-让 RocksDB 支持 Blob 存储 原生的 RocksDB 其实不适合存储Blob（Value 较大），因为分层模型和日志的存在，数据放大会更明显，KV在执行后台compaction也会更慢。业界提出的解决方案主要就是“Key Value 分开存储”，这样可以独立对 Blob 文件进行优化，减少写放大和compaction影响。具体可以阅读 Wisckey 的论文（阿里云应该在13年的时候就已经在内部KV实现了这类优化，支持其上OSS类BLOB业务)。
-目前，PingCAP 公司基于 RocksDB 和 Wisckey 实现了一个 RocksDB 的插件 TitanDB. 上层程序可以简单的通过 Titan::DB 的命名空间来使用。因此，我们将Titan 替换原生的 RocksDB，使得 KStore 可以较好的存储大文件。
-理论上，KStore 层面的代码完全不用修改，性能也不会有损耗。相对于 FileStore，没有 Double Write 的过程，性能更好。相对于 BlueStore，实现上更简单更易维护，对小文件更友善，性能类似。具体的性能报告待整理完善。
-Read Stripe Cache 导致的内存泄漏  issue地址 PR地址 与社区讨论地址  这个问题在19年5月分的时候就已经提交到社区，中间因为同事转岗以及社区对read-cache是否有意义有分歧，拖到最近才合并到主线。</description>
+      <description>&lt;h1 id=&#34;背景&#34;&gt;背景&lt;/h1&gt;
+&lt;p&gt;分享我们最近在 ceph kstore 上的一些工作。&lt;/p&gt;</description>
     </item>
     
     <item>
