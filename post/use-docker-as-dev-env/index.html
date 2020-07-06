@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
 
   
-  <title>Etcd SDK 中的选主实现</title>
+  <title>使用docker作为开发环境</title>
 
   
   
@@ -25,27 +25,27 @@
   
 
   
-  
-  <meta name="description" content="一句话总结就是：每个会话在指定目录下创建一个键值对，谁先创建成功谁就是主。
+  <meta name="author" content="Chang Liu">
+  <meta name="description" content="纪录自己使用容器作为开发环境的常用命令。
 ">
 
   
   
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@gohugoio">
-    <meta name="twitter:title" content="Etcd SDK 中的选主实现">
-    <meta name="twitter:description" content="一句话总结就是：每个会话在指定目录下创建一个键值对，谁先创建成功谁就是主。
+    <meta name="twitter:title" content="使用docker作为开发环境">
+    <meta name="twitter:description" content="纪录自己使用容器作为开发环境的常用命令。
 ">
-    <meta name="twitter:image" content="/images/avatar.png">
+    <meta name="twitter:image" content="https://pic3.zhimg.com/80/v2-714d489867d85c7949ffebd891693c0e_720w.jpg">
   
 
   
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Etcd SDK 中的选主实现">
-  <meta property="og:description" content="一句话总结就是：每个会话在指定目录下创建一个键值对，谁先创建成功谁就是主。
+  <meta property="og:title" content="使用docker作为开发环境">
+  <meta property="og:description" content="纪录自己使用容器作为开发环境的常用命令。
 ">
-  <meta property="og:url" content="https://liuchang0812.github.io/post/etcd-client-election/">
-  <meta property="og:image" content="/images/avatar.png">
+  <meta property="og:url" content="https://liuchang0812.github.io/post/use-docker-as-dev-env/">
+  <meta property="og:image" content="https://pic3.zhimg.com/80/v2-714d489867d85c7949ffebd891693c0e_720w.jpg">
 
 
 
@@ -53,7 +53,7 @@
 <meta name="generator" content="Hugo 0.68.3">
 
 
-<link rel="canonical" href="https://liuchang0812.github.io/post/etcd-client-election/">
+<link rel="canonical" href="https://liuchang0812.github.io/post/use-docker-as-dev-env/">
 
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -195,23 +195,25 @@
 
   <section class="main post-detail">
     <header class="post-header">
-      <h1 class="post-title">Etcd SDK 中的选主实现</h1>
-      <p class="post-meta">@Chang Liu · Nov 18, 2019 · 1 min read</p>
+      <h1 class="post-title">使用docker作为开发环境</h1>
+      <p class="post-meta">@Chang Liu · Jul 6, 2020 · 1 min read</p>
     </header>
-    <article class="post-content"><p>一句话总结就是：每个会话在指定目录下创建一个键值对，谁先创建成功谁就是主。</p>
-<h1 id="背景">背景</h1>
-<p>我们在使用 etcd 时，会利用 etcd 来实现进程抢主的逻辑。 etcd go 的SDK提供了封装好的 concurrency 模块来简化分布式选主的实现。如下，是一个忽略了错误处理的选主实现示例。</p>
-<script type="application/javascript" src="https://gist.github.com/liuchang0812/0f453b3976de5d927eed083ee93bc0cc.js?file=election.go"></script>
-
-<p>那么，etcd clientv3 的 Election 具体是怎么实现的呢？如何保证在任意情况下只有一个实例成为 leader ？</p>
-<h1 id="内部实现">内部实现</h1>
-<p>etcd 维护了一个全局递增的版本号，对应于每次原子修改。这个版本号称之为 Version。相应的，对于每个保存在 etcd 中的 Key 也保存了这个 Key 是在哪一个 Version 时创建的信息，称之为 CreateRevision。</p>
-<p>当用户调用<code>Election.Campaign</code>方法时，etcd client 就会尝试创建一个 Key(如何已经存在，就不创建，直接取值)，并纪录下这个 Key 的 CreateRevision 。接着，etcd client会遍历指定目录下所有的版本小于 CreateRevision 的 Key。如果不存在小于 CreateRevision 的 Key，则说明当前创建的 Key 就是最早的 Key 了，该会话可以安全的成为 leader。否则，etcd client 会一直监听目录下这些小于 CreateRevision 的 Key，直到所有的 Key 都被删除。</p>
-<script type="application/javascript" src="https://gist.github.com/liuchang0812/0f453b3976de5d927eed083ee93bc0cc.js?file=waitDeletes.go"></script></article>
+    <article class="post-content"><p>纪录自己使用容器作为开发环境的常用命令。</p>
+<p>举例来说，使用ubuntu作为开发环境，同时把本地目录挂载到容器中，让容器一直运行在后台。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker run  -t --name leveldb --net<span style="color:#f92672">=</span>host  -w <span style="color:#e6db74">&#34;/root/workspace&#34;</span> -v <span style="color:#e6db74">&#34;`pwd`:/root/workspace/leveldb&#34;</span> ubuntu /bin/sh -c <span style="color:#e6db74">&#34;echo Container started ; while sleep 1; do :; done&#34;</span>
+</code></pre></div><p>在需要使用容器时，使用 exec 命令进入容器。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker exec -it leveldb bash
+</code></pre></div></article>
     <footer class="post-footer">
       
+      <ul class="post-tags">
+        
+          <li><a href="https://liuchang0812.github.io/tags/docker"><span class="tag">Docker</span></a></li>
+        
+      </ul>
+      
       <p class="post-copyright">
-        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.This post was published <strong>230</strong> days ago, content in the post may be inaccurate, even wrong now, please take risk yourself.
+        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.
       </p>
     </footer>
     

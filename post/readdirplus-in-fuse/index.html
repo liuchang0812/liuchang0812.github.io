@@ -31,12 +31,12 @@
 
   
   
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@gohugoio">
     <meta name="twitter:title" content="FUSE 中的 readdirplus 优化">
     <meta name="twitter:description" content="使用 FUSE 将一个存储系统映射到本地文件系统时，都会遇到一个问题：默认的 ls 操作耗时特别长，用户体验特别糟糕。这里介绍我们优化 FUSE 中目录遍历的方法：通过支持 readdirplus 调用来上百倍的提升 ls 命令耗时。
 ">
-    <meta name="twitter:image" content="https://liuchang0812.github.io/images/cat.jpeg">
+    <meta name="twitter:image" content="/images/avatar.png">
   
 
   
@@ -45,7 +45,7 @@
   <meta property="og:description" content="使用 FUSE 将一个存储系统映射到本地文件系统时，都会遇到一个问题：默认的 ls 操作耗时特别长，用户体验特别糟糕。这里介绍我们优化 FUSE 中目录遍历的方法：通过支持 readdirplus 调用来上百倍的提升 ls 命令耗时。
 ">
   <meta property="og:url" content="https://liuchang0812.github.io/post/readdirplus-in-fuse/">
-  <meta property="og:image" content="https://liuchang0812.github.io/images/cat.jpeg">
+  <meta property="og:image" content="/images/avatar.png">
 
 
 
@@ -217,7 +217,15 @@
 <p>整个过程是串行的，对于每次 getattr 都需要发送网络请求的话。对于一个比较大的目录，例如目录下有10W个文件。完成一次 ls 操作，就是要串行的完成10W+次RPC调用。所以耗时会比较严重，用户侧的体验非常糟糕。</p>
 <h2 id="一些优化">一些优化</h2>
 <p>为了优化这个问题，思路也比较明确。就是要减少 getattr 的耗时。在内存中 cache 住文件的 st 信息，避免产生网络请求。</p>
-<p>实现上比较简单，但是需要用户指定最大cache数目，以及cache保留多久。需要用户来决定能接爱的多长时间的cache不一致性。</p>
+<p>实现上比较简单，但是需要用户指定最大cache数目，以及cache保留多久。需要用户来决定能接受多长时间的cache不一致性。例如 <a href="https://linux.die.net/man/8/mfsmount">moosefs</a> 允许用户使用如下参数指定相关cache过期时间</p>
+<blockquote>
+<p>-o mfsattrcacheto=SEC
+set attributes cache timeout in seconds (default: 1.0)
+-o mfsentrycacheto=SEC
+set file entry cache timeout in seconds (default: 0.0, i.e. no cache)
+-o mfsdirentrycacheto=SEC
+set directory entry cache timeout in seconds (default: 1.0)</p>
+</blockquote>
 <h1 id="解决方案">解决方案</h1>
 <p>理论上，在执行 readdir 的时候，可以同时把文件的ST信息也生成了。之后串行的对每个文件 getattr 是没有必要的。所以我们期望从机制上直接去掉 getattr 操作。</p>
 <p>在 NFS 的<a href="https://tools.ietf.org/html/rfc1813#page-80">标准</a> 中，提出了 READDIRPLUS 的解决方案。</p>
@@ -234,7 +242,7 @@
  handle. 
 </code></pre>
 </blockquote>
-<p>同样的，FUSE 也从 x.x.x 版本开始支持了 readdirplus 。只需要实现 readdirplus 回调，就可以大大的优化 FUSE 的目录遍历体验。遗憾的是，文件和示例非常非常稀缺，对于实现 readdirplus 的细节描述的很不清晰。</p>
+<p>同样的，FUSE 也从 3.0 版本开始支持了 readdirplus 。只需要实现 readdirplus 回调，就可以大大的优化 FUSE 的目录遍历体验。遗憾的是，文件和示例非常非常稀缺，对于实现 readdirplus 的细节描述的很不清晰。</p>
 <h1 id="实现细节">实现细节</h1>
 <h2 id="普通-readdir-的实现简介">普通 readdir 的实现简介</h2>
 <p>在实现普通的 readdir 时，是通过向 fuse 注册一个回调函数实现的。当用户在目录下执行 ls 命令时，fuse 会调用你设置的回调函数。其中，有一个参数为名字为fuse_fill_dir_t的函数指针，你通过这个函数指针填充文件列表。完整的函数声明如下</p>
