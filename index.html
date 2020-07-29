@@ -242,24 +242,10 @@
     <p class="post-meta">@Chang Liu · Oct 28, 2019 · 2 min read</p>
   </header>
   
-  <p class="post-summary">为什么要发明 RAFT 一致性协议？ 因为 paxos 过于复杂，难以理解。同时，paxos 是面向学术和理论证明，没有在论文中介绍工程上的实现。如果要实现一个工业级的 paxos，要做很多优化拓展，例如 multi-paxos。为了解决这些问题， raft 是一个把可理解性、明确工程实现方法放在首要考虑地位的算法。
-RAFT 算法细节 raft 算法主要分为两个部分: 1)Leader Election; 2)Log Replication。
-基本概念  term, 每次 leader 变更时就增长1。每个 term 内只会有一个 leader。时间的逻辑划分，用于 leader election。 RPC，不同结点之间通过 RPC 来通信，在 raft 中有两个 RPC: 1)RequestVote;2)AppendEntries。  Leader Election 空的 AppendEntries RPC 被用来作为心跳包，由 Leader 发送给其它 Server，同时维持其的Leader角色（Leader Authority）。当一个 Server 在超过一定时间(election timeout)没有收来自Leader的心跳包，就认为 Leader 不存在，开始新一轮的选举。
-选举的策略比较简单，每个 Server 在每个 Term 只给一个人投票，遵循先到先得的策略。为了尽量避免出现 split 投不出大多数的情况，每个 Server 都有一个随机的election timeout配置，来避免多个 Server 在同时发出 RequestVote 请求。
-Log Replication committed log: 保证持久化的日志，不会因为机器故障等各类原因丢失该日志。并且该日志最终会被所有可用机器执行。</p>
+  <p class="post-summary">介绍 raft 协议
+</p>
   <footer class="post-footer">
     <a class="read-more" href="https://liuchang0812.github.io/post/raft-paper-notes/">Read More →</a>
-  </footer>
-</article>
-  <article class="post-entry">
-  <header class="post-header">
-    <h3 class="post-title"><a href="https://liuchang0812.github.io/post/install-seastar/" class="post-link">Build and Link with SeaStar library</a></h3>
-    <p class="post-meta">@Chang Liu · Sep 26, 2019 · 1 min read</p>
-  </header>
-  
-  <p class="post-summary">Build Seastar git clone https://github.com/scylladb/seastar.git cd seastar git submodule update --init --recursive apt udpate &amp;&amp; ./install-dependencies.sh ./configure.py --mode=release --cook fmt Link with Seastar apt install libunistring-dev export seastar_dir=`pwd` g&#43;&#43; my_app.cc $(pkg-config --libs --cflags --static $seastar_dir/build/release/seastar.pc) -o my_app ./my_app </p>
-  <footer class="post-footer">
-    <a class="read-more" href="https://liuchang0812.github.io/post/install-seastar/">Read More →</a>
   </footer>
 </article>
  

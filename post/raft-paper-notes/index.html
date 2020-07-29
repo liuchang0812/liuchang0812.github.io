@@ -26,33 +26,24 @@
 
   
   
-  <meta name="description" content="为什么要发明 RAFT 一致性协议？ 因为 paxos 过于复杂，难以理解。同时，paxos 是面向学术和理论证明，没有在论文中介绍工程上的实现。如果要实现一个工业级的 paxos，要做很多优化拓展，例如 multi-paxos。为了解决这些问题， raft 是一个把可理解性、明确工程实现方法放在首要考虑地位的算法。
-RAFT 算法细节 raft 算法主要分为两个部分: 1)Leader Election; 2)Log Replication。
-基本概念  term, 每次 leader 变更时就增长1。每个 term 内只会有一个 leader。时间的逻辑划分，用于 leader election。 RPC，不同结点之间通过 RPC 来通信，在 raft 中有两个 RPC: 1)RequestVote;2)AppendEntries。  Leader Election 空的 AppendEntries RPC 被用来作为心跳包，由 Leader 发送给其它 Server，同时维持其的Leader角色（Leader Authority）。当一个 Server 在超过一定时间(election timeout)没有收来自Leader的心跳包，就认为 Leader 不存在，开始新一轮的选举。
-选举的策略比较简单，每个 Server 在每个 Term 只给一个人投票，遵循先到先得的策略。为了尽量避免出现 split 投不出大多数的情况，每个 Server 都有一个随机的election timeout配置，来避免多个 Server 在同时发出 RequestVote 请求。
-Log Replication committed log: 保证持久化的日志，不会因为机器故障等各类原因丢失该日志。并且该日志最终会被所有可用机器执行。">
+  <meta name="description" content="介绍 raft 协议
+">
 
   
   
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@gohugoio">
     <meta name="twitter:title" content="Raft Paper Notes">
-    <meta name="twitter:description" content="为什么要发明 RAFT 一致性协议？ 因为 paxos 过于复杂，难以理解。同时，paxos 是面向学术和理论证明，没有在论文中介绍工程上的实现。如果要实现一个工业级的 paxos，要做很多优化拓展，例如 multi-paxos。为了解决这些问题， raft 是一个把可理解性、明确工程实现方法放在首要考虑地位的算法。
-RAFT 算法细节 raft 算法主要分为两个部分: 1)Leader Election; 2)Log Replication。
-基本概念  term, 每次 leader 变更时就增长1。每个 term 内只会有一个 leader。时间的逻辑划分，用于 leader election。 RPC，不同结点之间通过 RPC 来通信，在 raft 中有两个 RPC: 1)RequestVote;2)AppendEntries。  Leader Election 空的 AppendEntries RPC 被用来作为心跳包，由 Leader 发送给其它 Server，同时维持其的Leader角色（Leader Authority）。当一个 Server 在超过一定时间(election timeout)没有收来自Leader的心跳包，就认为 Leader 不存在，开始新一轮的选举。
-选举的策略比较简单，每个 Server 在每个 Term 只给一个人投票，遵循先到先得的策略。为了尽量避免出现 split 投不出大多数的情况，每个 Server 都有一个随机的election timeout配置，来避免多个 Server 在同时发出 RequestVote 请求。
-Log Replication committed log: 保证持久化的日志，不会因为机器故障等各类原因丢失该日志。并且该日志最终会被所有可用机器执行。">
+    <meta name="twitter:description" content="介绍 raft 协议
+">
     <meta name="twitter:image" content="/images/avatar.png">
   
 
   
   <meta property="og:type" content="article">
   <meta property="og:title" content="Raft Paper Notes">
-  <meta property="og:description" content="为什么要发明 RAFT 一致性协议？ 因为 paxos 过于复杂，难以理解。同时，paxos 是面向学术和理论证明，没有在论文中介绍工程上的实现。如果要实现一个工业级的 paxos，要做很多优化拓展，例如 multi-paxos。为了解决这些问题， raft 是一个把可理解性、明确工程实现方法放在首要考虑地位的算法。
-RAFT 算法细节 raft 算法主要分为两个部分: 1)Leader Election; 2)Log Replication。
-基本概念  term, 每次 leader 变更时就增长1。每个 term 内只会有一个 leader。时间的逻辑划分，用于 leader election。 RPC，不同结点之间通过 RPC 来通信，在 raft 中有两个 RPC: 1)RequestVote;2)AppendEntries。  Leader Election 空的 AppendEntries RPC 被用来作为心跳包，由 Leader 发送给其它 Server，同时维持其的Leader角色（Leader Authority）。当一个 Server 在超过一定时间(election timeout)没有收来自Leader的心跳包，就认为 Leader 不存在，开始新一轮的选举。
-选举的策略比较简单，每个 Server 在每个 Term 只给一个人投票，遵循先到先得的策略。为了尽量避免出现 split 投不出大多数的情况，每个 Server 都有一个随机的election timeout配置，来避免多个 Server 在同时发出 RequestVote 请求。
-Log Replication committed log: 保证持久化的日志，不会因为机器故障等各类原因丢失该日志。并且该日志最终会被所有可用机器执行。">
+  <meta property="og:description" content="介绍 raft 协议
+">
   <meta property="og:url" content="https://liuchang0812.github.io/post/raft-paper-notes/">
   <meta property="og:image" content="/images/avatar.png">
 
@@ -207,7 +198,8 @@ Log Replication committed log: 保证持久化的日志，不会因为机器故�
       <h1 class="post-title">Raft Paper Notes</h1>
       <p class="post-meta">@Chang Liu · Oct 28, 2019 · 2 min read</p>
     </header>
-    <article class="post-content"><h3 id="为什么要发明-raft-一致性协议">为什么要发明 RAFT 一致性协议？</h3>
+    <article class="post-content"><p>介绍 raft 协议</p>
+<h3 id="为什么要发明-raft-一致性协议">为什么要发明 RAFT 一致性协议？</h3>
 <p>因为 paxos 过于复杂，难以理解。同时，paxos 是面向学术和理论证明，没有在论文中介绍工程上的实现。如果要实现一个工业级的 paxos，要做很多优化拓展，例如 multi-paxos。为了解决这些问题， raft 是一个把可理解性、明确工程实现方法放在首要考虑地位的算法。</p>
 <h1 id="raft-算法细节">RAFT 算法细节</h1>
 <p>raft 算法主要分为两个部分: 1)Leader Election; 2)Log Replication。</p>
@@ -229,12 +221,17 @@ the leader handles inconsistencies by forcing the followers’ logs to duplicate
 <p>Leader 通过给 Follower 不停的发送 AppendEntries RPC 来找到 follower 的日志起点（term和index都相同）。</p>
 <h2 id="safety">Safety</h2>
 <p>Leader Completeness Property: the leader for any given term con- tains all of the entries committed in previous terms
-Leader Completeness Property: Leader Completeness Prop</p>
-</article>
+Leader Completeness Property: Leader Completeness Prop</p></article>
     <footer class="post-footer">
       
+      <ul class="post-tags">
+        
+          <li><a href="https://liuchang0812.github.io/tags/raft"><span class="tag">Raft</span></a></li>
+        
+      </ul>
+      
       <p class="post-copyright">
-        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.This post was published <strong>252</strong> days ago, content in the post may be inaccurate, even wrong now, please take risk yourself.
+        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.This post was published <strong>275</strong> days ago, content in the post may be inaccurate, even wrong now, please take risk yourself.
       </p>
     </footer>
     

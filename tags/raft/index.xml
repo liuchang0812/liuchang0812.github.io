@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>raft on Notes</title>
+    <link>https://liuchang0812.github.io/tags/raft/</link>
+    <description>Recent content in raft on Notes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
+    <lastBuildDate>Mon, 28 Oct 2019 10:57:14 +0800</lastBuildDate>
+    
+	<atom:link href="https://liuchang0812.github.io/tags/raft/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Raft Paper Notes</title>
+      <link>https://liuchang0812.github.io/post/raft-paper-notes/</link>
+      <pubDate>Mon, 28 Oct 2019 10:57:14 +0800</pubDate>
+      
+      <guid>https://liuchang0812.github.io/post/raft-paper-notes/</guid>
+      <description>&lt;p&gt;介绍 raft 协议&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
