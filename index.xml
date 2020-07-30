@@ -22,6 +22,15 @@
     </item>
     
     <item>
+      <title>[FUSE] 事件循环的实现</title>
+      <link>https://liuchang0812.github.io/post/fuse-event-loop/</link>
+      <pubDate>Wed, 29 Jul 2020 21:03:48 +0800</pubDate>
+      
+      <guid>https://liuchang0812.github.io/post/fuse-event-loop/</guid>
+      <description>&lt;p&gt;FUSE 是如何实现内核与用户态的消息交互，完成整个事件循环的。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>使用docker作为开发环境</title>
       <link>https://liuchang0812.github.io/post/use-docker-as-dev-env/</link>
       <pubDate>Mon, 06 Jul 2020 11:22:55 +0800</pubDate>
