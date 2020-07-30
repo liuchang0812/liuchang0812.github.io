@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
 
   
-  <title>FUSE 中的 readdirplus 优化</title>
+  <title>[FUSE] readdirplus 优化</title>
 
   
   
@@ -33,7 +33,7 @@
   
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@gohugoio">
-    <meta name="twitter:title" content="FUSE 中的 readdirplus 优化">
+    <meta name="twitter:title" content="[FUSE] readdirplus 优化">
     <meta name="twitter:description" content="使用 FUSE 将一个存储系统映射到本地文件系统时，都会遇到一个问题：默认的 ls 操作耗时特别长，用户体验特别糟糕。这里介绍我们优化 FUSE 中目录遍历的方法：通过支持 readdirplus 调用来上百倍的提升 ls 命令耗时。
 ">
     <meta name="twitter:image" content="/images/avatar.png">
@@ -41,7 +41,7 @@
 
   
   <meta property="og:type" content="article">
-  <meta property="og:title" content="FUSE 中的 readdirplus 优化">
+  <meta property="og:title" content="[FUSE] readdirplus 优化">
   <meta property="og:description" content="使用 FUSE 将一个存储系统映射到本地文件系统时，都会遇到一个问题：默认的 ls 操作耗时特别长，用户体验特别糟糕。这里介绍我们优化 FUSE 中目录遍历的方法：通过支持 readdirplus 调用来上百倍的提升 ls 命令耗时。
 ">
   <meta property="og:url" content="https://liuchang0812.github.io/post/readdirplus-in-fuse/">
@@ -195,7 +195,7 @@
 
   <section class="main post-detail">
     <header class="post-header">
-      <h1 class="post-title">FUSE 中的 readdirplus 优化</h1>
+      <h1 class="post-title">[FUSE] readdirplus 优化</h1>
       <p class="post-meta">@Chang Liu · Jun 23, 2020 · 2 min read</p>
     </header>
     <article class="post-content"><p>使用 FUSE 将一个存储系统映射到本地文件系统时，都会遇到一个问题：默认的 ls 操作耗时特别长，用户体验特别糟糕。这里介绍我们优化 FUSE 中目录遍历的方法：通过支持 readdirplus 调用来上百倍的提升 ls 命令耗时。</p>
