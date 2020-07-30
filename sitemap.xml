@@ -8,6 +8,31 @@
   </url>
   
   <url>
+    <loc>https://liuchang0812.github.io/post/fuse-03-splice/</loc>
+    <lastmod>2020-07-30T20:38:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://liuchang0812.github.io/tags/fuse/</loc>
+    <lastmod>2020-07-30T20:38:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://liuchang0812.github.io/post/</loc>
+    <lastmod>2020-07-30T20:38:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://liuchang0812.github.io/tags/splice/</loc>
+    <lastmod>2020-07-30T20:38:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://liuchang0812.github.io/tags/</loc>
+    <lastmod>2020-07-30T20:38:39+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://liuchang0812.github.io/</loc>
     <lastmod>2020-07-30T20:27:58+08:00</lastmod>
   </url>
@@ -23,27 +48,12 @@
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/post/fuse-event-loop/</loc>
+    <loc>https://liuchang0812.github.io/post/fuse-02-event-loop/</loc>
     <lastmod>2020-07-29T21:03:48+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://liuchang0812.github.io/tags/cpp/</loc>
-    <lastmod>2020-07-29T21:03:48+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://liuchang0812.github.io/tags/fuse/</loc>
-    <lastmod>2020-07-29T21:03:48+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://liuchang0812.github.io/post/</loc>
-    <lastmod>2020-07-29T21:03:48+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://liuchang0812.github.io/tags/</loc>
     <lastmod>2020-07-29T21:03:48+08:00</lastmod>
   </url>
   
@@ -58,7 +68,7 @@
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/post/readdirplus-in-fuse/</loc>
+    <loc>https://liuchang0812.github.io/post/fuse-01-readdirplus-in-fuse/</loc>
     <lastmod>2020-06-23T17:03:29+08:00</lastmod>
   </url>
   

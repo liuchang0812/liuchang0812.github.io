@@ -7,26 +7,35 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
-    <lastBuildDate>Wed, 29 Jul 2020 21:03:48 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jul 2020 20:38:39 +0800</lastBuildDate>
     
 	<atom:link href="https://liuchang0812.github.io/tags/fuse/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>[FUSE] 事件循环的实现</title>
-      <link>https://liuchang0812.github.io/post/fuse-event-loop/</link>
+      <title>[FUSE03] FUSE 中的 Splice 特性支持</title>
+      <link>https://liuchang0812.github.io/post/fuse-03-splice/</link>
+      <pubDate>Thu, 30 Jul 2020 20:38:39 +0800</pubDate>
+      
+      <guid>https://liuchang0812.github.io/post/fuse-03-splice/</guid>
+      <description>&lt;p&gt;FUSE 通过 &lt;code&gt;/dev/fuse&lt;/code&gt; 块设备来完成数据在用户态和内核态的交换。FUSE 支持 splice 来实现 zero-copy&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[FUSE02] 事件循环的实现</title>
+      <link>https://liuchang0812.github.io/post/fuse-02-event-loop/</link>
       <pubDate>Wed, 29 Jul 2020 21:03:48 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/post/fuse-event-loop/</guid>
+      <guid>https://liuchang0812.github.io/post/fuse-02-event-loop/</guid>
       <description>&lt;p&gt;FUSE 是如何实现内核与用户态的消息交互，完成整个事件循环的。&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>[FUSE] readdirplus 优化</title>
-      <link>https://liuchang0812.github.io/post/readdirplus-in-fuse/</link>
+      <title>[FUSE01] readdirplus 优化</title>
+      <link>https://liuchang0812.github.io/post/fuse-01-readdirplus-in-fuse/</link>
       <pubDate>Tue, 23 Jun 2020 17:03:29 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/post/readdirplus-in-fuse/</guid>
+      <guid>https://liuchang0812.github.io/post/fuse-01-readdirplus-in-fuse/</guid>
       <description>&lt;p&gt;使用 FUSE 将一个存储系统映射到本地文件系统时，都会遇到一个问题：默认的 ls 操作耗时特别长，用户体验特别糟糕。这里介绍我们优化 FUSE 中目录遍历的方法：通过支持 readdirplus 调用来上百倍的提升 ls 命令耗时。&lt;/p&gt;</description>
     </item>
     

@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
 
   
-  <title>使用docker作为开发环境</title>
+  <title>[FUSE02] 事件循环的实现</title>
 
   
   
@@ -26,25 +26,25 @@
 
   
   <meta name="author" content="Chang Liu">
-  <meta name="description" content="纪录自己使用容器作为开发环境的常用命令。
+  <meta name="description" content="FUSE 是如何实现内核与用户态的消息交互，完成整个事件循环的。
 ">
 
   
   
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@gohugoio">
-    <meta name="twitter:title" content="使用docker作为开发环境">
-    <meta name="twitter:description" content="纪录自己使用容器作为开发环境的常用命令。
+    <meta name="twitter:title" content="[FUSE02] 事件循环的实现">
+    <meta name="twitter:description" content="FUSE 是如何实现内核与用户态的消息交互，完成整个事件循环的。
 ">
     <meta name="twitter:image" content="/images/avatar.png">
   
 
   
   <meta property="og:type" content="article">
-  <meta property="og:title" content="使用docker作为开发环境">
-  <meta property="og:description" content="纪录自己使用容器作为开发环境的常用命令。
+  <meta property="og:title" content="[FUSE02] 事件循环的实现">
+  <meta property="og:description" content="FUSE 是如何实现内核与用户态的消息交互，完成整个事件循环的。
 ">
-  <meta property="og:url" content="https://liuchang0812.github.io/post/use-docker-as-dev-env/">
+  <meta property="og:url" content="https://liuchang0812.github.io/post/fuse-02-event-loop/">
   <meta property="og:image" content="/images/avatar.png">
 
 
@@ -53,7 +53,7 @@
 <meta name="generator" content="Hugo 0.68.3">
 
 
-<link rel="canonical" href="https://liuchang0812.github.io/post/use-docker-as-dev-env/">
+<link rel="canonical" href="https://liuchang0812.github.io/post/fuse-02-event-loop/">
 
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -220,20 +220,95 @@
 
   <section class="main post-detail">
     <header class="post-header">
-      <h1 class="post-title">使用docker作为开发环境</h1>
-      <p class="post-meta">@Chang Liu · Jul 6, 2020 · 1 min read</p>
+      <h1 class="post-title">[FUSE02] 事件循环的实现</h1>
+      <p class="post-meta">@Chang Liu · Jul 29, 2020 · 1 min read</p>
     </header>
-    <article class="post-content"><p>纪录自己使用容器作为开发环境的常用命令。</p>
-<p>举例来说，使用ubuntu作为开发环境，同时把本地目录挂载到容器中，让容器一直运行在后台。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker run  -t --name leveldb --net<span style="color:#f92672">=</span>host  -w <span style="color:#e6db74">&#34;/root/workspace&#34;</span> -v <span style="color:#e6db74">&#34;`pwd`:/root/workspace/leveldb&#34;</span> ubuntu /bin/sh -c <span style="color:#e6db74">&#34;echo Container started ; while sleep 1; do :; done&#34;</span>
-</code></pre></div><p>在需要使用容器时，使用 exec 命令进入容器。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker exec -it leveldb bash
+    <article class="post-content"><p>FUSE 是如何实现内核与用户态的消息交互，完成整个事件循环的。</p>
+<p>[TOC]</p>
+<h1 id="概述">概述</h1>
+<p>FUSE 是为了简化文件系统实现的技术。用户不需要在内核态进行开发，只需要按照约定实现一些回调接口，就可以实现一个可以挂载的文件系统。</p>
+<p>整体 FUSE 可以分为三个部分：</p>
+<ol>
+<li>内核的 FUSE 模块。</li>
+<li>libfuse 的开发库。</li>
+<li>用户实现部分。</li>
+</ol>
+<p>内核的 FUSE 模块与用户态的FUSE实现，通过块设备 <code>/dev/fuse</code> 来完成消息交互。举例来说，用户使用一个 FUSE 实现，挂载了一个目录 <code>/mnt/fusedir</code>，当调用 <code>getattr /mnt/fusedir/a.txt</code> 时，会发生如下流程：</p>
+<ol>
+<li>操作系统调用 FUSE 内核模块；</li>
+<li>FUSE 内核模块向 <code>/dev/fuse</code> 模块写入一条消息(<code>fuse_req</code>)；</li>
+<li>用户态的 FUSE 模块会从 <code>/dev/fuse</code> 读取消息；</li>
+<li>根据消息类型，调用对应的用户回调；</li>
+<li>向 <code>/dev/fuse</code> 写入回应消息。</li>
+</ol>
+<h1 id="关键函数">关键函数</h1>
+<ul>
+<li><code>fuse_session_receive_buf_int</code>: 从 <code>/dev/fuse</code>读取消息，如果支持 <code>splice</code> 还会启用 <code>splice</code> 来实现 ZeroCopy。</li>
+<li><code>fuse_session_process_buf_int</code>: 处理消息函数，调用用户回调，封装成消息写回 <code>/dev/fuse</code> 。</li>
+</ul>
+<h1 id="详细实现">详细实现</h1>
+<h2 id="单线程">单线程</h2>
+<p>单线程模式比较简单清晰，就是一个循环，不停的调用 <code>fuse_session_receive_buf_int</code> 和 <code>fuse_session_process_buf_int</code> ，实现如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// libfuse/lib/fuse_loop.c
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">fuse_session_loop</span>(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">fuse_session</span> <span style="color:#f92672">*</span>se)
+{
+	<span style="color:#66d9ef">int</span> res <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">fuse_buf</span> fbuf <span style="color:#f92672">=</span> {
+		.mem <span style="color:#f92672">=</span> NULL,
+	};
+
+	<span style="color:#66d9ef">while</span> (<span style="color:#f92672">!</span>fuse_session_exited(se)) {
+		<span style="color:#75715e">// 注：从 /dev/fuse 块设备读取数据
+</span><span style="color:#75715e"></span>    res <span style="color:#f92672">=</span> fuse_session_receive_buf_int(se, <span style="color:#f92672">&amp;</span>fbuf, NULL);
+		
+		<span style="color:#66d9ef">if</span> (res <span style="color:#f92672">==</span> <span style="color:#f92672">-</span>EINTR)
+			<span style="color:#66d9ef">continue</span>;
+		<span style="color:#66d9ef">if</span> (res <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>)
+			<span style="color:#66d9ef">break</span>;
+		<span style="color:#75715e">// 注：解析数据并调用用户回调
+</span><span style="color:#75715e"></span>		fuse_session_process_buf_int(se, <span style="color:#f92672">&amp;</span>fbuf, NULL);
+	}
+
+	free(fbuf.mem);
+	<span style="color:#66d9ef">if</span>(se<span style="color:#f92672">-&gt;</span>error <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>)
+		res <span style="color:#f92672">=</span> se<span style="color:#f92672">-&gt;</span>error;
+	fuse_session_reset(se);
+	<span style="color:#66d9ef">return</span> res;
+}
+</code></pre></div><h2 id="多线程">多线程</h2>
+<p>多线程的版本实现在 <code>libfuse/lib/fuse_loop_mt.c</code></p>
+<ul>
+<li><code>fuse_worker</code> 一个工作线程，双向链表</li>
+<li><code>fuse_mt</code> 纪录事件循环的相关配置与信息，例如是否开启 clone fd 特性，可用线程数，总线程数等。</li>
+<li><code>fuse_chan</code> fuse channel，在开启 clone fd 特性时，使用 <code>fuse_chan</code>对应一个 <code>/dev/fuse</code> 的 clone fd</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">fuse_session_loop_mt</span>() {
+	<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">fuse_mt</span> mt;
+  <span style="color:#75715e">// 初始化 mt
+</span><span style="color:#75715e"></span>  fuse_loop_start_thread(<span style="color:#f92672">&amp;</span>mt);
+  <span style="color:#75715e">// 等待信号量和 fuse_worker退出
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> <span style="color:#a6e22e">fuse_do_work</span>() {
+	fuse_session_receive_buf_int()
+	<span style="color:#75715e">// 如果没有空闲线程，创建一个线程
+</span><span style="color:#75715e"></span>	fuse_loop_start_thread()
+	fuse_session_process_buf_int()
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">fuse_loop_start_thread</span>() {
+  <span style="color:#75715e">// 创建一个 `fuse_worker`
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">fuse_worker</span> <span style="color:#f92672">*</span>w <span style="color:#f92672">=</span> malloc(<span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">fuse_worker</span>));
+  fuse_start_thread(fuse_do_work);
+}
 </code></pre></div></article>
     <footer class="post-footer">
       
       <ul class="post-tags">
         
-          <li><a href="https://liuchang0812.github.io/tags/docker"><span class="tag">Docker</span></a></li>
+          <li><a href="https://liuchang0812.github.io/tags/fuse"><span class="tag">Fuse</span></a></li>
+        
+          <li><a href="https://liuchang0812.github.io/tags/cpp"><span class="tag">Cpp</span></a></li>
         
       </ul>
       

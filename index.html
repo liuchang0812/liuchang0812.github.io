@@ -213,14 +213,26 @@
   
    <article class="post-entry">
   <header class="post-header">
-    <h3 class="post-title"><a href="https://liuchang0812.github.io/post/fuse-event-loop/" class="post-link">[FUSE] 事件循环的实现</a></h3>
+    <h3 class="post-title"><a href="https://liuchang0812.github.io/post/fuse-03-splice/" class="post-link">[FUSE03] FUSE 中的 Splice 特性支持</a></h3>
+    <p class="post-meta">@Chang Liu · Jul 30, 2020 · 2 min read</p>
+  </header>
+  
+  <p class="post-summary">FUSE 通过 /dev/fuse 块设备来完成数据在用户态和内核态的交换。FUSE 支持 splice 来实现 zero-copy
+</p>
+  <footer class="post-footer">
+    <a class="read-more" href="https://liuchang0812.github.io/post/fuse-03-splice/">Read More →</a>
+  </footer>
+</article>
+  <article class="post-entry">
+  <header class="post-header">
+    <h3 class="post-title"><a href="https://liuchang0812.github.io/post/fuse-02-event-loop/" class="post-link">[FUSE02] 事件循环的实现</a></h3>
     <p class="post-meta">@Chang Liu · Jul 29, 2020 · 1 min read</p>
   </header>
   
   <p class="post-summary">FUSE 是如何实现内核与用户态的消息交互，完成整个事件循环的。
 </p>
   <footer class="post-footer">
-    <a class="read-more" href="https://liuchang0812.github.io/post/fuse-event-loop/">Read More →</a>
+    <a class="read-more" href="https://liuchang0812.github.io/post/fuse-02-event-loop/">Read More →</a>
   </footer>
 </article>
   <article class="post-entry">
@@ -228,8 +240,6 @@
     <h3 class="post-title"><a href="https://liuchang0812.github.io/post/use-docker-as-dev-env/" class="post-link">使用docker作为开发环境</a></h3>
     <p class="post-meta">@Chang Liu · Jul 6, 2020 · 1 min read</p>
   </header>
-  
-    <img class="post-cover" src="https://pic3.zhimg.com/80/v2-714d489867d85c7949ffebd891693c0e_720w.jpg" alt="使用docker作为开发环境" lazyload="on">
   
   <p class="post-summary">纪录自己使用容器作为开发环境的常用命令。
 </p>
@@ -239,14 +249,14 @@
 </article>
   <article class="post-entry">
   <header class="post-header">
-    <h3 class="post-title"><a href="https://liuchang0812.github.io/post/readdirplus-in-fuse/" class="post-link">[FUSE] readdirplus 优化</a></h3>
+    <h3 class="post-title"><a href="https://liuchang0812.github.io/post/fuse-01-readdirplus-in-fuse/" class="post-link">[FUSE01] readdirplus 优化</a></h3>
     <p class="post-meta">@Chang Liu · Jun 23, 2020 · 2 min read</p>
   </header>
   
   <p class="post-summary">使用 FUSE 将一个存储系统映射到本地文件系统时，都会遇到一个问题：默认的 ls 操作耗时特别长，用户体验特别糟糕。这里介绍我们优化 FUSE 中目录遍历的方法：通过支持 readdirplus 调用来上百倍的提升 ls 命令耗时。
 </p>
   <footer class="post-footer">
-    <a class="read-more" href="https://liuchang0812.github.io/post/readdirplus-in-fuse/">Read More →</a>
+    <a class="read-more" href="https://liuchang0812.github.io/post/fuse-01-readdirplus-in-fuse/">Read More →</a>
   </footer>
 </article>
   <article class="post-entry">
