@@ -3,132 +3,132 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://liuchang0812.github.io/about/</loc>
+    <loc>http://www.liuchang0812.com/about/</loc>
     <lastmod>2020-06-23T19:40:44+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/post/</loc>
+    <loc>http://www.liuchang0812.com/post/</loc>
     <lastmod>2020-12-10T11:09:44+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/tags/</loc>
+    <loc>http://www.liuchang0812.com/tags/</loc>
     <lastmod>2020-12-10T11:09:44+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/tags/%E5%90%8D%E8%91%97/</loc>
+    <loc>http://www.liuchang0812.com/tags/%E5%90%8D%E8%91%97/</loc>
     <lastmod>2020-12-10T11:09:44+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/tags/%E8%AF%BB%E4%B9%A6/</loc>
+    <loc>http://www.liuchang0812.com/tags/%E8%AF%BB%E4%B9%A6/</loc>
     <lastmod>2020-12-10T11:09:44+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/post/reading/12-10-to-kill-a-mockingbird/</loc>
+    <loc>http://www.liuchang0812.com/post/reading/12-10-to-kill-a-mockingbird/</loc>
     <lastmod>2020-12-10T11:09:44+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/tags/algorithm/</loc>
+    <loc>http://www.liuchang0812.com/tags/algorithm/</loc>
     <lastmod>2020-09-06T21:03:29+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/tags/distributed-system/</loc>
+    <loc>http://www.liuchang0812.com/tags/distributed-system/</loc>
     <lastmod>2020-09-06T21:03:29+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/</loc>
+    <loc>http://www.liuchang0812.com/</loc>
     <lastmod>2020-09-06T21:03:29+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/tags/raft/</loc>
+    <loc>http://www.liuchang0812.com/tags/raft/</loc>
     <lastmod>2020-09-06T21:03:29+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/raft-01/</loc>
+    <loc>http://www.liuchang0812.com/raft-01/</loc>
     <lastmod>2020-09-06T21:03:29+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/post/fuse-03-splice/</loc>
+    <loc>http://www.liuchang0812.com/post/fuse-03-splice/</loc>
     <lastmod>2020-07-30T20:38:39+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/tags/fuse/</loc>
+    <loc>http://www.liuchang0812.com/tags/fuse/</loc>
     <lastmod>2020-07-30T20:38:39+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/tags/splice/</loc>
+    <loc>http://www.liuchang0812.com/tags/splice/</loc>
     <lastmod>2020-07-30T20:38:39+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/resume/</loc>
+    <loc>http://www.liuchang0812.com/resume/</loc>
     <lastmod>2020-07-30T20:27:58+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/archives/</loc>
+    <loc>http://www.liuchang0812.com/archives/</loc>
     <lastmod>2020-07-30T20:27:52+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/post/fuse-02-event-loop/</loc>
+    <loc>http://www.liuchang0812.com/post/fuse-02-event-loop/</loc>
     <lastmod>2020-07-29T21:03:48+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/tags/cpp/</loc>
+    <loc>http://www.liuchang0812.com/tags/cpp/</loc>
     <lastmod>2020-07-29T21:03:48+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/tags/docker/</loc>
+    <loc>http://www.liuchang0812.com/tags/docker/</loc>
     <lastmod>2020-07-06T11:22:55+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/post/use-docker-as-dev-env/</loc>
+    <loc>http://www.liuchang0812.com/post/use-docker-as-dev-env/</loc>
     <lastmod>2020-07-06T11:22:55+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/post/fuse-01-readdirplus-in-fuse/</loc>
+    <loc>http://www.liuchang0812.com/post/fuse-01-readdirplus-in-fuse/</loc>
     <lastmod>2020-06-23T17:03:29+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/tags/filesystem/</loc>
+    <loc>http://www.liuchang0812.com/tags/filesystem/</loc>
     <lastmod>2020-06-23T17:03:29+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/post/recent-works-on-ceph-kstore/</loc>
+    <loc>http://www.liuchang0812.com/post/recent-works-on-ceph-kstore/</loc>
     <lastmod>2020-01-13T15:50:31+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/post/etcd-client-election/</loc>
+    <loc>http://www.liuchang0812.com/post/etcd-client-election/</loc>
     <lastmod>2019-11-18T16:04:19+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/post/raft-paper-notes/</loc>
+    <loc>http://www.liuchang0812.com/post/raft-paper-notes/</loc>
     <lastmod>2019-10-28T10:57:14+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://liuchang0812.github.io/categories/</loc>
+    <loc>http://www.liuchang0812.com/categories/</loc>
   </url>
   
 </urlset>

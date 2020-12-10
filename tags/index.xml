@@ -2,103 +2,103 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Notes</title>
-    <link>https://liuchang0812.github.io/tags/</link>
+    <link>http://www.liuchang0812.com/tags/</link>
     <description>Recent content in Tags on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
     <lastBuildDate>Thu, 10 Dec 2020 11:09:44 +0800</lastBuildDate>
     
-	<atom:link href="https://liuchang0812.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.liuchang0812.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>名著</title>
-      <link>https://liuchang0812.github.io/tags/%E5%90%8D%E8%91%97/</link>
+      <link>http://www.liuchang0812.com/tags/%E5%90%8D%E8%91%97/</link>
       <pubDate>Thu, 10 Dec 2020 11:09:44 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/tags/%E5%90%8D%E8%91%97/</guid>
+      <guid>http://www.liuchang0812.com/tags/%E5%90%8D%E8%91%97/</guid>
       <description></description>
     </item>
     
     <item>
       <title>读书</title>
-      <link>https://liuchang0812.github.io/tags/%E8%AF%BB%E4%B9%A6/</link>
+      <link>http://www.liuchang0812.com/tags/%E8%AF%BB%E4%B9%A6/</link>
       <pubDate>Thu, 10 Dec 2020 11:09:44 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/tags/%E8%AF%BB%E4%B9%A6/</guid>
+      <guid>http://www.liuchang0812.com/tags/%E8%AF%BB%E4%B9%A6/</guid>
       <description></description>
     </item>
     
     <item>
       <title>algorithm</title>
-      <link>https://liuchang0812.github.io/tags/algorithm/</link>
+      <link>http://www.liuchang0812.com/tags/algorithm/</link>
       <pubDate>Sun, 06 Sep 2020 21:03:29 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/tags/algorithm/</guid>
+      <guid>http://www.liuchang0812.com/tags/algorithm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>distributed system</title>
-      <link>https://liuchang0812.github.io/tags/distributed-system/</link>
+      <link>http://www.liuchang0812.com/tags/distributed-system/</link>
       <pubDate>Sun, 06 Sep 2020 21:03:29 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/tags/distributed-system/</guid>
+      <guid>http://www.liuchang0812.com/tags/distributed-system/</guid>
       <description></description>
     </item>
     
     <item>
       <title>raft</title>
-      <link>https://liuchang0812.github.io/tags/raft/</link>
+      <link>http://www.liuchang0812.com/tags/raft/</link>
       <pubDate>Sun, 06 Sep 2020 21:03:29 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/tags/raft/</guid>
+      <guid>http://www.liuchang0812.com/tags/raft/</guid>
       <description></description>
     </item>
     
     <item>
       <title>fuse</title>
-      <link>https://liuchang0812.github.io/tags/fuse/</link>
+      <link>http://www.liuchang0812.com/tags/fuse/</link>
       <pubDate>Thu, 30 Jul 2020 20:38:39 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/tags/fuse/</guid>
+      <guid>http://www.liuchang0812.com/tags/fuse/</guid>
       <description></description>
     </item>
     
     <item>
       <title>splice</title>
-      <link>https://liuchang0812.github.io/tags/splice/</link>
+      <link>http://www.liuchang0812.com/tags/splice/</link>
       <pubDate>Thu, 30 Jul 2020 20:38:39 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/tags/splice/</guid>
+      <guid>http://www.liuchang0812.com/tags/splice/</guid>
       <description></description>
     </item>
     
     <item>
       <title>cpp</title>
-      <link>https://liuchang0812.github.io/tags/cpp/</link>
+      <link>http://www.liuchang0812.com/tags/cpp/</link>
       <pubDate>Wed, 29 Jul 2020 21:03:48 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/tags/cpp/</guid>
+      <guid>http://www.liuchang0812.com/tags/cpp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>docker</title>
-      <link>https://liuchang0812.github.io/tags/docker/</link>
+      <link>http://www.liuchang0812.com/tags/docker/</link>
       <pubDate>Mon, 06 Jul 2020 11:22:55 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/tags/docker/</guid>
+      <guid>http://www.liuchang0812.com/tags/docker/</guid>
       <description></description>
     </item>
     
     <item>
       <title>filesystem</title>
-      <link>https://liuchang0812.github.io/tags/filesystem/</link>
+      <link>http://www.liuchang0812.com/tags/filesystem/</link>
       <pubDate>Tue, 23 Jun 2020 17:03:29 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/tags/filesystem/</guid>
+      <guid>http://www.liuchang0812.com/tags/filesystem/</guid>
       <description></description>
     </item>
     

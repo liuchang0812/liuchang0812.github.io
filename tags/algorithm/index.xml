@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>algorithm on Notes</title>
-    <link>https://liuchang0812.github.io/tags/algorithm/</link>
+    <link>http://www.liuchang0812.com/tags/algorithm/</link>
     <description>Recent content in algorithm on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
     <lastBuildDate>Sun, 06 Sep 2020 21:03:29 +0800</lastBuildDate>
     
-	<atom:link href="https://liuchang0812.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.liuchang0812.com/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>raft paper reading</title>
-      <link>https://liuchang0812.github.io/raft-01/</link>
+      <link>http://www.liuchang0812.com/raft-01/</link>
       <pubDate>Sun, 06 Sep 2020 21:03:29 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/raft-01/</guid>
+      <guid>http://www.liuchang0812.com/raft-01/</guid>
       <description></description>
     </item>
     

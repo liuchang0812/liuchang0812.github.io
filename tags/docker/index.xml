@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>docker on Notes</title>
-    <link>https://liuchang0812.github.io/tags/docker/</link>
+    <link>http://www.liuchang0812.com/tags/docker/</link>
     <description>Recent content in docker on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
     <lastBuildDate>Mon, 06 Jul 2020 11:22:55 +0800</lastBuildDate>
     
-	<atom:link href="https://liuchang0812.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.liuchang0812.com/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>使用docker作为开发环境</title>
-      <link>https://liuchang0812.github.io/post/use-docker-as-dev-env/</link>
+      <link>http://www.liuchang0812.com/post/use-docker-as-dev-env/</link>
       <pubDate>Mon, 06 Jul 2020 11:22:55 +0800</pubDate>
       
-      <guid>https://liuchang0812.github.io/post/use-docker-as-dev-env/</guid>
+      <guid>http://www.liuchang0812.com/post/use-docker-as-dev-env/</guid>
       <description>&lt;p&gt;纪录自己使用容器作为开发环境的常用命令。&lt;/p&gt;</description>
     </item>
     
