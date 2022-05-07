@@ -19,9 +19,10 @@ ShowToc=true
 TocOpen=false
 
 [markup]
-[[markup.highlight]]
+[markup.highlight]
   lineNos=true
   style='monokai'
+  tabWidth = 2
 
 [menu]
 [[menu.main]]
