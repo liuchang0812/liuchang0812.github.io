@@ -1,7 +1,11 @@
 baseURL = 'https://liuchang0812.github.io/'
-languageCode = 'en-us'
+languageCode = 'zh-cn'
 title = 'Liu Chang Blog'
 theme = "PaperMod"
+enableInlineShortcodes=true
+enableEmoji=true
+enableRobotsTXT=true
+hasCJKLanguage=true
 
 [outputs]
 home=['HTML', 'RSS', 'JSON']
@@ -9,3 +13,30 @@ home=['HTML', 'RSS', 'JSON']
 [params]
 ShowCodeCopyButtons=true
 ShowPostNavLinks=true
+ShowReadingTime=true
+
+ShowToc=true
+TocOpen=false
+
+[markup]
+[[markup.highlight]]
+  lineNos=true
+  style=monokai
+
+[menu]
+[[menu.main]]
+  identifier = 'about'
+  name = 'about'
+  pre = "<i class='fa fa-heart'></i>"
+  url = '/about/'
+  weight=1
+
+[[menu.main]]
+  name='⏱时间轴'
+  url='/archives/'
+  weight=2
+
+[[menu.main]]
+  name='🔍搜索'
+  url='/search/'
+  weight=3
