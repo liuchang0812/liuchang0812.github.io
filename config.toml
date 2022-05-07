@@ -21,7 +21,7 @@ TocOpen=false
 [markup]
 [[markup.highlight]]
   lineNos=true
-  style=monokai
+  style='monokai'
 
 [menu]
 [[menu.main]]
