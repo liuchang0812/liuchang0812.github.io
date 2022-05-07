@@ -26,11 +26,9 @@ TocOpen=false
 
 [menu]
 [[menu.main]]
-  identifier = 'about'
-  name = 'about'
-  pre = "<i class='fa fa-heart'></i>"
+  name = '🙋🏻‍♂️关于'
   url = '/about/'
-  weight=1
+  weight=3
 
 [[menu.main]]
   name='⏱时间轴'
@@ -40,4 +38,4 @@ TocOpen=false
 [[menu.main]]
   name='🔍搜索'
   url='/search/'
-  weight=3
+  weight=1
