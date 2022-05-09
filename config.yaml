@@ -17,19 +17,38 @@ params:
   ShowReadingTime: true
   ShowToc: true
   TocOpen: false
+  
+   profileMode:
+   enabled: true
+   title: (〃'▽'〃)
+   subtitle: "🧨学而时习之，不亦说乎？有朋自远方来，不亦乐乎？"
+
+   buttons:
+     - name: 👨🏻‍💻文章
+       url: posts
+     - name: 📕关于
+       url: about
+          
 markup:
   highlight:
     lineNos: true
     style: github
     tabWidth: 2
+    
 menu:
   main:
-    - name: "\U0001F64B\U0001F3FB‍♂️关于"
+    - name: 🙋🏻‍♂️关于
       url: /about/
-      weight: 3
+      weight: 4
+      
     - name: ⏱时间轴
       url: /archives/
-      weight: 2
-    - name: "\U0001F50D搜索"
+      weight: 3
+    - name: 🔍搜索
       url: /search/
+      weight: 2
+      
+    - identifier: posts
+      name: 📚文章
+      url: posts
       weight: 1
