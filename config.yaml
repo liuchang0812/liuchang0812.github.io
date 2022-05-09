@@ -1,0 +1,35 @@
+baseURL: 'https://liuchang0812.github.io/'
+languageCode: zh-cn
+title: Liu Chang Blog
+theme: PaperMod
+enableInlineShortcodes: true
+enableEmoji: true
+enableRobotsTXT: true
+hasCJKLanguage: true
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+params:
+  ShowCodeCopyButtons: true
+  ShowPostNavLinks: true
+  ShowReadingTime: true
+  ShowToc: true
+  TocOpen: false
+markup:
+  highlight:
+    lineNos: true
+    style: github
+    tabWidth: 2
+menu:
+  main:
+    - name: "\U0001F64B\U0001F3FB‍♂️关于"
+      url: /about/
+      weight: 3
+    - name: ⏱时间轴
+      url: /archives/
+      weight: 2
+    - name: "\U0001F50D搜索"
+      url: /search/
+      weight: 1
