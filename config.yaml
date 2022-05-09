@@ -18,16 +18,16 @@ params:
   ShowToc: true
   TocOpen: false
   
-   profileMode:
-   enabled: true
-   title: (〃'▽'〃)
-   subtitle: "🧨学而时习之，不亦说乎？有朋自远方来，不亦乐乎？"
+  profileMode:
+    enabled: true
+    title: (〃'▽'〃)
+    subtitle: "🧨学而时习之，不亦说乎？有朋自远方来，不亦乐乎？"
 
-   buttons:
-     - name: 👨🏻‍💻文章
-       url: posts
-     - name: 📕关于
-       url: about
+    buttons:
+      - name: 👨🏻‍💻文章
+        url: posts
+      - name: 📕关于
+        url: about
           
 markup:
   highlight:
