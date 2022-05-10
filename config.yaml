@@ -31,9 +31,10 @@ params:
           
 markup:
   highlight:
-    lineNos: true
-    style: github
-    tabWidth: 2
+        codeFences: true  
+        guessSyntax: true
+        lineNos: true
+        style: darcula
     
 menu:
   main:

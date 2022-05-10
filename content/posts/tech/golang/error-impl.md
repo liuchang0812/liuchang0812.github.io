@@ -1,5 +1,5 @@
 ---
-title: "Golang | error 的内部实现"
+title: "golang | error 的内部实现"
 date: 2022-05-07T20:01:06+08:00
 draft: false
 ---
