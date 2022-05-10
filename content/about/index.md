@@ -16,4 +16,4 @@ showbreadcrumbs: true #顶部显示当前路径
 ---
 
 
-TODO
+会写点儿 Cpp/Python 的码农，了解一点儿分布式存储系统

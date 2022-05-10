@@ -1,5 +1,5 @@
 ---
-title: "[golang] []byte 和 string 的区别与适用场景"
+title: "golang | []byte 和 string 的区别与适用场景"
 date: 2022-03-03T10:44:06+08:00
 draft: false
 ---
