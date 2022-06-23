@@ -1,6 +1,6 @@
 baseURL: 'https://liuchang0812.github.io/'
 languageCode: zh-cn
-title: Liu Chang Blog
+title: Liu Chang Notes
 theme: PaperMod
 enableInlineShortcodes: true
 enableEmoji: true
@@ -21,7 +21,7 @@ params:
   profileMode:
     enabled: true
     title: (〃'▽'〃)
-    subtitle: "🧨学而时习之，不亦说乎？有朋自远方来，不亦乐乎？"
+    subtitle: "🧨学习时的一些记录，不一定正确，一起讨论学习"
 
     buttons:
       - name: 👨🏻‍💻文章
