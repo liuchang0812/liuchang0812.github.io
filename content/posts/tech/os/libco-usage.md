@@ -14,7 +14,7 @@ weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默
 slug: ""
 draft: false # 是否为草稿
 comments: true
-showToc: true # 显示目录
+showToc: false # 显示目录
 TocOpen: true # 自动展开目录
 hidemeta: false # 是否隐藏文章的元信息，如发布日期、作者等
 disableShare: true # 底部不显示分享栏
@@ -28,14 +28,14 @@ libco 协程，被分类到非对称协程。分类的方法是：
 
 > 非对称在于程序控制流转移到被调协程时使用的是 call/resume 操作，而当被调协程让出 CPU 时使用的却是 return/yield 操作。此外，协程间的地位也不对等，caller 与 callee 关系是确定的，不可更改的，非对称协程只能返回最初调用它的协程。
 
-[https://zhuanlan.zhihu.com/p/51078499](https://zhuanlan.zhihu.com/p/51078499)
+> [https://zhuanlan.zhihu.com/p/51078499](https://zhuanlan.zhihu.com/p/51078499)
 > 
 
-在 libco 的实现中，每个线程会有一个 stack 来维护当前的协程列表，调用 `co_resume` 则会压入一个协程，调用 `co_yield` 则会弹出一个协程（实现的实现上只是栈顶指针的加减）。
+在 libco 的实现中，每个线程会有一个 stack 来维护当前的协程列表，调用 `co_resume` 则会压入一个协程，调用 `co_yield` 则会弹出一个协程（实际的实现是栈顶指针的加减）。
 
 所以，在实际使用过程中，如果涉及到复杂场景，需要用到 `co_yield` 来自己调度 `libco` 的协程。那么怎么来实现呢，有没有什么套路。我们可以参考这个[自带例子](https://github.com/Tencent/libco/blob/master/example_echosvr.cpp)来学习一下。
 
-因为需要自己调度协程，所以一般要把协程指针和协和对应的任务信息封装到一个结构体中，同时使用一个 `stack/queue` 保存所有的协程（因为一个协程 yield 之后就找不到了，没办法自动继续执行）。
+因为需要自己调度协程，所以一般要把协程指针和对应任务信息封装到一个结构体中，同时使用一个 `stack/queue` 保存所有的协程（因为一个协程 yield 之后就找不到了，没办法自动继续执行）。
 
 ```cpp
 struct task_t                           // 一个任务结构体
@@ -141,9 +141,9 @@ static void *accept_routine( void * )
 }
 ```
 
-## 总结一下
+### 总结一下
 
-使用 libco 自己调度协程的实现模块有：
+使用 libco 自己调度协程的实现模式有：
 
 - 用一个全局队列保存所有的任务执行协程；
 - 使用 task 结构体保存协程指针和任务参数；
