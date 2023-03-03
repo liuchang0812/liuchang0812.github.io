@@ -6,7 +6,6 @@ enableInlineShortcodes: true
 enableEmoji: true
 enableRobotsTXT: true
 hasCJKLanguage: true
-pygmentsUseClasses: true
 
 outputs:
   home:
@@ -45,7 +44,7 @@ markup:
   highlight:
         codeFences: true  
         guessSyntax: true
-        lineNos: true
+        lineNos: false
         style: darcula
     
 menu:
