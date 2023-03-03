@@ -6,6 +6,8 @@ enableInlineShortcodes: true
 enableEmoji: true
 enableRobotsTXT: true
 hasCJKLanguage: true
+pygmentsUseClasses: true
+
 outputs:
   home:
     - HTML
@@ -17,9 +19,11 @@ params:
   ShowReadingTime: true
   ShowToc: true
   TocOpen: false
+  DateFormat: "2006-01-02"
+  env: production
   
   profileMode:
-    enabled: true
+    enabled: false
     title: (〃'▽'〃)
     subtitle: "🧨学习时的一些记录，不一定正确，一起讨论学习"
 
@@ -28,7 +32,15 @@ params:
         url: posts
       - name: 🙋🏻‍♂️关于
         url: about
-          
+  fuseOpts:
+      isCaseSensitive: false
+      shouldSort: true
+      location: 0
+      distance: 1000
+      threshold: 1
+      minMatchCharLength: 0
+      keys: ["title", "permalink", "summary"]      
+
 markup:
   highlight:
         codeFences: true  
