@@ -23,7 +23,7 @@ params:
   env: production
   
   profileMode:
-    enabled: false
+    enabled: true
     title: (〃'▽'〃)
     subtitle: "🧨学习时的一些记录，不一定正确，一起讨论学习"
 
