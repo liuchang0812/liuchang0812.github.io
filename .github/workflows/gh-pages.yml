@@ -6,11 +6,11 @@ on:
       - master  # Set a branch to deploy
   pull_request:
   
-permissions:
-  id-token: write
 jobs:
   deploy:
     runs-on: ubuntu-20.04
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v2
         with:
