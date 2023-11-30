@@ -22,7 +22,7 @@ params:
   env: production
   
   profileMode:
-    enabled: true
+    enabled: false
     title: (〃'▽'〃)
     subtitle: "🧨学习时的一些记录，不一定正确，一起讨论学习"
 
@@ -31,6 +31,7 @@ params:
         url: posts
       - name: 🙋🏻‍♂️关于
         url: about
+        
   fuseOpts:
       isCaseSensitive: false
       shouldSort: true
@@ -39,6 +40,11 @@ params:
       threshold: 1
       minMatchCharLength: 0
       keys: ["title", "permalink", "summary"]      
+
+  cdn:
+    enable: true
+    # Host must NOT end with `/`
+    Host: "https://cdn.jsdelivr.net/gh/liuchang0812/liuchang0812.github.io"
 
 markup:
   highlight:
