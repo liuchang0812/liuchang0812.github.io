@@ -44,7 +44,7 @@ params:
   cdn:
     enable: true
     # Host must NOT end with `/`
-    Host: "https://cdn.jsdelivr.net/gh/liuchang0812/liuchang0812.github.io"
+    Host: "https://cdn.jsdelivr.net/gh/liuchang0812/liuchang0812.github.io/content"
 
 markup:
   highlight:
