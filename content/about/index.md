@@ -4,7 +4,7 @@ date:
 date: 2022-05-07T20:01:06+08:00
 author: ["Chang Liu"]
 description: ""
-weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
+weight: 1 # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""
 draft: false # 是否为草稿
 comments: true
