@@ -13,6 +13,7 @@ outputs:
     - RSS
     - JSON
 params:
+  disableSpecial1stPost: true
   ShowCodeCopyButtons: true
   ShowPostNavLinks: true
   ShowReadingTime: true
