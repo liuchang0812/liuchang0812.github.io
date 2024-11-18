@@ -1,3 +1,28 @@
+---
+title: "现代化的源码阅读方法"
+date: 2024-11-18T22:05:42+08:00
+lastmod: 2024-11-18T22:05:42+08:00
+author: ["Chang Liu"]
+tags: 
+- clangd
+- lsp
+- leveldb
+description: "现代化的源码阅读方法"
+weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
+slug: ""
+draft: true # 是否为草稿
+comments: true
+showToc: true # 显示目录
+TocOpen: true # 自动展开目录
+hidemeta: false # 是否隐藏文章的元信息，如发布日期、作者等
+disableShare: true # 底部不显示分享栏
+showbreadcrumbs: true #顶部显示当前路径
+cover:
+    image: ""
+    caption: ""
+    alt: ""
+    relative: false
+---
 
 LSP 是 VSCode 定义的一个语言无关的协议，提供代码解析补全等功能。本文以 leveldb 为例，介绍一下怎么通过 LSP 来更方便的阅读代码。
 
