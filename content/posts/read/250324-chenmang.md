@@ -5,8 +5,6 @@ lastmod: 2025-03-24T23:18:34+08:00
 author: ["Chang Liu"]
 tags: 
 - read
-- 陈虻
-- 读书
 summary: "东方时空制片人陈虻的一些话和思考"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""
