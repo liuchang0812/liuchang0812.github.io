@@ -1,4 +1,4 @@
-baseURL: 'https://liuchang0812.com/'
+baseURL: 'https://liuchang0812.github.io/'
 languageCode: zh-cn
 title: ​Tech and Text Tales
 theme: PaperMod
@@ -23,7 +23,7 @@ params:
   env: production
   
   profileMode:
-    enabled: false
+    enabled: true
     title: ​Tech and Text Tales
     subtitle: "I'm Liu Chang, a programmer. This blog mainly focuses on sharing technical experiences and insights, and I will also share some excellent books I've read from time to time. Welcome to follow and communicate."
 
@@ -63,6 +63,7 @@ menu:
     - name: ⏱时间轴
       url: /archives/
       weight: 3
+      
     - name: 🔍搜索
       url: /search/
       weight: 2
