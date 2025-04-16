@@ -33,8 +33,6 @@ cover:
 
 PID是比例（Proportional）、积分（Integral）、微分（Derivative）控制的简称，其核心思想是通过误差的三种维度进行动态补偿。数学表达式为：  
 
-**u(t) = Kₚ·e(t) + Kᵢ·∫e(t)dt + Kₐ·de(t)/dt**  
-
 $$ u(t) = K_p \cdot e(t) + K_i \cdot \int e(t) \, dt + K_d \cdot \frac{de(t)}{dt} $$
 
 - **比例项**（P）实时响应当前偏差，像精准的标枪手快速修正系统状态  
