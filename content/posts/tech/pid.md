@@ -35,6 +35,8 @@ PID是比例（Proportional）、积分（Integral）、微分（Derivative）�
 
 **u(t) = Kₚ·e(t) + Kᵢ·∫e(t)dt + Kₐ·de(t)/dt**  
 
+$$ u(t) = K_p \cdot e(t) + K_i \cdot \int e(t) \, dt + K_d \cdot \frac{de(t)}{dt} $$
+
 - **比例项**（P）实时响应当前偏差，像精准的标枪手快速修正系统状态  
 - **积分项**（I）累积历史误差，消除系统稳态偏差，如同经验丰富的老师傅修正细微偏差  
 - **微分项**（D）预测未来趋势，抑制超调震荡，扮演着"防患未然"的预警角色  
