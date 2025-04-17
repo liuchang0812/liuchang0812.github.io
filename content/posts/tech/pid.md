@@ -86,3 +86,6 @@ TODO: 介绍一个调整方法
 
 从恒温控制到火箭姿态调整，从传统PID到模糊PID、自适应PID等变种算法，这种经典控制理论持续焕发新生。在智能制造和物联网时代，PID作为基础控制算法，仍将在自动化系统中扮演关键角色。理解PID，就是掌握了一把打开现代控制技术大门的钥匙。
 
+
+1. [csdn](https://blog.csdn.net/as480133937/article/details/89508034)
+2. [wiki](https://en.wikipedia.org/wiki/Proportional%E2%80%93integral%E2%80%93derivative_controller#Control_loop_example)
