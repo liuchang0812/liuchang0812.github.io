@@ -16,11 +16,6 @@ TocOpen: true # 自动展开目录
 hidemeta:  true # 是否隐藏文章的元信息，如发布日期、作者等
 disableShare: true # 底部不显示分享栏
 showbreadcrumbs: true #顶部显示当前路径
-cover:
-    image: "./pid/image.png"
-    caption: ""
-    alt: ""
-    relative: false
 ---
 
 用过 `pytorch` 的小朋友都知道，只要调用一行 `loss.backward()`, 框架就会自动把所有变量的偏导数计算出来。这个看起来很神奇，一起来研究一下它是怎么实现的吧。本文简单介绍它的原理，然后提供一个简易的 CPP 实现帮忙理解。

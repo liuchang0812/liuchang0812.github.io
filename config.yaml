@@ -23,7 +23,7 @@ params:
   env: production
   
   profileMode:
-    enabled: true
+    enabled: false
     title: ​Tech and Text Tales
     subtitle: "I'm Liu Chang, a programmer. This blog mainly focuses on sharing technical experiences and insights, and I will also share some excellent books I've read from time to time. Welcome to follow and communicate."
 
