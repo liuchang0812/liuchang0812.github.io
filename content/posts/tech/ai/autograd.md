@@ -18,7 +18,7 @@ disableShare: true # 底部不显示分享栏
 showbreadcrumbs: true #顶部显示当前路径
 ---
 
-用过 `pytorch` 的小朋友都知道，只要调用一行 `loss.backward()`, 框架就会自动把所有变量的偏导数计算出来。这个看起来很神奇，一起来研究一下它是怎么实现的吧。本文简单介绍它的原理，然后提供一个简易的 CPP 实现帮忙理解。
+用过 `pytorch` 的小朋友都知道，只要调用一行 `loss.backward()`, 框架就会自动把所有变量的偏导数计算出来。这个看起来很神奇，一起来研究一下它是怎么实现的吧。本文简单介绍它的原理，然后提供一个简易的 CPP 实现帮助你理解。
 
 -----
 
@@ -26,7 +26,7 @@ showbreadcrumbs: true #顶部显示当前路径
 
 ### 链式法则
 
-在导数计算方法里面有一个链式法则（大家应该都学过，但是忘得差不多了）。对于一个函数 $f(g(x)) $ 的导数等于 $ f\'(g(x))*g\'(x) $。也可又写成
+在导数计算方法里面有一个链式法则（大家应该都学过，但是忘得差不多了）。对于一个函数 $f(g(x)) $ 的导数等于 $ f\'(g(x))*g\'(x) $。这个公式也可以写成
 
  $$\frac{\partial z}{\partial y} = \frac{\partial z}{\partial u}*\frac{\partial u}{\partial y}$$
 
@@ -41,14 +41,15 @@ z = 2*y-4
 
 ### 求导过程
 
-把计算过程当成一个图来看，z 是最终的输出结点，看成是根结点。x 是输入结点，看成是叶子结点。就可以得到一个有向图。在自动求导的过程中，从根结点开始向下递归，z 结点的梯度是 $\frac{\partial z}{\partial z}=1$。然后 y 结点是 z 的子结点，y 的结点就是 $\frac{\partial z}{\partial y} * z.grad$。然后再计算 x 结点就是 $\frac{\partial z}{\partial x} * z.grad = \frac{\partial y}{\partial x} * y.grad$。
+把计算过程当成一个图来看，z 是最终的输出结点，看成是根结点。x 是输入结点，看成是叶子结点。就可以得到一个有向图。在自动求导的过程中，从根结点开始向下递归，z 结点的梯度是 $\frac{\partial z}{\partial z}=1$。然后 y 结点的梯度是 z 的子结点，y 的结点就是 $\frac{\partial z}{\partial y}$。然后再计算 x 结点就是 $\frac{\partial z}{\partial x} = \frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial x}$。
 
-可以看出来就是一个递归的过程。
+可以看出来就是一个递归的过程，我们可以在每个结点中保存这个结点的梯度。在求一个结点的梯度时，它就等于所有前面结点的梯度值再乘以前面结点对当前结点的偏导数。假设前面的结点为 K，可以如下表达。
 
+$$ Grad_x = \sum_{k} Grad_k \cdot \frac{\partial k}{\partial x} $$
 
 ## 代码实现
 
-这儿提供一个 deepseek 实现的简单版本
+如何用代码实现上面的逻辑呢？我们需要从根结点开始向下遍历，根结点的初始梯度为 $ \frac{\partial k}{\partial x} = 1 $, 对他的所有子结点，增加根结点的梯度乘以根结点对其的偏导数。相同的逻辑再处理这些子结点。这儿提供一个 deepseek 实现的简单版本，你多花一些时间看一下，就明白了自动微分的逻辑。当然这个是比较初级的，还有很多细节和问题。
 
 ```cpp
 #include <stdio.h>

@@ -16,11 +16,6 @@ TocOpen: true # 自动展开目录
 hidemeta:  true # 是否隐藏文章的元信息，如发布日期、作者等
 disableShare: true # 底部不显示分享栏
 showbreadcrumbs: true #顶部显示当前路径
-cover:
-    image: "./pid/image.png"
-    caption: ""
-    alt: ""
-    relative: false
 ---
 
 一直有听说 PID 算法，最近学习了一下，看一下在我们的系统中是否能解决一些痛点问题。
