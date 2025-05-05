@@ -1,7 +1,7 @@
 ---
 title: "Google File System 设计"
-date: 2025-05-05T23:49:51+08:00
-lastmod: 2025-05-05T23:49:51+08:00
+date: 2025-05-05T22:44:51+08:00
+lastmod: 2025-05-05T22:44:51+08:00
 author: ["Chang Liu"]
 tags: 
 - gfs
