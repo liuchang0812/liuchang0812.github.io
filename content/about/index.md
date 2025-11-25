@@ -1,6 +1,5 @@
 ---
 title: "ABOUT"
-date: 
 date: 2022-05-07T20:01:06+08:00
 author: ["Chang Liu"]
 description: ""
@@ -24,9 +23,7 @@ showbreadcrumbs: true #顶部显示当前路径
 # 教育背景
 
 * 武汉大学计算机学院 2010.09 - 2014.06
-* ACM/ICPC 亚洲区域赛铜牌
-* Noip 一等奖
-* 国家励志奖学金
+* ACM/ICPC 铜牌
 * 软考系统分析师证书
 
 # 工作经历
