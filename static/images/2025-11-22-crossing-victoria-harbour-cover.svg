@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#00aaff" />
+      <stop offset="100%" stop-color="#0055aa" />
+    </linearGradient>
+    <filter id="f" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="40" result="b"/>
+      <feBlend in="SourceGraphic" in2="b" mode="screen"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+
+  <!-- decorative waves -->
+  <g fill="#ffffff" opacity="0.12" transform="translate(0,350)">
+    <path d="M0 80 C150 0 350 160 600 80 C850 0 1050 160 1200 80 L1200 300 L0 300 Z"/>
+  </g>
+
+  <g transform="translate(80,120)">
+    <text x="0" y="0" font-family="Noto Sans SC, Arial, sans-serif" font-size="56" fill="#ffffff" opacity="0.95">横渡维多利亚港</text>
+    <text x="0" y="70" font-family="Noto Sans SC, Arial, sans-serif" font-size="28" fill="#e6f7ff" opacity="0.95">2025-11-22 · 约 1.1 km · 第一次海泳体验</text>
+  </g>
+
+  <g transform="translate(80,440)">
+    <rect x="0" y="0" width="420" height="120" rx="8" ry="8" fill="#ffffff" opacity="0.06" />
+    <text x="20" y="36" font-family="Noto Sans SC, Arial, sans-serif" font-size="20" fill="#ffffff">海面：强逆流 · 浪较大</text>
+    <text x="20" y="72" font-family="Noto Sans SC, Arial, sans-serif" font-size="18" fill="#ffffff">心情：既紧张又满足 — 难忘的挑战</text>
+  </g>
+
+  <!-- small footer -->
+  <text x="1060" y="600" font-family="Noto Sans SC, Arial, sans-serif" font-size="14" fill="#ffffff" opacity="0.6">liuchang0812.github.io</text>
+</svg>
