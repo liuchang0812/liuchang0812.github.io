@@ -3,10 +3,11 @@ title: "2023 02 读书分享"
 date: 2023-03-03T20:06:29+08:00
 lastmod: 2023-03-03T20:06:29+08:00
 author: ["Chang Liu"]
-tags: 
+tags:
 - book
 - read
 description: "分享一下最近读的书"
+summary: "《置身事内》《永久记录》《他改变了中国》"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""
 draft: false # 是否为草稿

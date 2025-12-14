@@ -5,10 +5,11 @@ lastmod: 2023-11-29T20:52:14+08:00
 author: ["Chang Liu"]
 categories: 
 - read
-tags: 
+tags:
 - read
 - book
 description: ""
+summary: "《民主的细节》《芯片战争》《Elon Musk》"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""
 draft: false # 是否为草稿
@@ -39,7 +40,7 @@ Elon Musk
 
 新出的一本马斯克传，挺有意思的。天才都是偏执的，故事的流程都是：提出一个不可能的目标，定一个不可能的deadline，你不听musk的就开除，然后 musk 深入一线对每个细节都关注，然后取得巨大的成功。
 
-![elonmusk](elonmusk.png)
+![elonmusk](2023-11/elonmusk.png)
 
 民主的细节
 ----

@@ -5,10 +5,11 @@ lastmod: 2023-07-31T22:11:33+08:00
 author: ["Chang Liu"]
 categories: 
 - read
-tags: 
+tags:
 - 政治
 - 社科
 description: "2023 07 读书分享：清代地方政府"
+summary: "《清代地方政府》了解清朝行政体系运作机制"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""
 draft: false # 是否为草稿
