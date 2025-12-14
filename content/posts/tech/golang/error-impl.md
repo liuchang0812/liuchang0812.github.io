@@ -2,6 +2,7 @@
 title: "golang | error 的内部实现"
 date: 2022-05-07T20:01:06+08:00
 draft: false
+summary: "深入理解 Go error 接口及 errors.New 和 fmt.Errorf 的实现原理"
 ---
 
 Golang `error` 是一个包含了 `Error() string` 函数的接口，任何实现了 `Error() string` 的结构体都可以认为是 `error` 类型。

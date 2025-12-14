@@ -8,6 +8,7 @@ tags:
 - lsp
 - leveldb
 description: "现代化的源码阅读方法"
+summary: "使用 LSP 和 clangd 高效阅读 C++ 源码"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""
 draft: false # 是否为草稿

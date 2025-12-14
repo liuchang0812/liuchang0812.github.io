@@ -8,6 +8,7 @@ categories:
 tags: 
 - os
 description: "cgroup 介绍与使用方法"
+summary: "Linux cgroup 进程资源控制使用指南"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""
 draft: false # 是否为草稿

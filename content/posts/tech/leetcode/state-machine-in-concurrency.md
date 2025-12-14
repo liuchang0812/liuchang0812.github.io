@@ -10,6 +10,7 @@ tags:
 - cpp
 - leetcode
 description: "使用状态机思路解决一个并行问题"
+summary: "使用状态机思路解决 H2O 构建问题"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""
 draft: false # 是否为草稿
