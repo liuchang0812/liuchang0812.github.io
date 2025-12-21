@@ -6,6 +6,8 @@ author: ["Chang Liu"]
 tags: 
 - gfs
 - tech
+categories:
+- tech
 summary: "2025 年回头看 2003 年的 Google File System 设计"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""

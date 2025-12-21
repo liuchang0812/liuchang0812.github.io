@@ -2,6 +2,8 @@
 title: "golang | error 的内部实现"
 date: 2022-05-07T20:01:06+08:00
 draft: false
+categories:
+- tech
 summary: "深入理解 Go error 接口及 errors.New 和 fmt.Errorf 的实现原理"
 ---
 

@@ -6,6 +6,8 @@ author: ["Chang Liu"]
 tags: 
 - vi
 - tech
+categories:
+- tech
 description: "VI 是如何实现的"
 summary: "通过 BusyBox VI 实现学习终端编程和 escape code"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序

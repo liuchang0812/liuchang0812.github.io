@@ -6,6 +6,8 @@ author: ["Chang Liu"]
 tags: 
 - read
 - money
+categories:
+- tech
 summary: "语言模型和词向量笔记， deepseek 优化版"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""

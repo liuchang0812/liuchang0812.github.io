@@ -6,6 +6,8 @@ author: ["Chang Liu"]
 tags: 
 - ml
 - tech
+categories:
+- tech
 summary: "学习一下怎么实现机器学习框架🚀"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""
