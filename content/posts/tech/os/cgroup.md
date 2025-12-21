@@ -3,8 +3,8 @@ title: "cgroup usage"
 date: 2022-06-26T19:29:52+08:00
 lastmod: 2022-06-26T19:29:52+08:00
 author: ["Chang Liu"]
-categories: 
-- os
+categories:
+- tech
 tags: 
 - os
 description: "cgroup 介绍与使用方法"

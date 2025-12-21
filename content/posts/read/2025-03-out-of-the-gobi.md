@@ -3,9 +3,11 @@ title: "《走出戈壁》 单伟健"
 date: 2025-03-13T23:18:34+08:00
 lastmod: 2025-03-13T23:18:34+08:00
 author: ["Chang Liu"]
-tags: 
+tags:
 - read
 - money
+categories:
+- read
 summary: " 从戈壁滩走到美国，我是如何成为沃顿商学院教授的"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""

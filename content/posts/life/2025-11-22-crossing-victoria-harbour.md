@@ -3,8 +3,12 @@ title: "横渡维多利亚港"
 date: 2025-11-22T10:00:00+08:00
 layout: "post"
 summary: "周末完成的 2025 年 flag：横渡维多利亚港，1.1km 的第一次海泳体验。"
-tags: ["游泳", "挑战", "旅行"]
-categories: ["life"]
+tags:
+- 游泳
+- 挑战
+- 旅行
+categories:
+- life
 cover:
     image: "/images/2025-11-22-crossing-victoria-harbour-cover.svg"
 ---

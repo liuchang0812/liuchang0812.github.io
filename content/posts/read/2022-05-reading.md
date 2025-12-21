@@ -3,8 +3,8 @@ title: "2022 05 读书分享"
 date: 2022-06-04T21:22:37+08:00
 lastmod: 2022-06-04T21:22:37+08:00
 author: ["Chang Liu"]
-categories: 
-- 读书
+categories:
+- read
 tags:
 - 读书
 description: "介绍 22 年 5 月读的几本书"

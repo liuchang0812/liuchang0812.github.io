@@ -3,8 +3,10 @@ title: "通过 leveldb 学习批量请求优化"
 date: 2025-08-04T23:16:34+08:00
 lastmod: 2025-08-04T23:16:34+08:00
 author: ["Chang Liu"]
-tags: 
+tags:
 - leveldb
+categories:
+- tech
 summary: "学习如何通过批量化的方式优化我们的系统"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""

@@ -3,9 +3,8 @@ title: "2266. 统计打字方案数"
 date: 2022-05-10T22:21:58+08:00
 lastmod: 2022-05-10T22:21:58+08:00
 author: ["Chang Liu"]
-categories: 
-- leetcode
-- cpp
+categories:
+- tech
 tags:
 - cpp
 - leetcode

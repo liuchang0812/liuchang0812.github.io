@@ -6,6 +6,8 @@ author: ["Chang Liu"]
 tags:
 - book
 - read
+categories:
+- read
 description: ""
 summary: "知青报告文学《尘劫》"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序

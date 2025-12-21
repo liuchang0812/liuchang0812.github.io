@@ -3,12 +3,12 @@ title: "Paxos Algorithm Note"
 date: 2022-06-26T20:02:45+08:00
 lastmod: 2022-06-26T20:02:45+08:00
 author: ["Chang Liu"]
-categories: 
-- algorithm
-- distributed system
-tags: 
+categories:
+- tech
+tags:
 - algorithm
 - paxos
+- distributed-system
 description: "学习 PaxosStore 中的 Paxos 实现。"
 summary: "Paxos 协议详解与工程实践"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序

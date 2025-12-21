@@ -3,11 +3,11 @@ title: "Why Does Conv Need a Mutex"
 date: 2022-06-23T17:29:52+08:00
 lastmod: 2022-06-23T17:29:52+08:00
 author: ["Chang Liu"]
-categories: 
+categories:
+- tech
+tags:
 - os
 - lock
-tags: 
-- os
 description: "为什么信号量还需要一个互斥锁保护？"
 summary: "理解条件变量 wait/notify 为什么需要 mutex 保护"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序

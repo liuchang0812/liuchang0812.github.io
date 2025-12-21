@@ -3,8 +3,10 @@ title: "《朱江洪自传：我执掌格力的24年》"
 date: 2025-05-19T22:44:51+08:00
 lastmod: 2025-05-19T22:44:51+08:00
 author: ["Chang Liu"]
-tags: 
+tags:
 - book
+categories:
+- read
 summary: "格力老总的自传"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""

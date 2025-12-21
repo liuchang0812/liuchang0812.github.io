@@ -3,8 +3,8 @@ title: "2023 06 读书分享：被统治的艺术"
 date: 2023-07-04T11:58:05+08:00
 lastmod: 2023-07-04T11:58:05+08:00
 author: ["Chang Liu"]
-categories: 
-- 读书分享
+categories:
+- read
 tags:
 - 社科
 - 历史

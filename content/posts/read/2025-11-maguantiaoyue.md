@@ -3,8 +3,8 @@ title: "昂贵的和平"
 date: 2025-11-28T14:15:55+08:00
 lastmod: 2025-11-28T14:15:55+08:00
 author: ["Chang Liu"]
-categories: 
-- 读书
+categories:
+- read
 tags:
 - 读书
 - 马关条约

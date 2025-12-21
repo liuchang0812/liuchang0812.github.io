@@ -3,9 +3,8 @@ title: "libco usage"
 date: 2022-09-06T21:00:54+08:00
 lastmod: 2022-09-06T21:00:54+08:00
 author: ["Chang Liu"]
-categories: 
-- os
-- libco
+categories:
+- tech
 tags: 
 - os
 - libco

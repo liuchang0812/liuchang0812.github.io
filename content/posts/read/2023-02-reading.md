@@ -6,6 +6,8 @@ author: ["Chang Liu"]
 tags:
 - book
 - read
+categories:
+- read
 description: "分享一下最近读的书"
 summary: "《置身事内》《永久记录》《他改变了中国》"
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
