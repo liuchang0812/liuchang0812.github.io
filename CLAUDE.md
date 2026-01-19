@@ -1,129 +1,137 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+本文件为 Claude Code (claude.ai/code) 在此代码仓库中工作时提供指导。
 
-## Project Overview
+## 项目概述
 
-This is a personal blog built with Hugo static site generator, using the PaperMod theme. The blog is titled "代码与远方" (Code and Beyond) and contains technical articles, book reviews, and personal life posts written in Chinese.
+这是一个使用 Hugo 静态网站生成器构建的个人博客，使用 PaperMod 主题。博客名为"代码与远方"，包含技术文章、读书笔记和个人生活文章，内容以中文撰写。
 
-Site URL: https://www.liuchang0812.com/
+网站地址：https://www.liuchang0812.com/
 
-## Hugo Commands
+## Hugo 命令
 
-**Build the site:**
+**构建网站：**
 ```bash
 hugo --minify
 ```
 
-**Start local development server:**
+**启动本地开发服务器：**
 ```bash
 hugo server
 ```
 
-**Start with drafts enabled:**
+**启动并包含草稿：**
 ```bash
 hugo server -D
 ```
 
-## Content Structure
+## 内容结构
 
-Content is organized under `content/` directory:
-- `content/posts/tech/` - Technical articles (Go, algorithms, papers, OS, AI topics)
-- `content/posts/read/` - Book reviews and reading notes
-- `content/posts/life/` - Personal life posts
-- `content/about/` - About page
-- `content/archives.md` - Archives page
-- `content/search.md` - Search page
+内容组织在 `content/` 目录下：
+- `content/posts/tech/` - 技术文章，包含以下子目录：
+  - `golang/` - Go 语言相关文章
+  - `os/` - 操作系统相关主题（cgroup、libco、paxos 等）
+  - `leetcode/` - 算法和 LeetCode 问题
+  - `paper/` - 论文阅读笔记（GFS、Paxos、Raft）
+  - `ai/` - AI/ML 主题（word2vec、autograd）
+  - `read-code-vscode/` - 代码阅读笔记
+- `content/posts/read/` - 读书笔记和书评
+- `content/posts/life/` - 个人生活文章
+- `content/about/` - 关于页面
+- `content/archives.md` - 归档页面
+- `content/search.md` - 搜索页面
 
-### Creating New Posts
+### 创建新文章
 
-Use Hugo's archetype system to create new posts with proper frontmatter:
+使用 Hugo 的 archetype 系统创建带有正确 frontmatter 的新文章：
 
 ```bash
 hugo new content/posts/tech/your-post-title.md
+hugo new content/posts/tech/golang/your-post-title.md
 hugo new content/posts/read/your-post-title.md
 hugo new content/posts/life/your-post-title.md
 ```
 
-The archetype template is in `archetypes/default.md` and includes all necessary frontmatter fields.
+archetype 模板位于 `archetypes/default.md`，包含了大部分必要的 frontmatter 字段。**重要提示：** archetype 不包含 `summary` 字段 - 你必须手动添加此字段，因为它对良好的用户体验至关重要。
 
-### Post Frontmatter
+### 文章 Frontmatter
 
-All posts should include these frontmatter fields:
-- `title` - Post title
-- `date` - Publication date
-- `lastmod` - Last modified date
-- `author` - Should be ["Chang Liu"]
-- `summary` - Brief summary for preview (required for good UX)
-- `tags` - List of tags
-- `categories` - Optional categories
-- `draft` - Set to false for published posts
-- `showToc` - Display table of contents (default true)
-- `TocOpen` - Auto-expand TOC (default true)
+所有文章都应包含以下 frontmatter 字段：
+- `title` - 文章标题
+- `date` - 发布日期（格式：YYYY-MM-DDTHH:MM:SS+08:00）
+- `lastmod` - 最后修改日期
+- `author` - 应设置为 ["Chang Liu"]
+- `summary` - 用于预览的简短摘要（**必需** - archetype 中不包含，必须手动添加）
+- `categories` - 主要分类，通常是以下之一："tech"、"read"、"life"
+- `tags` - 具体标签列表（例如：golang、leveldb、paxos）
+- `draft` - 发布的文章设置为 false
+- `showToc` - 显示目录（默认 true）
+- `TocOpen` - 自动展开目录（根据 config.yaml 默认为 false）
 
-## Configuration
+## 配置
 
-Site configuration is in `config.yaml`:
-- Theme: PaperMod (installed as git submodule in `themes/PaperMod`)
-- Language: Chinese (zh-cn)
-- Features enabled: code copy buttons, TOC, reading time, search (JSON output)
-- CDN configuration for assets: jsdelivr CDN
-- Menu structure: 文章 (Posts), 搜索 (Search), 时间轴 (Timeline), 关于 (About)
+网站配置位于 `config.yaml`：
+- 主题：PaperMod（作为 git submodule 安装在 `themes/PaperMod`）
+- 语言：中文（zh-cn）
+- 启用的功能：代码复制按钮、目录、阅读时间、搜索（JSON 输出）、emoji 支持
+- 资源 CDN 配置：jsdelivr CDN（指向 GitHub 仓库内容）
+- 语法高亮：启用代码围栏的 Darcula 样式
+- 菜单结构（按权重排序）：📚文章、🔍搜索、⏱时间轴、🙋🏻‍♂️关于
 
-## Deployment
+## 部署
 
-The site automatically deploys via GitHub Actions on push to master branch.
+网站在推送到 master 分支时通过 GitHub Actions 自动部署。
 
-Workflow file: `.github/workflows/gh-pages.yml`
-- Hugo version: 0.152.2 (extended)
-- Builds to `./public` directory
-- Deploys to GitHub Pages using peaceiris/actions-gh-pages
+工作流文件：`.github/workflows/gh-pages.yml`
+- Hugo 版本：0.152.2（extended）
+- 构建到 `./public` 目录
+- 使用 peaceiris/actions-gh-pages 部署到 GitHub Pages
 
-**Manual build and deployment:**
+**手动构建和部署：**
 ```bash
 hugo --minify
-# Output is in ./public directory
+# 输出在 ./public 目录
 ```
 
-## Theme Customization
+## 主题自定义
 
-The PaperMod theme is added as a git submodule. To update the theme:
+PaperMod 主题作为 git submodule 添加。更新主题：
 
 ```bash
 git submodule update --remote themes/PaperMod
 ```
 
-Do not modify theme files directly. Use Hugo's override mechanism if customization is needed.
+不要直接修改主题文件。如果需要自定义，请使用 Hugo 的覆盖机制。
 
-## Static Assets
+## 静态资源
 
-Static files go in `static/` directory:
-- Favicons and app icons
-- CNAME file for custom domain
-- Additional CSS/JS (gitalk for comments)
-- Images used in posts can be placed in `static/` or co-located with posts
+静态文件放在 `static/` 目录：
+- Favicons 和应用图标
+- 自定义域名的 CNAME 文件
+- 额外的 CSS/JS（gitalk 评论系统）
+- 文章中使用的图片可以放在 `static/` 或与文章放在同一位置
 
-## Working with Images
+## 图片处理
 
-Images can be referenced in posts using:
-- Absolute paths from static: `/path/to/image.png`
-- Relative paths: `./image.png` (when co-located with post)
-- CDN paths are automatically configured via config.yaml
+文章中引用图片的方式：
+- 从 static 的绝对路径：`/path/to/image.png`
+- 相对路径：`./image.png`（与文章放在同一位置时）
+- CDN 路径通过 config.yaml 自动配置
 
-## Content Guidelines
+## 内容指南
 
-When creating or modifying posts:
-1. All posts must have a `summary` field for preview purposes
-2. Use consistent date format: `YYYY-MM-DD`
-3. Reading notes follow naming conventions:
-   - Monthly compilations: `YYYY-MM-reading.md`
-   - Individual books: `YYYY-MM-bookname.md`
-4. Technical posts should include appropriate tags (e.g., leveldb, golang, paxos)
-5. Code blocks should specify language for syntax highlighting
-6. Posts are in Chinese; maintain consistent tone and terminology
+创建或修改文章时：
+1. 所有文章必须包含 `summary` 字段用于预览
+2. 使用统一的日期格式：`YYYY-MM-DD`
+3. 读书笔记遵循命名规范：
+   - 月度合集：`YYYY-MM-reading.md`
+   - 单本书籍：`YYYY-MM-书名.md`
+4. 技术文章应包含适当的标签（例如：leveldb、golang、paxos）
+5. 代码块应指定语言以启用语法高亮
+6. 文章使用中文撰写；保持一致的语气和术语
 
-## Git Workflow
+## Git 工作流
 
-- Main branch: `master`
-- Commits automatically trigger deployment
-- Theme is a git submodule - use `git submodule update --init --recursive` after clone
+- 主分支：`master`
+- 提交会自动触发部署
+- 主题是 git submodule - 克隆后使用 `git submodule update --init --recursive`
