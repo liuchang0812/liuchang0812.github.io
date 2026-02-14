@@ -9,8 +9,6 @@ tags:
 - 旅行
 categories:
 - life
-cover:
-    image: "/images/2025-11-22-crossing-victoria-harbour-cover.svg"
 ---
 
 这个周末完成了一个 2025 年的 flag：横渡维多利亚港！早上 5 点起床，坐高铁到香港，和小伙伴汇合后排队入场。大约 9 点在中环会展中心下水，10 点左右在 K11 东边上岸。
@@ -35,3 +33,6 @@ cover:
 哈哈，很开心完成了这项挑战。明年再看情况决定要不要继续参加。
 
 （注：这是个人记录，若日后要发更多照片或视频可补充在后续更新。）
+
+
+![img](/images/2025-11-22-crossing-victoria-harbour-cover.svg")
