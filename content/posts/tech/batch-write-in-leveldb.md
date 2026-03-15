@@ -1,5 +1,5 @@
 ---
-title: "通过 leveldb 学习批量请求优化"
+title: "批量请求优化"
 date: 2025-08-04T23:16:34+08:00
 lastmod: 2025-08-04T23:16:34+08:00
 author: ["Chang Liu"]
