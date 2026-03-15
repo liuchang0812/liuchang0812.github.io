@@ -19,22 +19,7 @@ showbreadcrumbs: true #顶部显示当前路径
 
 * email: bGl1Y2hhbmcwODEyQGdtYWlsLmNvbQ==
 * tel: MTM2NTIzNTE4MTI=
-
-# 教育背景
-
-* 武汉大学计算机学院 2010.09 - 2014.06
-* ACM/ICPC 铜牌
-* 软考系统分析师证书
-
-# 工作经历
-
-* 腾讯微信
-* 腾讯云
-* 聚道
-* 阿里云
-* 微软
-
-# 主要项目
+* github: liuchang0812
 
 # 其它
 
