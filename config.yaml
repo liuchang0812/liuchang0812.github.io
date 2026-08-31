@@ -24,17 +24,6 @@ params:
   DateFormat: "2006-01-02"
   env: production
   
-  profileMode:
-    enabled: false
-    title: ​Tech and Text Tales
-    subtitle: "I'm Liu Chang, a programmer. This blog mainly focuses on sharing technical experiences and insights, and I will also share some excellent books I've read from time to time. Welcome to follow and communicate."
-
-    buttons:
-      - name: 👨🏻‍💻文章
-        url: posts
-      - name: 🙋🏻‍♂️关于
-        url: about
-        
   fuseOpts:
       isCaseSensitive: false
       shouldSort: true
@@ -43,11 +32,6 @@ params:
       threshold: 1
       minMatchCharLength: 0
       keys: ["title", "permalink", "summary"]      
-
-  cdn:
-    enable: true
-    # Host must NOT end with `/`
-    Host: "https://cdn.jsdelivr.net/gh/liuchang0812/liuchang0812.github.io/content"
 
 markup:
   highlight:

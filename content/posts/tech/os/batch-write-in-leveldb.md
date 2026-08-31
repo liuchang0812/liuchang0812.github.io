@@ -8,10 +8,11 @@ tags:
 categories:
 - tech
 summary: "学习如何通过批量化的方式优化我们的系统"
+aliases: # 旧 URL 重定向，避免外链 404
+- /posts/tech/batch-write-in-leveldb/
 weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默认按时间排序
 slug: ""
 draft: false # 是否为草稿
-comments: true
 showToc: true # 显示目录
 TocOpen: true # 自动展开目录
 hidemeta:   false # 是否隐藏文章的元信息，如发布日期、作者等

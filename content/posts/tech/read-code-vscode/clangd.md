@@ -45,16 +45,16 @@ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1  ..
 
 然后，我们就可以使用 VSCode 来阅读代码了，将鼠标放在变量名上，可以很容易的看到定义。可以任意的跳转定义和实现。可以方便的看到有哪些子类，有哪些地方调用了函数接口。
 
-![test`](./Pasted%20image%2020241118214551.png)
+![hover 查看定义](./clangd-hover-definition.png)
 
-![jpg](./Pasted%20image%2020241118213816.png)
+![跳转到定义](./clangd-goto-definition.png)
 
 也可以方便的查看 Call Hierarchy 和 Type Hierarchy。
 
 - Call Hierarchy 有哪些地方调用了这个方法
 - Type Hierarchy 有哪些子类
 
-![jpg](./Pasted%20image%2020241118214952.png)
+![Call/Type Hierarchy](./clangd-hierarchy.png)
 
 可以很方便的看到传参的含义。
 

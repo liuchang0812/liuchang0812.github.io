@@ -4,7 +4,7 @@
 
 ## 项目概述
 
-这是一个使用 Hugo 静态网站生成器构建的个人博客，使用 PaperMod 主题。博客名为"代码与远方"，包含技术文章、读书笔记和个人生活文章，内容以中文撰写。
+这是一个使用 Hugo 静态网站生成器构建的个人博客，使用 PaperMod 主题。博客名为"读书与编程"，包含技术文章、读书笔记和个人生活文章，内容以中文撰写。
 
 网站地址：https://www.liuchang0812.com/
 
@@ -65,6 +65,7 @@ archetype 模板位于 `archetypes/default.md`，包含了大部分必要的 fro
 - `categories` - 主要分类，通常是以下之一："tech"、"read"、"life"
 - `tags` - 具体标签列表（例如：golang、leveldb、paxos）
 - `draft` - 发布的文章设置为 false
+- `math` - 文章是否包含数学公式；为 true 时才会加载 KaTeX（默认 false，避免全站加载无用资源）
 - `showToc` - 显示目录（默认 true）
 - `TocOpen` - 自动展开目录（根据 config.yaml 默认为 false）
 
@@ -74,7 +75,7 @@ archetype 模板位于 `archetypes/default.md`，包含了大部分必要的 fro
 - 主题：PaperMod（作为 git submodule 安装在 `themes/PaperMod`）
 - 语言：中文（zh-cn）
 - 启用的功能：代码复制按钮、目录、阅读时间、搜索（JSON 输出）、emoji 支持
-- 资源 CDN 配置：jsdelivr CDN（指向 GitHub 仓库内容）
+- 数学公式：KaTeX 按需加载（仅 frontmatter `math: true` 的文章）
 - 语法高亮：启用代码围栏的 Darcula 样式
 - 菜单结构（按权重排序）：📚文章、🔍搜索、⏱时间轴、🙋🏻‍♂️关于
 
@@ -95,20 +96,18 @@ hugo --minify
 
 ## 主题自定义
 
-PaperMod 主题作为 git submodule 添加。更新主题：
+PaperMod 主题是 fork 的 submodule（`themes/PaperMod`，fork 自 adityatelange/hugo-PaperMod），针对本站做了少量定制：移除 Gitalk 评论、KaTeX 按需加载。
 
-```bash
-git submodule update --remote themes/PaperMod
-```
+修改主题后需在 submodule 内提交并 push 到 fork（`liuchang0812/hugo-PaperMod`），然后更新父仓库的 submodule 指针，否则 CI 构建会失败。
 
-不要直接修改主题文件。如果需要自定义，请使用 Hugo 的覆盖机制。
+其他自定义优先使用 Hugo 的覆盖机制（父仓库 `layouts/`）。
 
 ## 静态资源
 
 静态文件放在 `static/` 目录：
 - Favicons 和应用图标
 - 自定义域名的 CNAME 文件
-- 额外的 CSS/JS（gitalk 评论系统）
+- KaTeX（字体已裁剪为 woff2）
 - 文章中使用的图片可以放在 `static/` 或与文章放在同一位置
 
 ## 图片处理
@@ -116,7 +115,6 @@ git submodule update --remote themes/PaperMod
 文章中引用图片的方式：
 - 从 static 的绝对路径：`/path/to/image.png`
 - 相对路径：`./image.png`（与文章放在同一位置时）
-- CDN 路径通过 config.yaml 自动配置
 
 ## 内容指南
 
