@@ -35,7 +35,7 @@ showbreadcrumbs: true #顶部显示当前路径
 
 ### 反向传导
 
-有了上面的链式法则，我们就可以很巧妙的求导数了。假如我们有如下公式，要求 $\frac{\partial z}{\partial x}$ 的值，就可又转换为 $\frac{\partial z}{\partial y} * \frac{\partial y}{\partial x}$
+有了上面的链式法则，我们就可以很巧妙的求导数了。假如我们有如下公式，要求 $\frac{\partial z}{\partial x}$ 的值，就可以转换为 $\frac{\partial z}{\partial y} * \frac{\partial y}{\partial x}$
 
 ```python
 y = x^3+x^2
