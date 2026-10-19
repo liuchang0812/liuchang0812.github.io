@@ -1,0 +1,3322 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>程序员软实力手册 · 从会写代码到能成事</title>
+<meta name="description" content="写给普通程序员的软实力教材：结构化表达、技术写作、无授权影响力、反馈、冲突、向上管理、问题定义、职业叙事。">
+<meta name="theme-color" content="#faf8f4">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231b2028'/%3E%3Cpath d='M28 31h44M28 50h44M28 69h26' stroke='%23faf8f4' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+/* ============ 1. 设计变量 ============ */
+:root{
+  --paper:#faf8f4;
+  --panel:#ffffff;
+  --panel-2:#f4f1ea;
+  --ink:#1b2028;
+  --ink-2:#3a4250;
+  --muted:#6b7280;
+  --faint:#9aa1ac;
+  --line:#e4dfd4;
+  --line-strong:#d3ccbd;
+  --accent:#2c5d7c;
+  --accent-2:#3f7fa6;
+  --accent-soft:#eaf2f7;
+  --warm:#b45f3b;
+  --warm-soft:#fbeee6;
+  --good:#2f6b4f;
+  --good-soft:#e9f3ec;
+  --bad:#a8442f;
+  --bad-soft:#fbeae6;
+  --gold:#a8823a;
+  --gold-soft:#f8f1e0;
+  --hl:#f6e6b8;
+  --code-bg:#f2eee5;
+  --shadow-sm:0 1px 2px rgba(27,32,40,.05);
+  --shadow:0 2px 4px rgba(27,32,40,.04),0 12px 32px rgba(27,32,40,.06);
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC",Georgia,"Times New Roman",serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  --mono:"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  --radius:10px;
+  --maxw:760px;
+}
+html[data-theme="dark"]{
+  --paper:#14171c;
+  --panel:#1a1f27;
+  --panel-2:#20262f;
+  --ink:#e9e6df;
+  --ink-2:#c8ccd4;
+  --muted:#98a0ad;
+  --faint:#7a828f;
+  --line:#2b323c;
+  --line-strong:#3a424e;
+  --accent:#82b4d1;
+  --accent-2:#9cc6de;
+  --accent-soft:#1c2a34;
+  --warm:#d99070;
+  --warm-soft:#2e231e;
+  --good:#7fbb98;
+  --good-soft:#1b2a22;
+  --bad:#e09280;
+  --bad-soft:#2e2020;
+  --gold:#d0ac66;
+  --gold-soft:#2b2619;
+  --hl:#4a3f22;
+  --code-bg:#222831;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+  --shadow:0 2px 4px rgba(0,0,0,.2),0 12px 32px rgba(0,0,0,.25);
+}
+/* ============ 2. 基础 ============ */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  background-image:radial-gradient(rgba(27,32,40,.055) 1px, transparent 1px);
+  background-size:22px 22px;
+  pointer-events:none;z-index:0;
+  opacity:.5;
+}
+html[data-theme="dark"] body::before{background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px)}
+::selection{background:var(--hl);color:var(--ink)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:.2s}
+a:hover{border-bottom-color:var(--accent)}
+p{margin:1.05em 0}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:linear-gradient(transparent 62%, var(--hl) 62%);padding:0 1px}
+img,svg{max-width:100%}
+hr{border:0;border-top:1px solid var(--line);margin:3em 0}
+/* ============ 3. 顶部栏 & 进度 ============ */
+.progress{
+  position:fixed;top:0;left:0;height:3px;width:0;
+  background:linear-gradient(90deg,var(--accent),var(--warm));
+  z-index:120;transition:width .1s linear;
+}
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:60px;
+  display:flex;align-items:center;gap:14px;
+  padding:0 20px;
+  background:var(--paper);
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  z-index:100;
+}
+.brand{display:flex;align-items:baseline;gap:10px;font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:.02em}
+.brand span{font-family:var(--sans);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.topbar-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+.icon-btn{
+  appearance:none;border:1px solid var(--line);background:var(--panel);
+  color:var(--ink-2);font-family:var(--sans);font-size:12.5px;
+  padding:6px 11px;border-radius:999px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;transition:.18s;
+}
+.icon-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+#menuBtn{display:none}
+/* ============ 4. 布局 ============ */
+.layout{position:relative;z-index:1;display:grid;grid-template-columns:288px minmax(0,1fr);max-width:1280px;margin:0 auto;padding-top:60px}
+.sidebar{
+  position:sticky;top:60px;align-self:start;
+  height:calc(100vh - 60px);overflow-y:auto;
+  padding:26px 14px 60px 24px;
+  border-right:1px solid var(--line);
+  scrollbar-width:thin;
+}
+.sidebar::-webkit-scrollbar{width:5px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:3px}
+.nav-title{
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);font-weight:600;margin:22px 0 8px;padding-left:12px;
+}
+.nav-title:first-child{margin-top:0}
+.sidebar a{
+  display:flex;gap:9px;align-items:baseline;
+  padding:6px 12px;border-radius:7px;
+  color:var(--muted);font-size:13.6px;line-height:1.5;
+  border-bottom:0;transition:.15s;
+}
+.sidebar a:hover{background:var(--panel-2);color:var(--ink)}
+.sidebar a.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.sidebar a .n{font-family:var(--mono);font-size:10.5px;color:var(--faint);min-width:16px}
+.sidebar a.active .n{color:var(--accent)}
+.sidebar .read-dot{width:5px;height:5px;border-radius:50%;background:var(--line-strong);margin-left:auto;flex:none;align-self:center}
+.sidebar a.done .read-dot{background:var(--good)}
+main{min-width:0;padding:0 clamp(20px,5vw,64px) 120px}
+.wrap{max-width:var(--maxw);margin:0 auto}
+/* ============ 5. 封面 ============ */
+.hero{padding:72px 0 48px;border-bottom:1px solid var(--line)}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--warm);font-weight:600;margin-bottom:22px;
+}
+.hero-kicker::before{content:"";width:28px;height:1px;background:var(--warm)}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(38px,6vw,62px);
+  line-height:1.15;font-weight:700;letter-spacing:-.01em;
+  margin:0 0 18px;
+}
+.hero h1 small{display:block;font-size:clamp(15px,2vw,19px);font-family:var(--sans);font-weight:400;color:var(--muted);letter-spacing:.04em;margin-top:16px}
+.hero-lead{font-size:19px;color:var(--ink-2);max-width:620px;line-height:1.9}
+.hero-meta{display:flex;flex-wrap:wrap;gap:28px;margin:34px 0 30px}
+.hero-meta div{font-size:13px;color:var(--muted)}
+.hero-meta b{display:block;font-family:var(--serif);font-size:24px;color:var(--ink);font-weight:700;line-height:1.4}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 22px;border-radius:999px;
+  font-size:14px;font-weight:500;border:1px solid transparent;
+  cursor:pointer;transition:.2s;border-bottom:0;
+}
+.btn-primary{background:var(--ink);color:var(--paper)}
+.btn-primary:hover{background:var(--accent);transform:translateY(-1px)}
+.btn-ghost{border-color:var(--line-strong);color:var(--ink-2);background:transparent}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+/* ============ 6. 章节标题 ============ */
+.chapter{padding-top:78px;scroll-margin-top:70px}
+.ch-head{position:relative;margin-bottom:34px;padding-bottom:26px;border-bottom:1px solid var(--line)}
+.ch-num{
+  font-family:var(--serif);font-size:76px;line-height:1;font-weight:700;
+  color:transparent;-webkit-text-stroke:1.2px var(--line-strong);
+  position:absolute;right:0;top:-14px;user-select:none;
+}
+.ch-kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--warm);font-weight:600;margin-bottom:10px}
+.ch-head h2{
+  font-family:var(--serif);font-size:clamp(29px,4vw,40px);
+  line-height:1.3;font-weight:700;margin:0 0 14px;letter-spacing:-.005em;
+}
+.ch-lead{font-size:16.5px;color:var(--muted);line-height:1.85;max-width:640px;margin:0}
+h3{
+  font-family:var(--serif);font-size:22px;font-weight:700;
+  margin:2.6em 0 .9em;line-height:1.5;position:relative;padding-left:16px;
+}
+h3::before{
+  content:"";position:absolute;left:1px;top:.34em;
+  width:4px;height:16px;background:var(--warm);border-radius:2px;
+}
+h4{font-size:16px;font-weight:600;margin:2em 0 .6em;color:var(--ink)}
+/* ============ 7. 组件 ============ */
+.lead-in{
+  font-size:18px;line-height:1.9;color:var(--ink-2);
+  border-left:2px solid var(--line-strong);padding-left:20px;margin:1.6em 0;
+}
+.callout{
+  position:relative;margin:1.8em 0;padding:18px 22px;
+  background:var(--panel);border:1px solid var(--line);
+  border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;
+  font-size:15.5px;line-height:1.8;
+}
+.callout .label{
+  display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  font-weight:700;color:var(--accent);margin-bottom:6px;
+}
+.callout p:first-of-type{margin-top:0}
+.callout p:last-child{margin-bottom:0}
+.callout.warm{border-left-color:var(--warm)}
+.callout.warm .label{color:var(--warm)}
+.callout.good{border-left-color:var(--good)}
+.callout.good .label{color:var(--good)}
+.callout.plain{background:var(--panel-2);border-left-color:var(--line-strong)}
+.callout.plain .label{color:var(--muted)}
+.grid{display:grid;gap:14px;margin:1.8em 0}
+.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;box-shadow:var(--shadow-sm);
+}
+.card h4{margin:0 0 6px;font-size:15px;display:flex;align-items:center;gap:8px}
+.card p{font-size:14px;color:var(--muted);line-height:1.75;margin:0}
+.card .k{font-family:var(--mono);font-size:10.5px;color:var(--warm);letter-spacing:.08em}
+.compare{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  margin:1.8em 0;border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;background:var(--panel);
+}
+.compare > div{padding:16px 18px}
+.compare .bad-side{background:var(--bad-soft);border-right:1px solid var(--line)}
+.compare .good-side{background:var(--good-soft)}
+.compare .side-label{
+  font-size:11px;font-weight:700;letter-spacing:.08em;
+  display:flex;align-items:center;gap:6px;margin-bottom:10px;
+}
+.bad-side .side-label{color:var(--bad)}
+.good-side .side-label{color:var(--good)}
+.say{font-size:14.5px;line-height:1.75;margin:0 0 8px;color:var(--ink-2)}
+.say:last-child{margin-bottom:0}
+.say .who{font-weight:600;color:var(--ink);font-size:13px}
+.note-under{font-size:12.5px;color:var(--muted);margin-top:10px;font-style:italic}
+table{width:100%;border-collapse:collapse;margin:1.8em 0;font-size:14px}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7}
+th{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1.5px solid var(--line-strong)}
+td strong{color:var(--ink)}
+tr:last-child td{border-bottom:0}
+ul,ol{margin:1.1em 0;padding-left:1.4em}
+li{margin:.5em 0;line-height:1.8}
+ul li::marker{color:var(--warm)}
+ol li::marker{color:var(--warm);font-family:var(--mono);font-size:13px}
+ul.clean{list-style:none;padding-left:0}
+ul.clean li{position:relative;padding-left:24px}
+ul.clean li::before{
+  content:"";position:absolute;left:4px;top:.72em;
+  width:6px;height:6px;border:1.5px solid var(--accent);border-radius:50%;
+}
+.steps{counter-reset:s;list-style:none;padding:0;margin:1.8em 0}
+.steps li{
+  counter-increment:s;position:relative;padding:0 0 18px 46px;margin:0;
+  border-left:1px solid var(--line);margin-left:14px;
+}
+.steps li:last-child{border-left-color:transparent;padding-bottom:0}
+.steps li::before{
+  content:counter(s);position:absolute;left:-14px;top:-2px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--panel);border:1px solid var(--line-strong);
+  color:var(--accent);font-family:var(--mono);font-size:12px;
+  display:flex;align-items:center;justify-content:center;font-weight:600;
+}
+.steps li b{display:block;font-size:15.5px;margin-bottom:2px}
+.steps li p{margin:.2em 0;font-size:14.5px;color:var(--muted)}
+.tpl{
+  position:relative;background:var(--code-bg);border:1px solid var(--line);
+  border-radius:var(--radius);margin:1.6em 0;overflow:hidden;
+}
+.tpl-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 14px;border-bottom:1px solid var(--line);
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;
+}
+.copy{
+  appearance:none;border:1px solid var(--line-strong);background:var(--panel);
+  color:var(--muted);font-size:11px;padding:3px 9px;border-radius:5px;
+  cursor:pointer;font-family:var(--sans);transition:.15s;
+}
+.copy:hover{color:var(--accent);border-color:var(--accent)}
+.copy.ok{color:var(--good);border-color:var(--good)}
+.tpl pre{
+  margin:0;padding:16px 18px;white-space:pre-wrap;word-break:break-word;
+  font-family:var(--mono);font-size:13.2px;line-height:1.85;color:var(--ink-2);
+}
+.exercise{
+  margin:2em 0;padding:22px 24px;
+  background:var(--panel);border:1px dashed var(--line-strong);border-radius:var(--radius);
+}
+.exercise .ex-label{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:8px;
+}
+.exercise h4{margin:0 0 10px;font-size:16px}
+.exercise p{font-size:14.5px;color:var(--muted);margin:.5em 0}
+.check{display:flex;gap:10px;align-items:flex-start;padding:7px 0;cursor:pointer;font-size:14.5px;color:var(--ink-2);line-height:1.7}
+.check input{
+  appearance:none;width:17px;height:17px;flex:none;margin-top:4px;
+  border:1.5px solid var(--line-strong);border-radius:4px;background:var(--panel);
+  cursor:pointer;position:relative;transition:.15s;
+}
+.check input:checked{background:var(--good);border-color:var(--good)}
+.check input:checked::after{
+  content:"";position:absolute;left:5px;top:1px;width:4px;height:9px;
+  border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);
+}
+.check input:checked + span{color:var(--faint);text-decoration:line-through}
+details{
+  margin:1em 0;background:var(--panel-2);border-radius:8px;
+  padding:12px 16px;font-size:14.5px;
+}
+details summary{cursor:pointer;color:var(--accent);font-weight:500;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸ ";transition:.2s;display:inline-block}
+details[open] summary::before{transform:rotate(90deg)}
+details[open] summary{margin-bottom:8px}
+blockquote{
+  margin:2em 0;padding:6px 0 6px 24px;border-left:2px solid var(--warm);
+  font-family:var(--serif);font-size:18px;line-height:1.85;color:var(--ink-2);
+}
+blockquote cite{display:block;font-family:var(--sans);font-size:12.5px;color:var(--faint);margin-top:8px;font-style:normal}
+.takeaway{
+  margin:2.6em 0 0;padding:24px 26px;
+  background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+}
+.takeaway .label{
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--warm);font-weight:700;margin-bottom:12px;display:block;
+}
+.takeaway ul{margin:0;padding-left:1.15em}
+.takeaway li{font-size:14.5px;margin:.45em 0;color:var(--ink-2)}
+.tag{
+  display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;
+  background:var(--accent-soft);color:var(--accent);font-weight:600;
+  letter-spacing:.03em;margin-right:4px;
+}
+.diagram{
+  margin:2em 0;padding:24px 20px 16px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  text-align:center;box-shadow:var(--shadow-sm);
+}
+.diagram svg{width:100%;height:auto;max-width:620px}
+.diagram figcaption{font-size:12px;color:var(--faint);margin-top:14px;letter-spacing:.02em}
+.myth{
+  margin:1.6em 0;padding:14px 18px;background:var(--warm-soft);
+  border-radius:8px;font-size:14.5px;
+}
+.myth b{color:var(--warm);font-size:11px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.part-divider{
+  margin:88px 0 0;padding:34px 0 10px;border-top:2px solid var(--ink);
+  display:flex;align-items:baseline;gap:16px;scroll-margin-top:70px;
+}
+.part-divider .p-num{font-family:var(--serif);font-size:14px;color:var(--warm);font-weight:700;letter-spacing:.1em}
+.part-divider h2{font-family:var(--serif);font-size:26px;margin:0;font-weight:700}
+.part-divider p{margin:0;color:var(--muted);font-size:13.5px}
+.footer{
+  margin-top:64px;padding-top:30px;border-top:1px solid var(--line);
+  font-size:13px;color:var(--faint);line-height:1.9;
+}
+.chnav{display:flex;gap:12px;margin:46px 0 0;padding-top:24px;border-top:1px solid var(--line)}
+.chnav a{
+  flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;
+  padding:13px 16px;border:1px solid var(--line);border-radius:9px;
+  background:var(--panel);border-bottom:1px solid var(--line);transition:.18s;
+}
+.chnav a:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.chnav .dir{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.chnav .t{
+  font-size:14px;color:var(--ink);line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.chnav a.next{text-align:right;align-items:flex-end}
+.chnav .spacer{flex:1}
+.cheat{font-size:13.5px}
+.cheat td:first-child{white-space:nowrap;font-weight:600;color:var(--ink)}
+.cheat .grp td{
+  background:var(--panel-2);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--warm);font-weight:700;padding:8px 12px;
+}
+.cheat td{padding:9px 12px}
+.plan td:nth-child(1),.plan td:nth-child(2){white-space:nowrap}
+/* 自评 */
+.assess{margin:2em 0;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
+.assess-head{padding:22px 24px;border-bottom:1px solid var(--line);background:var(--panel-2)}
+.assess-head h3{margin:0;padding:0;font-size:20px}
+.assess-head h3::before{display:none}
+.assess-head p{margin:6px 0 0;font-size:13.5px;color:var(--muted)}
+.assess-body{padding:8px 24px 24px}
+.q{padding:14px 0;border-bottom:1px solid var(--line)}
+.q:last-of-type{border-bottom:0}
+.q-text{font-size:14.5px;margin-bottom:9px;line-height:1.65}
+.q-text .dim{font-size:10.5px;color:var(--faint);letter-spacing:.06em;margin-right:8px}
+.scale{display:flex;gap:6px}
+.scale label{flex:1;text-align:center;cursor:pointer}
+.scale input{display:none}
+.scale span{
+  display:block;padding:6px 0;font-size:12px;color:var(--muted);
+  border:1px solid var(--line);border-radius:6px;background:var(--panel);
+  transition:.15s;font-family:var(--mono);
+}
+.scale label:hover span{border-color:var(--accent-2);color:var(--accent)}
+.scale input:checked + span{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.assess-foot{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.result{display:none;margin-top:22px;padding-top:22px;border-top:1px solid var(--line)}
+.result.show{display:block}
+.result-grid{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:center}
+.result canvas{width:100%;max-width:300px}
+.result h4{margin:0 0 6px;font-size:15px}
+.result p{font-size:13.5px;color:var(--muted);margin:.3em 0}
+.score-row{display:flex;justify-content:space-between;font-size:12.5px;padding:3px 0;color:var(--ink-2)}
+.score-row b{font-family:var(--mono);color:var(--accent)}
+/* 回到顶部 */
+.totop{
+  position:fixed;right:24px;bottom:24px;width:40px;height:40px;
+  border-radius:50%;border:1px solid var(--line);background:var(--panel);
+  color:var(--muted);cursor:pointer;box-shadow:var(--shadow);
+  opacity:0;pointer-events:none;transition:.25s;z-index:90;font-size:15px;
+}
+.totop.show{opacity:1;pointer-events:auto}
+.totop:hover{color:var(--accent);border-color:var(--accent)}
+/* ============ 8. 响应式 ============ */
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{
+    position:fixed;top:60px;left:0;bottom:0;width:280px;
+    background:var(--paper);z-index:95;
+    transform:translateX(-100%);transition:transform .25s ease;
+    height:auto;padding-bottom:40px;
+  }
+  .sidebar.open{transform:translateX(0);box-shadow:0 0 40px rgba(0,0,0,.15)}
+  #menuBtn{display:inline-flex}
+  main{padding-left:20px;padding-right:20px}
+  .hero{padding-top:44px}
+  .grid.two,.grid.three{grid-template-columns:1fr}
+  .compare{grid-template-columns:1fr}
+  .compare .bad-side{border-right:0;border-bottom:1px solid var(--line)}
+  .result-grid{grid-template-columns:1fr}
+  .ch-num{font-size:52px;top:-6px}
+  body{font-size:16.5px}
+}
+@media (max-width:640px){
+  .topbar{padding:0 12px;gap:8px}
+  .brand{font-size:15px;white-space:nowrap;gap:0}
+  .brand span{display:none}
+  .icon-btn{padding:5px 9px;font-size:11.5px;white-space:nowrap}
+  .btn-label{display:none}
+  .hero-meta{gap:18px}
+  .hero-meta b{font-size:21px}
+}
+@media print{
+  @page{margin:16mm 14mm}
+  .topbar,.sidebar,.progress,.totop,.copy,.hero-actions,.chnav{display:none!important}
+  .layout{display:block;padding-top:0}
+  body{background:#fff;font-size:11pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body::before{display:none}
+  main{padding:0}
+  .wrap{max-width:none}
+  .chapter{page-break-before:always;padding-top:0}
+  .hero{page-break-after:always;padding-top:0;min-height:76vh;display:flex;flex-direction:column;justify-content:center}
+  .card,.callout,.exercise,.takeaway,.diagram,.compare,.tpl{break-inside:avoid}
+  h2,h3,h4{break-after:avoid}
+  tr{break-inside:avoid}
+  a{color:#000;border:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header class="topbar">
+  <button class="icon-btn" id="menuBtn" aria-label="打开目录">☰ <span class="btn-label">目录</span></button>
+  <div class="brand">软实力手册 <span>Soft Skills for Engineers</span></div>
+  <div class="topbar-actions">
+    <button class="icon-btn" id="themeBtn" aria-label="切换主题">◐ <span class="btn-label">夜间</span></button>
+    <button class="icon-btn" id="printBtn" aria-label="打印">⎙ <span class="btn-label">打印</span></button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <nav>
+      <div class="nav-title">开始</div>
+      <a href="#intro"><span class="n">00</span>为什么是软实力<span class="read-dot"></span></a>
+
+      <div class="nav-title">一 · 把话说清楚</div>
+      <a href="#ch01"><span class="n">01</span>结构化表达<span class="read-dot"></span></a>
+      <a href="#ch02"><span class="n">02</span>技术写作<span class="read-dot"></span></a>
+      <a href="#ch03"><span class="n">03</span>当众表达<span class="read-dot"></span></a>
+      <a href="#ch04"><span class="n">04</span>倾听与提问<span class="read-dot"></span></a>
+
+      <div class="nav-title">二 · 让人愿意配合</div>
+      <a href="#ch05"><span class="n">05</span>无授权影响力<span class="read-dot"></span></a>
+      <a href="#ch06"><span class="n">06</span>反馈的艺术<span class="read-dot"></span></a>
+      <a href="#ch07"><span class="n">07</span>冲突与谈判<span class="read-dot"></span></a>
+      <a href="#ch08"><span class="n">08</span>向上管理<span class="read-dot"></span></a>
+
+      <div class="nav-title">三 · 想明白再动手</div>
+      <a href="#ch09"><span class="n">09</span>问题定义<span class="read-dot"></span></a>
+      <a href="#ch10"><span class="n">10</span>决策与优先级<span class="read-dot"></span></a>
+      <a href="#ch11"><span class="n">11</span>情绪与内耗<span class="read-dot"></span></a>
+
+      <div class="nav-title">四 · 长期复利</div>
+      <a href="#ch12"><span class="n">12</span>职业叙事与个人品牌<span class="read-dot"></span></a>
+      <a href="#ch13"><span class="n">13</span>关系网络<span class="read-dot"></span></a>
+      <a href="#ch14"><span class="n">14</span>学习力<span class="read-dot"></span></a>
+
+      <div class="nav-title">工具</div>
+      <a href="#cheatsheet"><span class="n">◎</span>模型速查表<span class="read-dot"></span></a>
+      <a href="#assessment"><span class="n">◎</span>五维自评<span class="read-dot"></span></a>
+      <a href="#plan"><span class="n">◎</span>30 天训练计划<span class="read-dot"></span></a>
+      <a href="#books"><span class="n">◎</span>书单与延伸<span class="read-dot"></span></a>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="wrap">
+      <section class="hero" id="top">
+        <div class="hero-kicker">给普通程序员的第一本软实力教材</div>
+        <h1>从会写代码<br>到能成事<small>Soft Skills Handbook for Engineers</small></h1>
+        <p class="hero-lead">技术决定你能走多快，软实力决定你能走多远。这本手册不谈玄学，只讲那些可以拆解、可以练习、明天上班就能用的能力。</p>
+        <div class="hero-meta">
+          <div><b>14</b>章系统课程</div>
+          <div><b>18</b>份话术模板</div>
+          <div><b>51</b>个练习动作</div>
+          <div><b>≈ 1.5h</b>纯阅读时长</div>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#intro">开始阅读 →</a>
+          <a class="btn btn-ghost" href="#assessment">先做五维自评</a>
+        </div>
+      </section>
+
+<article class="chapter" id="intro">
+  <header class="ch-head">
+    <div class="ch-num">00</div>
+    <div class="ch-kicker">序章 · 重新理解软实力</div>
+    <h2>为什么最努力写代码的人，<br>往往不是最后走得最远的人</h2>
+    <p class="ch-lead">先讲一个你可能见过的画面：两个技术差不多的同事，三年后一个还在等需求排期，另一个已经在决定明年做什么。</p>
+  </header>
+
+  <p class="lead-in">软实力不是“会说话”，也不是“会来事”。它是一组让你在<strong>没有正式权力的情况下，仍然能让正确的事情发生</strong>的能力。</p>
+
+  <h3>一个熟悉的场景</h3>
+  <p>小林和阿哲同一年入职，都是后端工程师，技术底子接近。</p>
+  <p>第一年，两人都在写业务代码。区别出现在一些很小的瞬间：</p>
+  <ul>
+    <li>需求评审时，小林觉得方案有问题，憋了半天说“这个实现有点麻烦”，然后被产品经理一句“先这样做吧”带过。阿哲会说：“如果按现在这个设计，订单状态会有四种非法组合，我建议加一个状态机约束，成本大概多半天。”</li>
+    <li>线上出故障，小林在群里连发十几条日志截图。阿哲发的是：“影响范围：3% 的下单请求；已定位到缓存击穿；临时方案已生效；根因今晚给结论。”</li>
+    <li>年底述职，小林写了 8 页“我做了 A、B、C”。阿哲讲了 3 个故事：哪个指标因为他的改动从多少变到多少，谁因此少加了班，他沉淀了什么被别的团队复用。</li>
+  </ul>
+  <p>三年后，阿哲成了那个“别人做方案前会先问一句”的人。不是因为他代码写得更快，而是因为<em>他的判断可以被信任，他的表达可以被依赖，他的推动可以落地</em>。</p>
+  <p>这就是软实力。它不替代技术，它负责把你的技术<strong>兑换成真实世界里的结果</strong>。</p>
+
+  <div class="callout">
+    <span class="label">核心定义</span>
+    <p>软实力 = 在没有人“必须”听你的情况下，让别人<strong>愿意</strong>理解你、信任你、配合你、并把事情交给你。</p>
+    <p>它由三件事构成：<strong>清晰的表达</strong>（让人听懂）、<strong>可靠的协作</strong>（让人愿意）、<strong>成熟的判断</strong>（让人放心）。</p>
+  </div>
+
+  <h3>为什么程序员特别容易在这上面吃亏</h3>
+  <p>不是性格问题，是职业训练的结果。我们的工作长期奖励另一种能力结构：</p>
+
+  <div class="grid two">
+    <div class="card">
+      <h4><span class="k">01</span> 与机器对话太久</h4>
+      <p>代码是确定性的：输入对，输出就对。但人是不确定的。你会不自觉地假设“我说清楚了，你就应该懂”，而现实是——对方只听到了他能听懂的部分。</p>
+    </div>
+    <div class="card">
+      <h4><span class="k">02</span> 把“正确”当成“有效”</h4>
+      <p>技术上正确的方案，可能在组织里推不动。你赢了争论，输了事情。而职场评价的从来不是“谁对”，是“事情有没有成”。</p>
+    </div>
+    <div class="card">
+      <h4><span class="k">03</span> 低估“翻译”的价值</h4>
+      <p>把技术语言翻译成业务语言、把复杂系统翻译成一句风险提示——这本身就是极稀缺的生产力，但学校从不教，绩效里也常被忽略。</p>
+    </div>
+    <div class="card">
+      <h4><span class="k">04</span> 回避冲突，假装没意见</h4>
+      <p>很多技术判断在会议上被否决，不是因为理由不充分，而是因为当事人选择了沉默，事后在工位上生气。</p>
+    </div>
+  </div>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 560 380" role="img" aria-label="技术深度与组织影响力四象限图">
+      <defs>
+        <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 z" fill="var(--line-strong)"/>
+        </marker>
+      </defs>
+      <line x1="80" y1="320" x2="520" y2="320" stroke="var(--line-strong)" stroke-width="1.2" marker-end="url(#ar)"/>
+      <line x1="80" y1="320" x2="80" y2="40" stroke="var(--line-strong)" stroke-width="1.2" marker-end="url(#ar)"/>
+      <line x1="300" y1="60" x2="300" y2="320" stroke="var(--line)" stroke-dasharray="4 5"/>
+      <line x1="80" y1="190" x2="510" y2="190" stroke="var(--line)" stroke-dasharray="4 5"/>
+
+      <text x="500" y="342" font-size="11" fill="var(--muted)" text-anchor="end" font-family="sans-serif">组织影响力 →</text>
+      <text x="68" y="52" font-size="11" fill="var(--muted)" text-anchor="end" font-family="sans-serif" transform="rotate(-90 68 52)">技术深度 →</text>
+
+      <rect x="96" y="70" width="190" height="106" rx="6" fill="var(--accent-soft)" opacity=".55"/>
+      <text x="112" y="96" font-size="12.5" font-weight="700" fill="var(--accent)" font-family="sans-serif">手艺人</text>
+      <text x="112" y="116" font-size="10.5" fill="var(--muted)" font-family="sans-serif">技术很强，但没人知道</text>
+      <text x="112" y="132" font-size="10.5" fill="var(--muted)" font-family="sans-serif">容易被安排，难被托付</text>
+
+      <rect x="314" y="70" width="190" height="106" rx="6" fill="var(--good-soft)"/>
+      <text x="330" y="96" font-size="12.5" font-weight="700" fill="var(--good)" font-family="sans-serif">关键先生</text>
+      <text x="330" y="116" font-size="10.5" fill="var(--muted)" font-family="sans-serif">判断可信，能调动资源</text>
+      <text x="330" y="132" font-size="10.5" fill="var(--muted)" font-family="sans-serif">组织的技术锚点</text>
+
+      <rect x="96" y="204" width="190" height="100" rx="6" fill="var(--panel-2)"/>
+      <text x="112" y="230" font-size="12.5" font-weight="700" fill="var(--muted)" font-family="sans-serif">执行者</text>
+      <text x="112" y="250" font-size="10.5" fill="var(--faint)" font-family="sans-serif">按部就班，可替代性高</text>
+
+      <rect x="314" y="204" width="190" height="100" rx="6" fill="var(--warm-soft)"/>
+      <text x="330" y="230" font-size="12.5" font-weight="700" fill="var(--warm)" font-family="sans-serif">表达者</text>
+      <text x="330" y="250" font-size="10.5" fill="var(--muted)" font-family="sans-serif">会讲，但缺少硬支撑</text>
+      <text x="330" y="266" font-size="10.5" fill="var(--muted)" font-family="sans-serif">长期会被看穿</text>
+
+      <circle cx="404" cy="118" r="5" fill="var(--good)"/>
+      <text x="404" y="152" font-size="10" fill="var(--good)" text-anchor="middle" font-family="sans-serif">目标位置</text>
+    </svg>
+    <figcaption>技术深度是入场券，组织影响力是杠杆。真正稀缺的是右上角。</figcaption>
+  </figure>
+
+  <h3>这本书怎么用</h3>
+  <p>它不是“读完就变强”的书，而是一本<strong>可以反复查的工具书</strong>。每一章都遵循同一个结构，你可以按需跳读：</p>
+  <div class="grid three">
+    <div class="card"><h4>为什么难</h4><p>先解释你为什么会卡住，而不是上来就给结论。</p></div>
+    <div class="card"><h4>模型 + 正反例</h4><p>一个可复用的结构，配上真实对话的坏版本和好版本。</p></div>
+    <div class="card"><h4>模板 + 练习</h4><p>可以直接抄的话术，以及一个 10 分钟内能做完的动作。</p></div>
+  </div>
+
+  <div class="callout warm">
+    <span class="label">使用建议</span>
+    <p>不要一次读完。每周挑<strong>一章</strong>，只练其中一个动作，练到成为习惯再换下一章。软实力是肌肉，不是知识——知道 SBI 模型不等于会在气头上用出来。</p>
+    <p>建议顺序：先读第 1、2、6 章（立刻能用），再做一次五维自评，然后针对最弱的一维补课。</p>
+  </div>
+
+  <div class="myth">
+    <b>一个必须澄清的误解</b>
+    <p>软实力不是“圆滑”“讨好”“搞关系”。真正高段位的软实力，往往包含<strong>明确地说不</strong>、<strong>当面指出问题</strong>、<strong>拒绝不合理的要求</strong>。区别只在于：你是在发泄情绪，还是在解决问题。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>软实力的本质：在无授权的情况下，让正确的事情发生。</li>
+      <li>它不替代技术，它把技术兑换成组织里的真实结果。</li>
+      <li>程序员的四个陷阱：假设对方懂、把正确当有效、低估翻译价值、回避冲突。</li>
+      <li>练法：一次只练一个动作，练到不用想。</li>
+    </ul>
+  </div>
+</article>
+
+<div class="part-divider" id="part1">
+  <span class="p-num">PART 01</span>
+  <h2>把话说清楚</h2>
+  <p>表达不是表演，是降低别人的理解成本。</p>
+</div>
+
+<article class="chapter" id="ch01">
+  <header class="ch-head">
+    <div class="ch-num">01</div>
+    <div class="ch-kicker">第一章 · 表达</div>
+    <h2>结构化表达：<br>让人在三句话内听懂你</h2>
+    <p class="ch-lead">你不是表达不清楚，你是把“思考的过程”当成了“表达的内容”。听众要的不是你怎么想的，而是你想到了什么。</p>
+  </header>
+
+  <p class="lead-in">一个残酷的事实：在会上，大多数人只会给你 <strong>30 秒</strong>的注意力。如果这 30 秒里你在铺垫背景，你就已经失去了他们。</p>
+
+  <h3>为什么我们总是从盘古开天讲起</h3>
+  <p>因为那是我们真实的思考顺序。你接到一个问题，先查资料，再排除方案，最后得出结论——这个链条在你脑子里是完整的，所以你很自然地从头讲。</p>
+  <p>但听众的脑子和你的不一样：<em>他们不知道你的结论，所以无法判断你哪句话重要</em>。信息一条条进来，他们得自己在脑子里搭结构，搭到一半就累了。</p>
+  <p>结构化表达做的事情只有一件：<strong>把你脑子里的树，倒过来交给对方</strong>。先给树根（结论），再给枝干（理由），最后给叶子（细节）。</p>
+
+  <div class="callout">
+    <span class="label">一句话原则</span>
+    <p><strong>结论先行，以上统下，归类分组，逻辑递进。</strong>这十六个字来自金字塔原理，是几乎所有商业表达的底层结构。</p>
+  </div>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 560 330" role="img" aria-label="金字塔结构示意图">
+      <polygon points="280,30 380,120 180,120" fill="var(--accent)" opacity=".9"/>
+      <text x="280" y="88" font-size="14" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">结论</text>
+
+      <polygon points="176,132 384,132 434,222 126,222" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/>
+      <line x1="280" y1="132" x2="280" y2="222" stroke="var(--accent)" stroke-width="1" opacity=".45"/>
+      <line x1="228" y1="132" x2="203" y2="222" stroke="var(--accent)" stroke-width="1" opacity=".3"/>
+      <line x1="332" y1="132" x2="357" y2="222" stroke="var(--accent)" stroke-width="1" opacity=".3"/>
+      <text x="280" y="172" font-size="12" fill="var(--accent)" text-anchor="middle" font-family="sans-serif">理由一</text>
+      <text x="280" y="196" font-size="12" fill="var(--accent)" text-anchor="middle" font-family="sans-serif">理由二</text>
+      <text x="280" y="216" font-size="12" fill="var(--accent)" text-anchor="middle" font-family="sans-serif">理由三</text>
+
+      <polygon points="120,234 440,234 500,310 60,310" fill="var(--panel-2)" stroke="var(--line-strong)" stroke-width="1"/>
+      <text x="280" y="266" font-size="11.5" fill="var(--muted)" text-anchor="middle" font-family="sans-serif">数据 · 案例 · 细节 · 边界条件</text>
+      <text x="280" y="288" font-size="10.5" fill="var(--faint)" text-anchor="middle" font-family="sans-serif">只在被追问时展开</text>
+
+      <text x="452" y="80" font-size="10.5" fill="var(--faint)" font-family="sans-serif">先说什么</text>
+      <text x="452" y="98" font-size="10.5" fill="var(--faint)" font-family="sans-serif">↓</text>
+      <text x="452" y="290" font-size="10.5" fill="var(--faint)" font-family="sans-serif">后说什么</text>
+    </svg>
+    <figcaption>金字塔：一个结论，三个理由，若干证据。任何一层都能独立成立。</figcaption>
+  </figure>
+
+  <h3>三个可以立刻套用的结构</h3>
+
+  <h4>结构一：结论—依据—请求（30 秒版）</h4>
+  <p>适合：会上发言、电梯里遇到老板、群里同步重要信息。公式只有三句：</p>
+  <div class="tpl">
+    <div class="tpl-head"><span>30 秒表达公式</span><button class="copy">复制</button></div>
+    <pre>【结论】我建议把 X 推迟到下个迭代。
+【依据】因为依赖的支付接口还没联调完，现在上线的故障概率很高。
+【请求】需要你确认：是先上不含支付的部分，还是整体延期？</pre>
+  </div>
+  <p>注意最后一句：<strong>表达必须带“请求”</strong>。没有请求的表达只是广播，对方不知道要不要行动、该做什么。很多人讲完一段话，会议室安静三秒，然后有人说“好的我们再看一下”——问题就出在缺少明确的请求。</p>
+
+  <h4>结构二：SCQA（讲故事版）</h4>
+  <p>适合：方案汇报、写文档开头、说服别人接受一个不太受欢迎的决定。</p>
+  <table>
+    <thead><tr><th style="width:90px">要素</th><th>作用</th><th>例句</th></tr></thead>
+    <tbody>
+      <tr><td><strong>S</strong> 情境</td><td>建立一个双方都认同的起点</td><td>“我们现在的下单接口平均响应 800ms。”</td></tr>
+      <tr><td><strong>C</strong> 冲突</td><td>指出变化、问题、差距</td><td>“但大促流量会翻五倍，压测下已经出现超时。”</td></tr>
+      <tr><td><strong>Q</strong> 疑问</td><td>把冲突变成一个明确的问题</td><td>“要不要现在重构，还是先做限流兜底？”</td></tr>
+      <tr><td><strong>A</strong> 答案</td><td>给出你的结论</td><td>“我建议先做限流 + 缓存，重构放到 Q2。”</td></tr>
+    </tbody>
+  </table>
+  <p>SCQA 的妙处在于：它让听众<strong>自己走到你的问题面前</strong>。你先说结论，他可能抗拒；你先说冲突，他会想“那怎么办”，这时候你的答案就成了他的答案。</p>
+
+  <h4>结构三：问题—选项—建议（决策版）</h4>
+  <p>适合：让领导做选择、跨团队对齐方案。核心是<strong>不要只带问题，要带选项</strong>。</p>
+  <div class="tpl">
+    <div class="tpl-head"><span>决策请求模板</span><button class="copy">复制</button></div>
+    <pre>问题：导出功能在 10 万行数据时会超时，已有 3 个客户反馈。
+选项：
+  A. 改异步导出（2 人日，体验最好，但需要新增任务队列）
+  B. 限制单次导出上限（0.5 人日，能止血，但客户会不满）
+  C. 先加缓存（1 人日，只解决重复导出场景）
+建议：先做 B 止血，同时排期 A。
+需要你决定：是否接受 A 的 2 人日投入。</pre>
+  </div>
+
+  <h3>同一个意思，两种说法</h3>
+  <div class="compare">
+    <div class="bad-side">
+      <div class="side-label">✕ 常见说法</div>
+      <p class="say"><span class="who">你：</span>“这个需求我看了一下，感觉有点复杂，因为现在我们的订单表字段特别多，然后历史数据也没有清理，而且那个导出功能之前是别人写的，我还没完全看懂，可能要多花点时间……”</p>
+      <p class="note-under">听众接收到的：他在抱怨，事情可能要延期，但不知道延多久、要他做什么。</p>
+    </div>
+    <div class="good-side">
+      <div class="side-label">✓ 结构化说法</div>
+      <p class="say"><span class="who">你：</span>“这个需求能做，但需要 5 天而不是 2 天。原因有两个：订单表有 40 个字段需要做映射，历史数据有 300 万条要迁移。我建议先做新数据，历史数据异步补。需要你确认：能不能接受首屏只展示近 3 个月？”</p>
+      <p class="note-under">听众接收到的：能做、多久、为什么、要决定什么。</p>
+    </div>
+  </div>
+
+  <h3>把结构用在三个高频场景</h3>
+
+  <h4>场景一：汇报进展</h4>
+  <p>不要按时间顺序讲“我这周做了什么”。按<strong>目标—结果—风险—下一步</strong>讲。</p>
+  <div class="tpl">
+    <div class="tpl-head"><span>周报/站会模板</span><button class="copy">复制</button></div>
+    <pre>目标：本周要把支付成功率从 92% 提到 95%。
+结果：目前 94.1%，主要靠重试策略和超时时间调整。
+风险：还有 1.2% 失败集中在某家银行，需要对方配合排查，可能要拖到下周。
+下一步：我先做降级方案，保证大促不受影响。</pre>
+  </div>
+
+  <h4>场景二：解释一个技术方案</h4>
+  <p>对非技术听众，永远按这个顺序：<strong>它解决什么问题 → 不解决会怎样 → 大概怎么做 → 有什么代价</strong>。技术细节放在最后，且只讲一个。</p>
+  <div class="compare">
+    <div class="bad-side">
+      <div class="side-label">✕ 术语轰炸</div>
+      <p class="say">“我们打算引入一个基于事件溯源的 CQRS 架构，通过 Kafka 做最终一致性，读写分离之后可以解决现在的锁竞争问题。”</p>
+    </div>
+    <div class="good-side">
+      <div class="side-label">✓ 翻译成人话</div>
+      <p class="say">“现在两个人同时改同一笔订单会互相等待，高峰期就卡住。我打算把‘改’和‘看’分开：改的时候先记账，看的时候读另一份数据，最多延迟 1 秒。代价是偶尔会看到 1 秒前的状态。”</p>
+    </div>
+  </div>
+
+  <h4>场景三：拒绝一个需求</h4>
+  <p>拒绝的结构是<strong>肯定目标 + 说明代价 + 给出替代</strong>。不要只说“做不了”，那是在逼对方去找你的领导。</p>
+  <div class="tpl">
+    <div class="tpl-head"><span>拒绝模板</span><button class="copy">复制</button></div>
+    <pre>我理解你想解决的是【对方的真实目标】。
+如果现在做【他的方案】，需要【具体代价：3 人周 / 延期上线 / 影响稳定性】。
+我建议改成【替代方案】，它能达到【目标的 80%】，成本只要【半天】。
+如果一定要原方案，我们可以排到【时间】，你看哪个更合适？</pre>
+  </div>
+
+  <div class="myth">
+    <b>三个常见误区</b>
+    <p><strong>1. 以为信息越多越专业。</strong>信息量不等于说服力。对方记不住的细节，都是噪音。</p>
+    <p><strong>2. 用“但是”连接结论。</strong>“整体不错，但是……”——对方只会记住“但是”后面的话。想表达保留意见，用“同时”“另外”。</p>
+    <p><strong>3. 把铺垫当礼貌。</strong>“不好意思打扰一下，有个小事……”——直接说事，才是对别人时间最大的尊重。</p>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 15 分钟</span>
+    <h4>把一段流水账改成金字塔</h4>
+    <p>找出你最近发过的一条工作消息（越长越好），用下面的清单改一遍：</p>
+    <label class="check"><input type="checkbox" data-key="c1-1"><span>把结论提到第一句，删掉所有“我先说下背景”</span></label>
+    <label class="check"><input type="checkbox" data-key="c1-2"><span>理由压缩到 3 条以内，每条不超过一行</span></label>
+    <label class="check"><input type="checkbox" data-key="c1-3"><span>结尾补一句明确的请求（要谁、做什么、什么时候）</span></label>
+    <label class="check"><input type="checkbox" data-key="c1-4"><span>删掉 30% 的字，看看意思有没有损失</span></label>
+    <p style="margin-top:12px">进阶：下次开会前，用一张便利贴写下“结论 / 三个理由 / 我要的请求”，发言时只看这张纸。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>表达的顺序应该是结论先行，而不是思考顺序。</li>
+      <li>30 秒公式：结论 — 依据 — 请求。没有请求的表达等于没说完。</li>
+      <li>SCQA 用于说服，问题—选项—建议用于要决策。</li>
+      <li>拒绝的三段式：肯定目标、说明代价、给出替代。</li>
+    </ul>
+  </div>
+</article>
+
+<article class="chapter" id="ch02">
+  <header class="ch-head">
+    <div class="ch-num">02</div>
+    <div class="ch-kicker">第二章 · 表达</div>
+    <h2>技术写作：<br>你写的每个字，都在替你加班</h2>
+    <p class="ch-lead">文档不是工作的副产品，它是工作的杠杆。一份写清楚的设计文档，能省掉二十次口头解释、五个重复提问和一次返工。</p>
+  </header>
+
+  <p class="lead-in">工程师最被低估的能力，是<strong>把复杂的事情写得让人一次看懂</strong>。它同时训练三件事：想清楚、说准确、可复用。</p>
+
+  <h3>先分清四种文体，别用同一种语气写所有东西</h3>
+  <p>很多人写不好，不是文笔问题，是<strong>文体错配</strong>：用写日记的方式写决策文档，用写论文的方式写周报。</p>
+
+  <table>
+    <thead><tr><th style="width:110px">文体</th><th>读者想知道</th><th>核心要求</th><th>常见失败</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>决策文档</strong><br><span style="font-size:12px;color:var(--muted)">设计文档 / RFC</span></td>
+        <td>为什么这么做？还有别的选择吗？代价是什么？</td>
+        <td>把权衡摊开，让反对意见有地方落脚</td>
+        <td>只写方案，不写被否决的方案</td>
+      </tr>
+      <tr>
+        <td><strong>状态同步</strong><br><span style="font-size:12px;color:var(--muted)">周报 / 站会</span></td>
+        <td>现在到哪了？有没有风险？要我做什么？</td>
+        <td>结果优先，风险前置</td>
+        <td>按时间流水账，报喜不报忧</td>
+      </tr>
+      <tr>
+        <td><strong>求助</strong><br><span style="font-size:12px;color:var(--muted)">提问 / 工单</span></td>
+        <td>你试过什么？我怎么复现？</td>
+        <td>让对方花最少的力气理解问题</td>
+        <td>“在吗”“有个问题”然后消失</td>
+      </tr>
+      <tr>
+        <td><strong>复盘</strong><br><span style="font-size:12px;color:var(--muted)">Postmortem</span></td>
+        <td>发生了什么？为什么没早发现？怎么防？</td>
+        <td>对事不对人，找系统性原因</td>
+        <td>归因到“某人粗心”，然后没有然后</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>决策文档：把“权衡”写出来</h3>
+  <p>一份能被信任的设计文档，不是证明“我的方案很好”，而是让读者看到<strong>你认真考虑过别的路</strong>。下面这个结构可以直接用：</p>
+
+  <div class="tpl">
+    <div class="tpl-head"><span>设计文档骨架</span><button class="copy">复制</button></div>
+    <pre># 标题：一句话说明要做什么
+
+## 1. 背景与问题
+现在是什么状态？谁受影响？不解决会怎样？（用数据说话）
+
+## 2. 目标与非目标
+目标：这次要达成什么，怎么衡量。
+非目标：明确这次不做什么。（防止范围蔓延）
+
+## 3. 方案
+整体思路 + 关键流程图 + 核心数据结构。
+只写“别人需要知道才能评审”的部分，不贴大段代码。
+
+## 4. 备选方案与取舍
+方案 B：…… 为什么没选（成本 / 风险 / 长期维护）。
+方案 C：……
+
+## 5. 风险与缓解
+最可能出问题的地方是什么？怎么发现？怎么回滚？
+
+## 6. 里程碑
+分几步上线，每步可验证什么。
+
+## 7. 待定问题
+还没想清楚的，明确列出来，指定负责人。</pre>
+  </div>
+
+  <div class="callout">
+    <span class="label">一个反直觉的建议</span>
+    <p>第 4 节“备选方案”是整篇文档最有价值的部分。评审者真正想知道的不是“你的方案能不能跑”，而是“<strong>你有没有能力判断哪个方案更合适</strong>”。只写一个方案的文档，通常会被质疑；写了三个方案并说清取舍的文档，通常会被信任。</p>
+  </div>
+
+  <h3>周报：不要汇报“忙碌”，要汇报“变化”</h3>
+  <p>老板看周报只关心三件事：<strong>进度是否偏离、有没有需要他出手的、你的产出是什么</strong>。所以周报的黄金结构是：</p>
+  <ol class="steps">
+    <li><b>本周期结果</b><p>用可验证的事实，不用“推进中”“持续跟进”。例：支付成功率 92% → 94.1%。</p></li>
+    <li><b>下周期计划</b><p>不超过 3 条，每条有明确完成标准。</p></li>
+    <li><b>风险与求助</b><p>写清楚“需要谁、在什么时间、做什么决定”。这一节最容易被省略，也最重要。</p></li>
+  </ol>
+
+  <div class="compare">
+    <div class="bad-side">
+      <div class="side-label">✕ 忙碌型周报</div>
+      <p class="say">本周继续推进支付优化项目，参与了多次会议，与产品、测试对齐了需求，修复了一些线上问题，代码正在 review 中，下周继续跟进。</p>
+      <p class="note-under">读完不知道：做了什么、效果如何、要不要帮忙。</p>
+    </div>
+    <div class="good-side">
+      <div class="side-label">✓ 结果型周报</div>
+      <p class="say">支付成功率 92% → 94.1%（目标 95%）。<br>下周：完成银行侧超时重试，预计 +0.6%。<br>风险：某银行接口文档缺失，需要你帮忙约对方技术对接，否则大促前无法覆盖。</p>
+      <p class="note-under">三行字，进度、计划、求助全清楚。</p>
+    </div>
+  </div>
+
+  <h3>求助：让别人愿意帮你</h3>
+  <p>在群里发“有人知道 XX 怎么解决吗”，本质是把<strong>整理问题的成本转嫁给了所有人</strong>。高质量提问的公式是：</p>
+  <div class="tpl">
+    <div class="tpl-head"><span>提问模板</span><button class="copy">复制</button></div>
+    <pre>【背景】我在做 X，环境是 Y（版本/配置）。
+【现象】期望 A，实际 B，报错如下：（完整错误信息，不要截图一半）
+【已尝试】1) …… 结果……；2) …… 结果……
+【最小复现】一段可运行的代码 / 一个仓库链接 / 三步操作。
+【我的猜测】我怀疑是 Z，但不确定，因为……
+【问题】这个方向对吗？有没有更快的排查思路？</pre>
+  </div>
+  <p>注意最后一句。不要问“怎么解决”，要问“我的判断对不对”——前者把对方当成搜索引擎，后者把对方当成专家。人都更愿意回应后者。</p>
+
+  <h3>改稿：好文章是删出来的</h3>
+  <p>初稿写完，只做四件事，质量会立刻上一个台阶：</p>
+  <div class="grid two">
+    <div class="card"><h4><span class="k">01</span> 删形容词</h4><p>“非常严重的问题” → “影响 3% 用户的问题”。能量化的量化，不能量化的删掉。</p></div>
+    <div class="card"><h4><span class="k">02</span> 一段一个意思</h4><p>一段超过 5 行，就拆。读者是靠段落呼吸的。</p></div>
+    <div class="card"><h4><span class="k">03</span> 把名词改成动词</h4><p>“进行优化” → “把 P99 从 800ms 降到 200ms”。</p></div>
+    <div class="card"><h4><span class="k">04</span> 先写标题，再写内容</h4><p>如果标题写不出来，说明你还没想清楚这篇要说什么。</p></div>
+  </div>
+
+  <div class="callout warm">
+    <span class="label">发布前自检</span>
+    <p>把文档给一个<strong>不在你项目里</strong>的同事看 30 秒，然后问他：“我要做什么？”如果他说不出来，问题不在他，在文档。</p>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 20 分钟</span>
+    <h4>给下个季度的自己留一份文档</h4>
+    <p>选一个你最近做的技术决策（选型、重构、方案取舍），按下面的问题写 300 字：</p>
+    <label class="check"><input type="checkbox" data-key="c2-1"><span>当时的问题是什么？不解决会怎样？</span></label>
+    <label class="check"><input type="checkbox" data-key="c2-2"><span>考虑过哪两个替代方案？为什么没选？</span></label>
+    <label class="check"><input type="checkbox" data-key="c2-3"><span>如果重来一次，你会在哪里做不同的选择？</span></label>
+    <p style="margin-top:12px">这份文档不需要给别人看。它的作用是训练你<strong>把隐性判断显性化</strong>——这正是高级工程师和普通工程师的分水岭。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>先分清文体：决策文档要权衡，周报要结果，求助要可复现，复盘要系统性。</li>
+      <li>设计文档的核心不是方案，是“备选方案与取舍”。</li>
+      <li>周报三行结构：结果、计划、风险与求助。</li>
+      <li>提问时问“我的判断对吗”，而不是“这怎么解决”。</li>
+    </ul>
+  </div>
+</article>
+
+<article class="chapter" id="ch03">
+  <header class="ch-head">
+    <div class="ch-num">03</div>
+    <div class="ch-kicker">第三章 · 表达</div>
+    <h2>当众表达：<br>你不是紧张，你是在盯着自己</h2>
+    <p class="ch-lead">上台前心跳加速、手心出汗、脑子里一片空白——这不是能力问题，是注意力放错了地方。你一直在想“我看起来怎么样”，而不是“他们需要听懂什么”。</p>
+  </header>
+
+  <p class="lead-in">当众表达的本质，不是表演，是<strong>帮一群人完成一次认知迁移</strong>：把他们从“不知道”带到“知道”，从“不同意”带到“愿意试”。</p>
+
+  <h3>先把注意力从自己身上挪开</h3>
+  <p>紧张的生理反应是一样的：肾上腺素上升、心率加快。区别在于你怎么解释它。</p>
+  <p>如果你把注意力放在“我会不会讲砸”，身体会进入防御状态，你会语速加快、回避眼神、越讲越慌。</p>
+  <p>如果你把注意力放在“<em>他有没有听懂</em>”，同样的肾上腺素会变成专注和能量。这是唯一有效的解法，也是所有演讲教练最终都会说的一句话：<strong>去服务听众，而不是保护自己。</strong></p>
+
+  <h3>准备阶段：四个问题决定一切</h3>
+  <div class="grid two">
+    <div class="card"><h4><span class="k">Q1</span> 他们是谁？</h4><p>技术背景如何？和你熟不熟？是来学东西的，还是来评审你的？</p></div>
+    <div class="card"><h4><span class="k">Q2</span> 他们关心什么？</h4><p>老板关心风险和资源，同事关心“这会不会增加我的工作量”，新人关心“我能不能学会”。</p></div>
+    <div class="card"><h4><span class="k">Q3</span> 讲完之后，我要他们做什么？</h4><p>是批准方案、采用工具，还是仅仅知道这件事？没有行动目标的演讲，注定松散。</p></div>
+    <div class="card"><h4><span class="k">Q4</span> 我拿什么证明？</h4><p>一个数据、一个 demo、一个真实案例。三者至少有一个，否则只是观点。</p></div>
+  </div>
+
+  <div class="callout">
+    <span class="label">准备的第一件事</span>
+    <p>不是做 PPT，是写一句<strong>“讲完之后，我希望他们记住的一句话”</strong>。这句话超过 20 个字，说明你还没想清楚。整场演讲的所有内容，都应该为这一句话服务。</p>
+  </div>
+
+  <h3>结构：钩子—承诺—三点—回扣</h3>
+  <figure class="diagram">
+    <svg viewBox="0 0 600 190" role="img" aria-label="演讲结构时间轴">
+      <line x1="40" y1="100" x2="560" y2="100" stroke="var(--line-strong)" stroke-width="1.2"/>
+      <g font-family="sans-serif">
+        <circle cx="80" cy="100" r="7" fill="var(--warm)"/>
+        <text x="80" y="76" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">钩子</text>
+        <text x="80" y="128" font-size="10" fill="var(--muted)" text-anchor="middle">一个痛点/反常识</text>
+        <text x="80" y="144" font-size="10" fill="var(--faint)" text-anchor="middle">30 秒</text>
+
+        <circle cx="190" cy="100" r="7" fill="var(--accent)"/>
+        <text x="190" y="76" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">承诺</text>
+        <text x="190" y="128" font-size="10" fill="var(--muted)" text-anchor="middle">听完你能得到什么</text>
+        <text x="190" y="144" font-size="10" fill="var(--faint)" text-anchor="middle">1 分钟</text>
+
+        <circle cx="330" cy="100" r="7" fill="var(--accent)"/>
+        <circle cx="410" cy="100" r="7" fill="var(--accent)"/>
+        <circle cx="490" cy="100" r="7" fill="var(--accent)"/>
+        <text x="410" y="76" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">三个要点</text>
+        <text x="410" y="128" font-size="10" fill="var(--muted)" text-anchor="middle">每点一个例子</text>
+        <text x="410" y="144" font-size="10" fill="var(--faint)" text-anchor="middle">主体 80%</text>
+
+        <circle cx="550" cy="100" r="7" fill="var(--good)"/>
+        <text x="548" y="76" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">回扣</text>
+        <text x="548" y="128" font-size="10" fill="var(--muted)" text-anchor="middle">回到开头那句话</text>
+        <text x="548" y="144" font-size="10" fill="var(--faint)" text-anchor="middle">1 分钟</text>
+      </g>
+      <path d="M80,160 C200,180 400,180 550,160" stroke="var(--warm)" stroke-width="1" fill="none" stroke-dasharray="3 4" opacity=".5"/>
+      <text x="315" y="182" font-size="10" fill="var(--faint)" text-anchor="middle" font-family="sans-serif">听众的记忆曲线：开头和结尾最清晰，中间只需要三个锚点</text>
+    </svg>
+    <figcaption>不要试图讲十件事。三个要点，各配一个例子，足够。</figcaption>
+  </figure>
+
+  <h4>钩子：前三句决定他们要不要听</h4>
+  <p>有效的钩子有三种，选一种即可：</p>
+  <ul>
+    <li><strong>痛点</strong>：“上个月我们因为一次配置错误，损失了 40 分钟的交易量。”</li>
+    <li><strong>反常识</strong>：“我们花了两周做的性能优化，最后发现瓶颈不在代码，在 DNS。”</li>
+    <li><strong>具体场景</strong>：“想象一下，凌晨两点你被叫起来，监控显示订单全挂了。”</li>
+  </ul>
+  <p>无效的钩子是：“大家好，我是 XX，今天我要分享的是……”——这不是钩子，这是自我介绍。可以放在钩子之后，一句话带过。</p>
+
+  <h4>承诺：明确告诉听众“值得听”</h4>
+  <p>“接下来 20 分钟，你会看到三个我们踩过的坑，以及一个能立刻用上的排查清单。”</p>
+  <p>承诺要<strong>具体、可实现、和听众有关</strong>。不要承诺“全面了解”“深入探讨”，那是空话。</p>
+
+  <h4>主体：一个要点，一个例子，一句总结</h4>
+  <p>每个要点讲完，停一秒，用一句话收口：“所以，<strong>不要在没有监控的地方做灰度</strong>。”这句话是给听众的“抓手”，没有它，例子讲完就散了。</p>
+
+  <h3>技术分享的五段式</h3>
+  <p>技术分享比一般演讲多一个要求：<strong>可信</strong>。所以结构要包含证据和边界。</p>
+  <ol class="steps">
+    <li><b>问题</b><p>我们遇到了什么，为什么现有的办法不行。用真实数据，不要虚构。</p></li>
+    <li><b>方案</b><p>整体思路，一张架构图，不超过 5 个框。讲清楚数据怎么流。</p></li>
+    <li><b>证据</b><p>效果对比、压测数据、线上指标。没有证据的方案只是想法。</p></li>
+    <li><b>Demo</b><p>能跑就跑，跑不了就放录屏。Demo 失败不可怕，假装成功才可怕。</p></li>
+    <li><b>边界</b><p>什么场景不适用、还有什么没解决。主动说局限，反而增加可信度。</p></li>
+  </ol>
+
+  <h3>PPT：一页一个观点</h3>
+  <div class="grid two">
+    <div class="card"><h4>标题写结论，不写主题</h4><p>不要写“性能优化方案”，写“把 P99 从 800ms 降到 180ms 的三个改动”。</p></div>
+    <div class="card"><h4>一页不超过 30 个字</h4><p>PPT 是提词器，不是讲义。细节放文档，讲完发给大家。</p></div>
+    <div class="card"><h4>图优先于表，表优先于字</h4><p>一张架构图胜过一段描述。图上的字要大到最后一排能看清。</p></div>
+    <div class="card"><h4>不要念 PPT</h4><p>听众自己会看。你负责讲页面背后的判断和取舍。</p></div>
+  </div>
+
+  <h3>提问环节：最见功力的五分钟</h3>
+  <p>被问住是常态，处理方式比答案更重要。用一个三步动作：</p>
+  <div class="tpl">
+    <div class="tpl-head"><span>应对提问的三步</span><button class="copy">复制</button></div>
+    <pre>1. 复述：“你的问题是，这套方案在数据量再涨 10 倍时还成不成立，对吗？”
+   —— 确认理解，也给自己 3 秒思考时间。
+
+2. 分类：
+   · 我知道 → 直接答，先给结论再给依据。
+   · 我不确定 → “这个我没验证过，我的猜测是……会后我查一下给你确切答案。”
+   · 前提有误 → “这里可能有个误解，实际情况是……”
+
+3. 收口：“这样回答到你的问题了吗？”
+   —— 防止答偏，也显得尊重。</pre>
+  </div>
+
+  <div class="callout good">
+    <span class="label">最加分的一句话</span>
+    <p>“这个我不知道，但我可以告诉你怎么验证。”</p>
+    <p>承认不知道不会损害你的专业形象，<strong>硬编一个答案被当场拆穿才会</strong>。而且后半句展示了你的方法论，比一个正确答案更有价值。</p>
+  </div>
+
+  <h3>紧张管理的三个具体动作</h3>
+  <ul>
+    <li><strong>提前到场，站上讲台。</strong>让身体先熟悉环境，比在座位上默念有效得多。</li>
+    <li><strong>准备第一句和最后一句，背下来。</strong>中间可以自由发挥，头尾稳住，整个人就稳了。</li>
+    <li><strong>把“我要讲好”换成“我要让他听懂”。</strong>注意力一转移，生理反应会自动降级。</li>
+  </ul>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 每周一次</span>
+    <h4>用三分钟讲清楚你上周做的一件事</h4>
+    <p>对着手机录像，不看稿，按“钩子—承诺—三点—回扣”讲一遍。回放时只看三件事：</p>
+    <label class="check"><input type="checkbox" data-key="c3-1"><span>开头 15 秒有没有说清“为什么要听”</span></label>
+    <label class="check"><input type="checkbox" data-key="c3-2"><span>有没有超过三个要点</span></label>
+    <label class="check"><input type="checkbox" data-key="c3-3"><span>结尾有没有回到开头那句话</span></label>
+    <p style="margin-top:12px">录三次，你会明显看到自己语速下降、废话减少。这是最快见效的表达训练，没有之一。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>紧张的解药不是放松，是把注意力从自己转到听众。</li>
+      <li>准备先写“希望他们记住的一句话”，再写内容。</li>
+      <li>结构：钩子—承诺—三个要点—回扣。</li>
+      <li>技术分享必须有证据和边界，主动说局限会增加可信度。</li>
+      <li>被问住时：复述、分类、收口。不知道就说不知道，给出验证路径。</li>
+    </ul>
+  </div>
+</article>
+
+<article class="chapter" id="ch04">
+  <header class="ch-head">
+    <div class="ch-num">04</div>
+    <div class="ch-kicker">第四章 · 表达</div>
+    <h2>倾听与提问：<br>先听懂，再解决</h2>
+    <p class="ch-lead">程序员最常犯的沟通错误，不是不会说，是<strong>太快开始解决</strong>。对方话还没说完，你脑子里已经在写方案了——然后你解决了一个他没问的问题。</p>
+  </header>
+
+  <p class="lead-in">倾听不是“等对方说完”，是<strong>主动获取三层信息</strong>：他说了什么事实、带着什么情绪、真正想要什么。</p>
+
+  <h3>为什么我们听不进去</h3>
+  <p>因为对话在我们脑子里是“回合制”的：对方说一句，我们判断对错；找到漏洞，就准备反驳。这在工作里是本能——代码评审训练我们找 bug，找 bug 就有奖励。</p>
+  <p>但人际沟通不是找 bug。你一开口反驳，对方就会进入防御状态，接下来他说的每句话都是为了证明自己没错，而不是为了解决问题。</p>
+
+  <div class="callout">
+    <span class="label">一个简单的判断</span>
+    <p>如果你在对话中说话时间超过 50%，你大概率不在倾听，而在等待发言。</p>
+  </div>
+
+  <h3>三层倾听：事实、情绪、意图</h3>
+  <figure class="diagram">
+    <svg viewBox="0 0 560 300" role="img" aria-label="倾听的三个层次">
+      <g font-family="sans-serif">
+        <rect x="120" y="30" width="320" height="56" rx="6" fill="var(--accent)" opacity=".92"/>
+        <text x="280" y="55" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">事实层：他描述了发生了什么</text>
+        <text x="280" y="74" font-size="10.5" fill="#e8f0f5" text-anchor="middle">“接口又超时了，这是这周第三次”</text>
+
+        <rect x="90" y="100" width="380" height="56" rx="6" fill="var(--accent)" opacity=".55"/>
+        <text x="280" y="125" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">情绪层：他现在的感受是什么</text>
+        <text x="280" y="144" font-size="10.5" fill="#eef5f9" text-anchor="middle">焦虑、被忽视、担心背锅</text>
+
+        <rect x="60" y="170" width="440" height="60" rx="6" fill="var(--accent)" opacity=".25"/>
+        <text x="280" y="196" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="middle">意图层：他真正想要的是什么</text>
+        <text x="280" y="215" font-size="10.5" fill="var(--ink-2)" text-anchor="middle">不是“修好接口”，是“别再让我在群里被追问”</text>
+
+        <line x1="40" y1="246" x2="520" y2="246" stroke="var(--line)" stroke-dasharray="4 5"/>
+        <text x="280" y="270" font-size="10.5" fill="var(--faint)" text-anchor="middle">只听到第一层，就会给出“技术正确但人际无效”的回应</text>
+      </g>
+    </svg>
+    <figcaption>同一句话，三层含义。回应事实只能解决表面，回应意图才能解决问题。</figcaption>
+  </figure>
+
+  <p>举个具体的例子。同事说：“这个接口怎么又超时了？”</p>
+  <table>
+    <thead><tr><th style="width:100px">你听到的</th><th>你的回应</th><th>结果</th></tr></thead>
+    <tbody>
+      <tr><td>只有事实</td><td>“我查一下日志，可能是缓存没命中。”</td><td>技术上没错，但对方的情绪没被接住，他会觉得你在敷衍。</td></tr>
+      <tr><td>事实 + 情绪</td><td>“连续三次了，确实挺让人抓狂的。我先看下监控。”</td><td>对方感到被理解，愿意配合你排查。</td></tr>
+      <tr><td>三层都听到</td><td>“你是不是担心大促前再出问题不好交代？我今天给你一个明确的兜底方案。”</td><td>直接解决他真正的焦虑，关系加分。</td></tr>
+    </tbody>
+  </table>
+
+  <h3>复述：成本最低、效果最好的技术</h3>
+  <p>复述不是重复对方的话，是<strong>用你的话总结，然后请他确认</strong>。</p>
+  <div class="tpl">
+    <div class="tpl-head"><span>四种复述句式</span><button class="copy">复制</button></div>
+    <pre>· 内容复述：“我理解你的意思是，A 和 B 都要在本周完成，对吗？”
+· 情绪确认：“听起来这件事让你挺被动的。”
+· 意图澄清：“你最在意的是时间，还是稳定性？”
+· 归纳分歧：“所以我们一致的是 X，还没谈拢的是 Y。”</pre>
+  </div>
+  <p>最后一句尤其有用。争论到一半，双方往往已经不在同一个问题上了。把“一致”和“分歧”分开列出来，冲突会立刻降温——因为人一旦看到自己的一部分被认可，就不那么需要赢了。</p>
+
+  <h3>提问：用问题代替判断</h3>
+  <p>“你为什么这么做”听起来像质问，“你当时考虑了哪些因素”就是邀请。同样的信息，不同的门。</p>
+
+  <div class="grid two">
+    <div class="card"><h4>开放式</h4><p>“你觉得最大的风险在哪？”——用于收集信息，让对方展开。</p></div>
+    <div class="card"><h4>封闭式</h4><p>“是周五上线，还是下周一？”——用于收敛，推动决定。</p></div>
+    <div class="card"><h4>澄清假设</h4><p>“如果流量只有现在的一半，这个方案还成立吗？”——用于检验逻辑。</p></div>
+    <div class="card"><h4>换位提问</h4><p>“如果让你站在测试的角度看，你最担心什么？”——用于打破立场。</p></div>
+  </div>
+
+  <h4>连续追问：找到真正的约束</h4>
+  <p>需求说“这个功能必须这周上线”，连问三层，通常会露出真实原因：</p>
+  <ul>
+    <li>“为什么是这周？”——“因为下周有大促。”</li>
+    <li>“大促为什么一定要这个功能？”——“因为上次大促客服被问爆了。”</li>
+    <li>“客服被问爆的具体是什么问题？”——“用户找不到自己的优惠券在哪。”</li>
+  </ul>
+  <p>到这一步，真正的需求可能不是“做一个新功能”，而是“在订单页加一行优惠券入口”。<strong>追问不是为了刁难，是为了避免用两周做一个半天就能解决的问题。</strong></p>
+
+  <div class="callout warm">
+    <span class="label">注意</span>
+    <p>连续追问在<strong>事情</strong>上有效，在<strong>人</strong>上容易变成审问。区别是：问完有没有给对方留台阶，以及你有没有先说自己的判断。安全做法是——“我先说我的理解，你看对不对”，再问。</p>
+  </div>
+
+  <h3>当对方情绪上来时，讲道理是最没用的</h3>
+  <p>同事在群里发：“你们这个接口又挂了，我们这边全卡住了！”</p>
+  <p>这时候你解释“是因为你们没按文档传参”，无论多正确，都会让事情更糟。因为对方此刻要的不是原因，是<strong>“有人接住了”</strong>。</p>
+
+  <div class="compare">
+    <div class="bad-side">
+      <div class="side-label">✕ 讲道理</div>
+      <p class="say">“你看一下文档，这个参数是可选的，你们传了空值才报错。”</p>
+      <p class="note-under">对方听到的是：这是你的问题，别赖我们。接下来他会花更多力气证明不是自己的错。</p>
+    </div>
+    <div class="good-side">
+      <div class="side-label">✓ 先接住，再解决</div>
+      <p class="say">“确实影响你们了，我先看下。给我 5 分钟，我确认一下是不是我们这边的问题，然后给你一个明确的说法。”</p>
+      <p class="note-under">先承认影响，给出时间，承诺结论。对方的情绪有了落点，才有空间听原因。</p>
+    </div>
+  </div>
+
+  <p>四个动作，顺序不能乱：</p>
+  <ol class="steps">
+    <li><b>承认影响</b><p>“这事确实影响到你们了。”——不判断对错，只承认事实。</p></li>
+    <li><b>给出时间</b><p>“5 分钟后给你结论。”——情绪最怕的是无限期等待。</p></li>
+    <li><b>再谈原因</b><p>等对方平静下来，再说“我查了一下，是参数为空导致的”。</p></li>
+    <li><b>给出下一步</b><p>“我们加一个默认值，另外在文档里补一句。”——让对方看到不会再发生。</p></li>
+  </ol>
+
+  <div class="callout warm">
+    <span class="label">一个语言习惯</span>
+    <p>把“是的，但是……”换成“<strong>是的，而且……</strong>”。前者否定了对方前半句，后者把它接住再往前推。这个小改动，能让很多对话从对抗变成合作。</p>
+  </div>
+
+  <h3>沉默也是一种表达</h3>
+  <p>对方说完，停三秒再回应。这三秒里会发生两件事：他可能会补充真正重要的信息；你可能会想到一个更好的回应。</p>
+  <p>很多重要的信息，都是在“以为对话结束了”的那三秒里说出来的。</p>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 一次对话</span>
+    <h4>今天找一个人，只提问，不建议</h4>
+    <p>选一个同事聊 10 分钟，规则是：</p>
+    <label class="check"><input type="checkbox" data-key="c4-1"><span>不打断，哪怕你不同意</span></label>
+    <label class="check"><input type="checkbox" data-key="c4-2"><span>至少复述一次对方的观点，并请他确认</span></label>
+    <label class="check"><input type="checkbox" data-key="c4-3"><span>至少问一次“你最在意的是什么”</span></label>
+    <label class="check"><input type="checkbox" data-key="c4-4"><span>全程不给解决方案，除非对方明确问</span></label>
+    <p style="margin-top:12px">结束后记一句话：你原来以为的问题，和聊完之后发现的问题，是同一个吗？</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>沟通不是回合制，别急着反驳和解决。</li>
+      <li>听三层：事实、情绪、意图。只回应事实，通常解决不了问题。</li>
+      <li>复述是最低成本的信任技术，先确认再回应。</li>
+      <li>追问用于找约束，不用于审问；问之前先给出自己的理解。</li>
+    </ul>
+  </div>
+</article>
+
+<div class="part-divider" id="part2">
+  <span class="p-num">PART 02</span>
+  <h2>让人愿意配合</h2>
+  <p>你没有权力，但你有信用、有信息、有判断。</p>
+</div>
+
+<article class="chapter" id="ch05">
+  <header class="ch-head">
+    <div class="ch-num">05</div>
+    <div class="ch-kicker">第五章 · 协作</div>
+    <h2>无授权影响力：<br>怎么让不归你管的人帮你</h2>
+    <p class="ch-lead">你发现一个跨团队的隐患，需要另一个部门改接口。你不在他们的汇报线里，没有审批权，也不能给他们打绩效。这件事怎么推动？</p>
+  </header>
+
+  <p class="lead-in">职场里绝大多数重要的事，都发生在<strong>你的职权范围之外</strong>。能不能推动它们，是普通工程师和技术负责人的真正分界线。</p>
+
+  <h3>先接受一个事实：你没有权力，但你有“货币”</h3>
+  <p>组织里的影响力不只有职位一种。至少还有三种硬通货，每个人都可以积累：</p>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 560 320" role="img" aria-label="影响力的三种货币">
+      <g font-family="sans-serif">
+        <circle cx="215" cy="130" r="92" fill="var(--accent)" opacity=".18"/>
+        <circle cx="345" cy="130" r="92" fill="var(--warm)" opacity=".18"/>
+        <circle cx="280" cy="212" r="92" fill="var(--good)" opacity=".16"/>
+        <text x="180" y="96" font-size="13" font-weight="700" fill="var(--accent)" text-anchor="middle">信息</text>
+        <text x="180" y="116" font-size="10" fill="var(--muted)" text-anchor="middle">你知道别人不知道的</text>
+        <text x="382" y="96" font-size="13" font-weight="700" fill="var(--warm)" text-anchor="middle">专业</text>
+        <text x="382" y="116" font-size="10" fill="var(--muted)" text-anchor="middle">你能解决别人解决不了的</text>
+        <text x="280" y="262" font-size="13" font-weight="700" fill="var(--good)" text-anchor="middle">关系</text>
+        <text x="280" y="282" font-size="10" fill="var(--muted)" text-anchor="middle">别人愿意接你电话</text>
+        <text x="280" y="168" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">可信度</text>
+        <text x="280" y="186" font-size="9.5" fill="var(--muted)" text-anchor="middle">三者交集</text>
+      </g>
+    </svg>
+    <figcaption>信息、专业、关系。三者叠加的地方，就是“这个人说话我信”。</figcaption>
+  </figure>
+
+  <ul>
+    <li><strong>信息货币：</strong>你比别人更早、更准地知道发生了什么。比如你从监控里发现某个下游团队的错误率在上升。</li>
+    <li><strong>专业货币：</strong>你能解决他们解决不了的问题。这是工程师最天然的杠杆。</li>
+    <li><strong>关系货币：</strong>你们之前打过交道，你帮过他，或者至少你没有让他难堪过。</li>
+  </ul>
+  <p>大多数人推动事情失败，是因为只带了一张牌：<em>“这件事很重要，请你配合。”</em>重要是<strong>你的</strong>判断，不是他的优先级。</p>
+
+  <h3>推动跨团队的四步法</h3>
+
+  <ol class="steps">
+    <li>
+      <b>找到共同目标，而不是共同任务</b>
+      <p>不要说“请你改一下接口”，要说“我们都在为同一个大促的稳定性负责，现在这个链路是共同的单点”。任务是你的事，目标才是你们的事。</p>
+    </li>
+    <li>
+      <b>降低对方的成本</b>
+      <p>这是最关键、也最少人做的一步。你能不能把改动写好、测试跑通、文档备齐，让对方只需要点一次“合并”？你能不能承担联调和回归？<strong>推动的本质，是替对方减少麻烦，而不是增加说服。</strong></p>
+    </li>
+    <li>
+      <b>小步试点，先拿到一个成功</b>
+      <p>不要一上来就要全量改造。先做一个不影响主流程的场景，跑出数据。有了第一个成功案例，第二个团队的说服成本会下降一半。</p>
+    </li>
+    <li>
+      <b>公开归功，私下感谢</b>
+      <p>事情成了，在群里、在汇报里明确说“这次是 X 团队帮我们顶住的”。你损失了一点功劳，换来的是下一次还有人愿意帮你。</p>
+    </li>
+  </ol>
+
+  <h3>先画一张利益相关者地图</h3>
+  <p>在开口之前，花十分钟把相关的人列出来，按两个维度放：<strong>影响力</strong>（能不能决定这件事）和<strong>态度</strong>（支持 / 中立 / 反对）。</p>
+
+  <table>
+    <thead><tr><th style="width:120px">位置</th><th>策略</th><th>具体动作</th></tr></thead>
+    <tbody>
+      <tr><td><strong>高影响 · 支持</strong></td><td>借力</td><td>请他先在会上表态，或帮你引荐关键人。</td></tr>
+      <tr><td><strong>高影响 · 中立</strong></td><td>优先争取</td><td>一对一沟通，重点讲对他的价值和风险，不要群发。</td></tr>
+      <tr><td><strong>高影响 · 反对</strong></td><td>提前处理</td><td>私下问清顾虑，能改方案就改；不能改就准备证据，避免当众对抗。</td></tr>
+      <tr><td><strong>低影响 · 反对</strong></td><td>别忽视</td><td>他们往往掌握执行细节，一句“这个方案在我们这儿跑不通”就能拖住你。</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="label">一个反直觉的规律</span>
+    <p>决定一件事能不能推动的，往往不是<strong>支持者有多少</strong>，而是<strong>反对者有没有被提前听见</strong>。公开会议上第一次听到反对意见，你就已经输了——因为那时候所有人都看着，对方必须维护立场。</p>
+  </div>
+
+  <h3>群发是最低效的推动方式</h3>
+  <div class="compare">
+    <div class="bad-side">
+      <div class="side-label">✕ 群发式推动</div>
+      <p class="say">“@所有人 各位好，我们计划下个月升级网关协议，请各业务方配合改造，具体文档见附件，有问题随时沟通。”</p>
+      <p class="note-under">每个人的第一反应都是：这会不会增加我的工作量？然后假装没看见。</p>
+    </div>
+    <div class="good-side">
+      <div class="side-label">✓ 一对一 + 明确收益</div>
+      <p class="say">“老张，你们那边现在每天有多少请求走旧协议？我看了下监控，大概 30%。升级后这部分可以省掉一次序列化，延迟能降 15ms。改造我这边可以先提 PR，你们只需要 review。”</p>
+      <p class="note-under">对方听到的是：有好处、我的活很少、风险可控。</p>
+    </div>
+  </div>
+
+  <h3>三种可以“借”的力量</h3>
+  <div class="grid three">
+    <div class="card"><h4>借数据</h4><p>“这个月因为这个问题的客诉有 47 单。”数字比形容词有力量。</p></div>
+    <div class="card"><h4>借用户</h4><p>把真实用户的反馈、录音、工单原文放出来。它绕过了所有立场之争。</p></div>
+    <div class="card"><h4>借目标</h4><p>把这件事挂到对方也在背的 OKR 上。没有人会拒绝自己的 KPI。</p></div>
+  </div>
+
+  <div class="myth">
+    <b>常见误区</b>
+    <p><strong>“我职位高，所以你应该配合。”</strong>职位能让人做事，但不能让人做好事。靠权力推动的事情，只会在你的视线范围内发生。</p>
+    <p><strong>“我说了很多次，他们就是不动。”</strong>说得多不等于推动。推动是降低对方的行动成本，不是提高音量。</p>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 20 分钟</span>
+    <h4>为一件“推不动”的事画地图</h4>
+    <p>想一件你需要别人配合、但一直没进展的事，然后写下来：</p>
+    <label class="check"><input type="checkbox" data-key="c5-1"><span>列出 5 个相关的人，标出影响力和态度</span></label>
+    <label class="check"><input type="checkbox" data-key="c5-2"><span>写下每个人真正的利益（不是你的理由）</span></label>
+    <label class="check"><input type="checkbox" data-key="c5-3"><span>找出一个你能替对方承担的麻烦</span></label>
+    <label class="check"><input type="checkbox" data-key="c5-4"><span>约其中最关键的那个人，一对一聊 15 分钟</span></label>
+    <p style="margin-top:12px">如果你说不出对方的利益，说明你还没开始推动，只是在表达愿望。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>影响力有三种货币：信息、专业、关系。至少要有一张。</li>
+      <li>推动四步：共同目标、降低对方成本、小步试点、公开归功。</li>
+      <li>先画利益相关者地图，尤其要提前处理高影响反对者。</li>
+      <li>群发无效，一对一沟通才有效；推动的本质是减少对方的麻烦。</li>
+    </ul>
+  </div>
+</article>
+
+<article class="chapter" id="ch06">
+  <header class="ch-head">
+    <div class="ch-num">06</div>
+    <div class="ch-kicker">第六章 · 协作</div>
+    <h2>反馈的艺术：<br>怎么指出问题，还不把人得罪</h2>
+    <p class="ch-lead">大多数人不给反馈，不是没看见问题，是怕说了之后关系变差。于是问题被拖到绩效面谈，变成一句迟到的“其实我早就觉得……”。</p>
+  </header>
+
+  <p class="lead-in">好的反馈只有一个标准：<strong>对方听完知道下一步怎么做，且愿意去做。</strong>让人觉得被攻击的反馈，无论多正确，都是失败的反馈。</p>
+
+  <h3>为什么反馈容易变成吵架</h3>
+  <p>因为我们习惯把“行为”说成“人格”。</p>
+  <table>
+    <thead><tr><th>你说的</th><th>对方听到的</th><th>结果</th></tr></thead>
+    <tbody>
+      <tr><td>“你太粗心了。”</td><td>“你这个人不行。”</td><td>防御、辩解、翻旧账</td></tr>
+      <tr><td>“你总是拖延。”</td><td>“你态度有问题。”</td><td>“我哪有总是？”——开始争论频率</td></tr>
+      <tr><td>“这个方案不够好。”</td><td>“你能力不行。”</td><td>自尊受损，听不进后面的话</td></tr>
+    </tbody>
+  </table>
+  <p>人格评价没有改进空间，行为才有。所以反馈的第一原则是：<strong>说具体的行为，不说抽象的标签。</strong></p>
+
+  <h3>SBI：一个足够好用的结构</h3>
+  <p>SBI 把一句话拆成三段：<strong>情境（Situation）— 行为（Behavior）— 影响（Impact）</strong>。</p>
+
+  <div class="tpl">
+    <div class="tpl-head"><span>SBI 模板</span><button class="copy">复制</button></div>
+    <pre>【情境】昨天下午的需求评审会上，
+【行为】当产品经理介绍方案时，你打断了三次，并且说“这个方案根本不可行”，
+【影响】产品经理后来没有继续讲完，会议提前结束了，我们也没拿到结论。
+
+我想听听你当时的想法。</pre>
+  </div>
+
+  <p>注意最后一句。SBI 不是判决书，是<strong>一次邀请</strong>。你说完事实和影响，要把解释权交回给对方——因为你也可能漏掉了什么。</p>
+
+  <div class="compare">
+    <div class="bad-side">
+      <div class="side-label">✕ 标签式反馈</div>
+      <p class="say">“你最近工作态度有问题，沟通也不积极，代码质量也下降了，希望你能重视一下。”</p>
+      <p class="note-under">对方只能回答“我没有”，然后对话结束。什么都没改变。</p>
+    </div>
+    <div class="good-side">
+      <div class="side-label">✓ SBI 反馈</div>
+      <p class="say">“上周三的联调（S），你答应下午给接口文档但一直没发（B），我们三个人等了一下午，最后只能先做别的（I）。是遇到什么卡点了吗？”</p>
+      <p class="note-under">对方能回应具体的事，也能给出真实原因。</p>
+    </div>
+  </div>
+
+  <h3>给反馈前，先问一句“可以吗”</h3>
+  <p>这句话看起来多余，但它决定了对方是“打开”还是“防御”：</p>
+  <ul>
+    <li>“关于昨天的会，我有个观察，你想听吗？”</li>
+    <li>“有个地方我觉得可以更好，现在说方便吗？”</li>
+  </ul>
+  <p>对方说“可以”，等于签了一个心理契约：接下来他听到批评时，不容易立刻反弹。如果他说“等一下”，那就等——强行输出的反馈，效果通常是负的。</p>
+
+  <div class="callout">
+    <span class="label">时机比措辞重要</span>
+    <p>反馈的保鲜期很短。<strong>当天说</strong>是反馈，<strong>一个月后说</strong>是清算。而且越晚说，对方越容易觉得“你早就看不惯我了，一直憋着”。</p>
+  </div>
+
+  <h3>接受反馈：比给反馈更难</h3>
+  <p>被指出问题时，人的第一反应是解释。但解释在对方听来就是辩护，辩护会让对方下次不再跟你说真话。</p>
+  <p>一个可以背下来的四步动作：</p>
+  <ol class="steps">
+    <li><b>不打断，听完</b><p>哪怕你觉得事实有误，也先让对方说完。中途打断，你听到的永远是半句话。</p></li>
+    <li><b>先谢，再问例子</b><p>“谢谢你说这个，能举个具体例子吗？”——例子会把情绪化的评价变成可讨论的事实。</p></li>
+    <li><b>承认你能承认的部分</b><p>“会上我确实打断了他，这点是我的问题。”不需要全盘接受，承认一部分就足够让对话继续。</p></li>
+    <li><b>说明你的判断，而不是辩解</b><p>“不过我当时着急，是因为发现方案里有个数据一致性的漏洞。下次我会先记下来，等他说完再提。”</p></li>
+  </ol>
+
+  <div class="tpl">
+    <div class="tpl-head"><span>接受批评的万能句式</span><button class="copy">复制</button></div>
+    <pre>“谢谢你直接跟我说。
+我想确认一下，你说的【具体行为】是指……对吗？
+这部分我认，确实造成了【影响】。
+我接下来会【具体改变】。你看这样行吗？”</pre>
+  </div>
+
+  <h3>Code Review 里的反馈语言</h3>
+  <p>代码评审是工程师最高频的反馈场景，也是最容易伤人的地方——因为文字没有语气，一句陈述句会被读成质问。</p>
+
+  <table>
+    <thead><tr><th style="width:44%">容易激怒的写法</th><th>更好的写法</th></tr></thead>
+    <tbody>
+      <tr><td>“这里为什么要这么写？”</td><td>“这里我没看懂，能解释一下当时的考虑吗？”</td></tr>
+      <tr><td>“这样写有性能问题。”</td><td>“这个循环在数据量大时是 O(n²)，建议改成 map，我可以提个 patch。”</td></tr>
+      <tr><td>“这段代码质量太差了。”</td><td>“这个函数做了三件事，拆开会不会更好维护？非阻塞建议。”</td></tr>
+      <tr><td>“必须改。”</td><td>“这个是阻塞项：会导致空指针。其余都是建议。”</td></tr>
+    </tbody>
+  </table>
+  <p>再加两个小技巧：<strong>明确标注“阻塞 / 非阻塞”</strong>，让对方知道哪些必须改；<strong>多用“我们”“这个代码”而不是“你”</strong>，把矛头从人转向问题。</p>
+
+  <h3>表扬也要具体</h3>
+  <p>“干得不错”是一句社交辞令，对方听完不知道该继续保持什么。具体的表扬才有复制性：</p>
+  <blockquote>“昨天线上故障，你在群里第一时间给出的是影响范围和临时方案，而不是一堆日志。这个动作让所有人都冷静下来了。”</blockquote>
+  <p>这句话不仅让当事人知道什么行为被认可，也让在场其他人学到了标准。</p>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 本周内</span>
+    <h4>给一个人一条 SBI 反馈</h4>
+    <p>选一个同事，可以是正面也可以是负面，但必须满足：</p>
+    <label class="check"><input type="checkbox" data-key="c6-1"><span>有一个具体的时间、地点、事件</span></label>
+    <label class="check"><input type="checkbox" data-key="c6-2"><span>描述的是行为，不是性格</span></label>
+    <label class="check"><input type="checkbox" data-key="c6-3"><span>说清了对他人的实际影响</span></label>
+    <label class="check"><input type="checkbox" data-key="c6-4"><span>结尾是一个问题，不是一句结论</span></label>
+    <p style="margin-top:12px">如果说不出口，先发文字。文字能让你删掉情绪词，也能让对方有时间消化。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>反馈说行为，不说人格。人格没有改进空间。</li>
+      <li>SBI：情境、行为、影响，最后用一个问题收口。</li>
+      <li>给反馈前先征得同意；当天说是反馈，一个月后说是清算。</li>
+      <li>接受反馈：听完、追问例子、承认一部分、说明判断而非辩解。</li>
+      <li>Code Review 标注阻塞/非阻塞，把矛头对准代码而不是人。</li>
+    </ul>
+  </div>
+</article>
+
+<article class="chapter" id="ch07">
+  <header class="ch-head">
+    <div class="ch-num">07</div>
+    <div class="ch-kicker">第七章 · 协作</div>
+    <h2>冲突与谈判：<br>把“你对我错”变成“我们要什么”</h2>
+    <p class="ch-lead">技术团队里最消耗人的，往往不是难题，是那些没说出口的分歧：你觉得方案有风险，他觉得你在拖进度，谁也不肯先退。</p>
+  </header>
+
+  <p class="lead-in">冲突本身不是问题，<strong>回避冲突才是</strong>。被压下去的分歧不会消失，它会在上线前夜、在复盘会上、在绩效沟通里，以更贵的方式回来。</p>
+
+  <h3>先分清：立场与利益</h3>
+  <p>这是谈判学里最重要的一组概念，几乎能解释所有“谈不拢”：</p>
+  <ul>
+    <li><strong>立场</strong>是你要求的具体结果：“这个功能必须这周上线。”</li>
+    <li><strong>利益</strong>是你真正在意的东西：“我怕大促时客服被投诉，影响我的考核。”</li>
+  </ul>
+  <p>立场是对立的，利益往往可以兼容。两个人争一个窗户开不开，立场是“开”和“关”，利益可能是“我要新鲜空气”和“我怕风吹头”——最后方案是开另一扇窗。</p>
+
+  <div class="callout">
+    <span class="label">核心提问</span>
+    <p>当对方坚持一个你无法接受的方案时，不要问“你为什么非要这样”，要问：<strong>“如果这个方案做不到，你最担心会发生什么？”</strong></p>
+    <p>这句话会把他从立场拉回利益。而利益，才是可以谈的。</p>
+  </div>
+
+  <h3>五种冲突风格，没有一种永远正确</h3>
+  <figure class="diagram">
+    <svg viewBox="0 0 560 360" role="img" aria-label="五种冲突处理风格">
+      <g font-family="sans-serif">
+        <line x1="80" y1="300" x2="520" y2="300" stroke="var(--line-strong)" stroke-width="1.1"/>
+        <line x1="80" y1="300" x2="80" y2="50" stroke="var(--line-strong)" stroke-width="1.1"/>
+        <text x="500" y="322" font-size="10.5" fill="var(--muted)" text-anchor="end">关注对方需求 →</text>
+        <text x="66" y="62" font-size="10.5" fill="var(--muted)" text-anchor="end" transform="rotate(-90 66 62)">关注自身需求 →</text>
+
+        <circle cx="150" cy="250" r="34" fill="var(--panel-2)" stroke="var(--line-strong)"/>
+        <text x="150" y="248" font-size="11.5" font-weight="700" fill="var(--ink)" text-anchor="middle">回避</text>
+        <text x="150" y="264" font-size="9" fill="var(--muted)" text-anchor="middle">都不重要</text>
+
+        <circle cx="300" cy="150" r="40" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <text x="300" y="146" font-size="12" font-weight="700" fill="var(--accent)" text-anchor="middle">合作</text>
+        <text x="300" y="162" font-size="9" fill="var(--muted)" text-anchor="middle">双赢</text>
+
+        <circle cx="430" cy="250" r="34" fill="var(--good-soft)" stroke="var(--good)"/>
+        <text x="430" y="248" font-size="11.5" font-weight="700" fill="var(--good)" text-anchor="middle">迁就</text>
+        <text x="430" y="264" font-size="9" fill="var(--muted)" text-anchor="middle">让给对方</text>
+
+        <circle cx="300" cy="250" r="34" fill="var(--warm-soft)" stroke="var(--warm)"/>
+        <text x="300" y="248" font-size="11.5" font-weight="700" fill="var(--warm)" text-anchor="middle">妥协</text>
+        <text x="300" y="264" font-size="9" fill="var(--muted)" text-anchor="middle">各让一步</text>
+
+        <circle cx="150" cy="150" r="34" fill="var(--bad-soft)" stroke="var(--bad)"/>
+        <text x="150" y="148" font-size="11.5" font-weight="700" fill="var(--bad)" text-anchor="middle">竞争</text>
+        <text x="150" y="164" font-size="9" fill="var(--muted)" text-anchor="middle">我赢</text>
+      </g>
+    </svg>
+    <figcaption>选哪种，取决于两件事：这件事有多重要，这段关系有多重要。</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th style="width:90px">风格</th><th>什么时候用</th><th>代价</th></tr></thead>
+    <tbody>
+      <tr><td><strong>竞争</strong></td><td>涉及安全、合规、不可逆的线上事故，必须立刻拍板。</td><td>赢了事情，输了关系。</td></tr>
+      <tr><td><strong>合作</strong></td><td>双方利益都重要，且有时间充分讨论。</td><td>耗时，需要双方都成熟。</td></tr>
+      <tr><td><strong>妥协</strong></td><td>时间紧、分歧大，需要一个都能接受的临时方案。</td><td>双方都不太满意，容易留下后患。</td></tr>
+      <tr><td><strong>迁就</strong></td><td>这件事对你无关紧要，但对对方很重要。</td><td>长期迁就会积累怨气。</td></tr>
+      <tr><td><strong>回避</strong></td><td>情绪太激动，或议题根本不值得投入。</td><td>问题会变大，回避久了会变成冷暴力。</td></tr>
+    </tbody>
+  </table>
+
+  <h3>谈判前，先知道你的 BATNA</h3>
+  <p>BATNA 是“谈不成时你的最佳替代方案”。它决定了你的底气，也决定了你的底线。</p>
+  <p>比如你在争取一个技术重构的排期：</p>
+  <ul>
+    <li>如果谈不成，你能接受“只重构最关键的模块”吗？</li>
+    <li>如果还不行，你能接受“先加监控，等问题发生再处理”吗？</li>
+    <li>如果都不行，你会考虑换团队吗？</li>
+  </ul>
+  <p>想清楚最差选项，你反而能更平静地谈——因为你知道自己不会被逼到墙角。<strong>没有 BATNA 的人，容易在谈判里要么过度强硬，要么全盘退让。</strong></p>
+
+  <h3>冲突升级的四个阶段，越早介入越便宜</h3>
+  <ol class="steps">
+    <li><b>分歧</b><p>观点不同，还能就事论事。此时最好的动作是：把双方假设写下来，对照事实。</p></li>
+    <li><b>防卫</b><p>开始解释自己、质疑对方动机。此时不要讲道理，先复述对方的观点，让他感到被听见。</p></li>
+    <li><b>对抗</b><p>出现“你总是”“你根本不懂”。此时应该暂停，改为一对一沟通，避免在群里或会上继续。</p></li>
+    <li><b>破裂</b><p>不再沟通，转为向上投诉或冷处理。此时需要第三方介入，重点不再是方案，而是修复关系。</p></li>
+  </ol>
+
+  <div class="callout warm">
+    <span class="label">一个止损信号</span>
+    <p>当你开始想“我要让他知道我不是好惹的”，这场对话的目标已经从<strong>解决问题</strong>变成了<strong>争夺地位</strong>。这时候最有效的动作是：<em>“我们先停一下，我把你的顾虑整理成文字发你，明天再聊。”</em></p>
+  </div>
+
+  <h3>道歉：不是认输，是修复</h3>
+  <p>工作里的道歉，最容易犯的错是说“如果我让你不舒服，我道歉”——这不是道歉，是把责任推回给对方。</p>
+  <div class="tpl">
+    <div class="tpl-head"><span>有效道歉的四段</span><button class="copy">复制</button></div>
+    <pre>1. 承认事实：“昨天会上我打断了你三次。”
+2. 承认影响：“这让你没能讲完方案，也让会议没有结论。”
+3. 不找借口：“不管当时多着急，那不是打断你的理由。”
+4. 给出改变：“下次我会先把问题记下来，等你说完再提。”
+
+（不要加“但是”。）</pre>
+  </div>
+
+  <h3>案例：和产品经理争排期</h3>
+  <div class="compare">
+    <div class="bad-side">
+      <div class="side-label">✕ 立场对撞</div>
+      <p class="say"><span class="who">产品：</span>“这个功能必须月底上线，客户已经答应了。”</p>
+      <p class="say"><span class="who">你：</span>“不可能，至少六周。你们每次都这样，根本不考虑技术成本。”</p>
+      <p class="note-under">结果：上升到态度问题，排期没谈成，还多了个敌人。</p>
+    </div>
+    <div class="good-side">
+      <div class="side-label">✓ 回到利益</div>
+      <p class="say"><span class="who">你：</span>“我先确认一下，客户答应的是‘月底能看到这个功能’，还是‘月底必须全量上线’？”</p>
+      <p class="say"><span class="who">产品：</span>“其实是月底要给他们演示。”</p>
+      <p class="say"><span class="who">你：</span>“那这样：月底我做一个可演示的版本，只覆盖主流程，两周后再补边界情况。这样你这边能交代，我也不用把没测完的东西推上线。”</p>
+      <p class="note-under">结果：找到了第三个方案，因为真正的问题是“演示”，不是“上线”。</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 10 分钟</span>
+    <h4>把一句立场翻译成利益</h4>
+    <p>写下你最近一次没谈拢的对话，然后填三行：</p>
+    <label class="check"><input type="checkbox" data-key="c7-1"><span>我的立场是：______；我真正的利益是：______</span></label>
+    <label class="check"><input type="checkbox" data-key="c7-2"><span>对方的立场是：______；他可能的利益是：______</span></label>
+    <label class="check"><input type="checkbox" data-key="c7-3"><span>有没有一个方案，能同时满足两个利益？</span></label>
+    <p style="margin-top:12px">如果写不出对方的利益，下次见面先只问这个问题，不辩论。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>冲突不可怕，回避才可怕。分歧会以更贵的方式回来。</li>
+      <li>立场对立，利益可以兼容。问“你最担心发生什么”。</li>
+      <li>五种风格没有优劣，看事情重要还是关系重要。</li>
+      <li>想清楚 BATNA，你才有底气不卑不亢。</li>
+      <li>道歉四段：事实、影响、不找借口、给出改变。不要加“但是”。</li>
+    </ul>
+  </div>
+</article>
+
+<article class="chapter" id="ch08">
+  <header class="ch-head">
+    <div class="ch-num">08</div>
+    <div class="ch-kicker">第八章 · 协作</div>
+    <h2>向上管理：<br>把老板变成你的资源</h2>
+    <p class="ch-lead">很多人把“向上管理”理解成讨好。其实它真正的含义是：<strong>降低老板和你合作的成本</strong>，让他知道你在做什么、需不需要他、值不值得托付更大的事。</p>
+  </header>
+
+  <p class="lead-in">你的老板通常同时管着 5–10 个人、几十件事。他不是不关心你，是<strong>没有带宽主动关心你</strong>。谁让他省心，谁就更容易拿到好机会。</p>
+
+  <h3>老板真正需要你给的三样东西</h3>
+  <div class="grid three">
+    <div class="card"><h4>可控感</h4><p>他知道事情进展到哪、会不会炸。最怕的不是坏消息，是“最后一个知道”。</p></div>
+    <div class="card"><h4>判断依据</h4><p>他要做决定时，你能给出选项、代价和建议，而不是把问题原样抛回去。</p></div>
+    <div class="card"><h4>确定性</h4><p>你答应的事能交付，交付的东西不用他返工。这是信任的地基。</p></div>
+  </div>
+
+  <h3>三种汇报，别混在一起</h3>
+  <table>
+    <thead><tr><th style="width:90px">类型</th><th>目的</th><th>结构</th><th>频率</th></tr></thead>
+    <tbody>
+      <tr><td><strong>同步</strong></td><td>让他知道进展，不用回复</td><td>结果 → 风险 → 下一步</td><td>每周固定</td></tr>
+      <tr><td><strong>求助</strong></td><td>需要他出手解决</td><td>卡点 → 已尝试 → 需要他做什么</td><td>随时，越早越好</td></tr>
+      <tr><td><strong>决策</strong></td><td>需要他拍板</td><td>问题 → 选项 → 建议 → 影响</td><td>有明确分叉时</td></tr>
+    </tbody>
+  </table>
+  <p>最常见的错误，是把“求助”包装成“同步”：说了一堆困难，最后没说要他干什么。老板听完只能回一句“好的，你看着办”——然后事情继续卡着。</p>
+
+  <h3>坏消息：早说、带方案、给选项</h3>
+  <p>项目要延期，最糟糕的处理方式是拖到最后一刻说“实在做不完”。这时候老板已经没有腾挪空间了，他只能接受结果，并且记住“这个人不可靠”。</p>
+
+  <div class="tpl">
+    <div class="tpl-head"><span>延期汇报模板</span><button class="copy">复制</button></div>
+    <pre>【结论】这个项目要延期 3 天，从周五到下周一下午。
+【原因】联调时发现对方接口的字段定义和文档不一致，需要他们改一版。
+【影响】不影响大促，但会压缩一天测试时间。
+【选项】
+  A. 砍掉导出功能，周五按时上线（推荐）
+  B. 整体延到周一，功能完整
+【建议】选 A，导出可以下个迭代补，风险最低。
+【需要你】如果同意 A，我今天就去和产品对齐。</pre>
+  </div>
+
+  <p>注意结构：<strong>结论在最前，选项在最后，建议只有一个</strong>。不要给老板五个选项让他自己选——那是把决策成本转嫁回去。你要做的是帮他缩小到两个，并明确推荐一个。</p>
+
+  <div class="callout">
+    <span class="label">信任公式（简化版）</span>
+    <p>信任 = （可靠 × 坦诚）÷ 自我导向。</p>
+    <p>可靠是按时交付，坦诚是坏消息早说，自我导向是“这事对我有什么好处”的味道。三者里，<strong>坦诚最便宜，也最容易被忽略</strong>。</p>
+  </div>
+
+  <h3>承诺管理：不要说“我尽快”</h3>
+  <p>“尽快”“马上”“这周吧”这些词，在你嘴里是“我会努力”，在老板耳朵里是“他没有计划”。</p>
+  <table>
+    <thead><tr><th>模糊承诺</th><th>可管理承诺</th></tr></thead>
+    <tbody>
+      <tr><td>“我尽快看一下。”</td><td>“我今天下班前给你初步结论，明天中午前给完整方案。”</td></tr>
+      <tr><td>“这个应该不难。”</td><td>“核心逻辑半天，边界情况我还没评估，明天上午给你准确估时。”</td></tr>
+      <tr><td>“我尽量周五完成。”</td><td>“周五能完成 80%，剩下 20% 需要下周一，你要不要先看 80% 的版本？”</td></tr>
+    </tbody>
+  </table>
+  <p>给区间，比给一个乐观的数字更专业。因为区间传达的是：<strong>我评估过风险</strong>。</p>
+
+  <h3>1:1 怎么开才不浪费</h3>
+  <p>很多人把 1:1 开成“进度汇报”，那是最亏的用法——进度用文字同步就够了。1:1 应该用来谈那些不方便在群里说的事：</p>
+  <ul>
+    <li><strong>判断类：</strong>“下季度你觉得团队最该补的短板是什么？”</li>
+    <li><strong>关系类：</strong>“上次那个方案我否得比较直接，你当时什么感受？”</li>
+    <li><strong>发展类：</strong>“我想往技术负责人走，你觉得我现在最缺哪一块？”</li>
+    <li><strong>对齐类：</strong>“我现在同时在做三件事，如果只能保两件，你希望我放掉哪个？”</li>
+  </ul>
+  <p>最后一句尤其重要。它既帮你减负，也让老板明确你的优先级——<strong>不做的事，必须由他来确认</strong>，否则最后背锅的还是你。</p>
+
+  <h3>晋升：别等述职才开始准备</h3>
+  <p>晋升不是“我做了很多事”，而是“我已经在按下一级的标准工作，并且有证据”。证据需要平时积累：</p>
+  <ol class="steps">
+    <li><b>记录影响，而不是任务</b><p>不要写“负责支付模块”，写“把支付失败率从 8% 降到 2%，每年减少约 X 万损失”。</p></li>
+    <li><b>收集他人的话</b><p>合作方的正面反馈、你在跨团队会议上的推动，都可以截图存档。到时候你不需要自夸，只需要引用。</p></li>
+    <li><b>提前半年让老板知道</b><p>“我想明年尝试晋升，你觉得我还差什么？”——这句话会让他在接下来的项目里，有意识地给你机会。</p></li>
+  </ol>
+
+  <div class="myth">
+    <b>一个常见误区</b>
+    <p><strong>“只要活干得好，老板自然会看到。”</strong>老板看到的是<strong>结果</strong>，不是你的<strong>过程</strong>。你不说，他真的不知道你为了这个结果熬了几个晚上、排除了多少坑。表达贡献不是邀功，是提供信息。</p>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 下次 1:1 之前</span>
+    <h4>准备三个问题，而不是三页进度</h4>
+    <label class="check"><input type="checkbox" data-key="c8-1"><span>一个判断类问题（团队/业务的短板）</span></label>
+    <label class="check"><input type="checkbox" data-key="c8-2"><span>一个对齐类问题（优先级/资源）</span></label>
+    <label class="check"><input type="checkbox" data-key="c8-3"><span>一个发展类问题（我缺什么）</span></label>
+    <label class="check"><input type="checkbox" data-key="c8-4"><span>会后再发一条文字总结：结论 + 我接下来做什么</span></label>
+    <p style="margin-top:12px">最后这条会让老板觉得“这个人靠谱”，成本只要三分钟。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>向上管理是降低合作成本，不是讨好。</li>
+      <li>分清同步、求助、决策，求助必须说清“需要你做什么”。</li>
+      <li>坏消息早说，带两个选项和一个建议。</li>
+      <li>用区间承诺替代“尽快”，让老板可预期。</li>
+      <li>1:1 谈判断、关系和优先级，不要用来汇报进度。</li>
+    </ul>
+  </div>
+</article>
+
+<div class="part-divider" id="part3">
+  <span class="p-num">PART 03</span>
+  <h2>想明白再动手</h2>
+  <p>大部分返工，不是做错了，是解决错了问题。</p>
+</div>
+
+<article class="chapter" id="ch09">
+  <header class="ch-head">
+    <div class="ch-num">09</div>
+    <div class="ch-kicker">第九章 · 思维</div>
+    <h2>问题定义：<br>在动手之前，先确认你解的是对的问题</h2>
+    <p class="ch-lead">“帮我加个导出功能。”——这句话里，至少藏着五种完全不同的需求。做错一种，就是两周白干。</p>
+  </header>
+
+  <p class="lead-in">工程师的核心价值，不是把需求实现出来，而是<strong>在实现之前，判断这个需求值不值得做、有没有更便宜的做法</strong>。</p>
+
+  <h3>症状不是问题</h3>
+  <p>“客服每天被问 50 次订单到哪了”——这是症状。问题是“用户在下单后缺少可预期的物流信息”。</p>
+  <p>直接解症状，你会做一个“订单查询页面”；解问题，你可能会做一条发货短信，或者一个预计到达时间。后者成本更低，效果更好。</p>
+
+  <table>
+    <thead><tr><th style="width:46%">用户说的</th><th>可能是真正的问题</th></tr></thead>
+    <tbody>
+      <tr><td>“能不能加个导出 Excel？”</td><td>他想拿数据去做分析 / 给老板汇报 / 导进另一个系统</td></tr>
+      <tr><td>“这个页面太慢了。”</td><td>首屏加载慢？还是某个操作等待久？还是他觉得流程步骤太多？</td></tr>
+      <tr><td>“能不能支持批量操作？”</td><td>数据量太大？还是重复劳动太多？还是缺少自动化入口？</td></tr>
+      <tr><td>“我想要一个 dashboard。”</td><td>他需要向谁证明什么？还是需要及时发现异常？</td></tr>
+    </tbody>
+  </table>
+
+  <h3>三个追问工具</h3>
+
+  <h4>工具一：连续追问“为什么”</h4>
+  <p>不是问五次“为什么”就一定有答案，而是每次追问都要逼近<strong>可验证的事实</strong>：</p>
+  <ul>
+    <li>“为什么要导出？”——“要做月度分析。”</li>
+    <li>“分析什么？”——“看哪些商品退款率高。”</li>
+    <li>“现在怎么做的？”——“手工复制，一次要两小时。”</li>
+    <li>“多久做一次？”——“每月一次。”</li>
+  </ul>
+  <p>结论：一个月用一次、花两小时的事，可能不值得做一个完整的导出系统。一个定时邮件报表，成本低得多。</p>
+
+  <h4>工具二：反事实提问</h4>
+  <p>“如果这个功能明天上线，会发生什么？如果永远不做，又会怎样？”</p>
+  <p>这两个问题能迅速区分<strong>“想要”和“需要”</strong>。很多需求，永远不做的后果只是“有点不方便”；而有些小需求，不做的后果是“客户流失”。</p>
+
+  <h4>工具三：把“做不了”翻译成约束</h4>
+  <p>“做不了”是一句没有信息量的话。它背后通常是一个具体约束：</p>
+  <table>
+    <thead><tr><th>“做不了”</th><th>真实约束</th><th>可能的解法</th></tr></thead>
+    <tbody>
+      <tr><td>“这个需求做不了”</td><td>现有数据模型不支持</td><td>加一张关联表，或先做数据迁移</td></tr>
+      <tr><td>“时间不够”</td><td>人力被别的项目占满</td><td>砍范围、分期上线、借人</td></tr>
+      <tr><td>“性能扛不住”</td><td>某个查询没有索引 / 全表扫描</td><td>加索引、加缓存、异步化</td></tr>
+      <tr><td>“这个不能改”</td><td>下游有强依赖，改了会破坏契约</td><td>加新字段、双写过渡、版本化</td></tr>
+    </tbody>
+  </table>
+  <p>把“做不了”说成“在 X 约束下做不了，除非 Y”，你立刻从<strong>阻力</strong>变成了<strong>合作者</strong>。</p>
+
+  <div class="callout">
+    <span class="label">一个说话习惯</span>
+    <p>把“这个做不了”换成：<strong>“能做，但需要满足 A 和 B；如果 A 不成立，我们得换个做法。”</strong></p>
+    <p>前者关闭对话，后者打开方案空间。而且大多数时候，你确实是“能做”的，只是代价没被说清楚。</p>
+  </div>
+
+  <h3>用 JTBD 看需求：用户“雇”你的功能做什么</h3>
+  <p>Jobs To Be Done 的核心是：用户不是买产品，是雇它来完成一个任务。</p>
+  <p>“加导出”这个需求，用户真正要完成的 job 可能是：</p>
+  <ul>
+    <li><strong>功能型：</strong>把数据搬到另一个系统里继续处理。</li>
+    <li><strong>情感型：</strong>不想再手工复制，怕出错被领导骂。</li>
+    <li><strong>社交型：</strong>想在月度会上拿出一张好看的报表。</li>
+  </ul>
+  <p>三种 job，对应三种完全不同的方案。如果你只做“导出 CSV”，可能只满足了第一种。</p>
+
+  <h3>定义成功：没有指标的需求，无法验收</h3>
+  <p>在动手前，和需求方一起写下这句话：</p>
+  <blockquote>“这个功能上线后，如果 ______ 从 ______ 变成 ______，就算成功。”</blockquote>
+  <p>填不出来，说明这个需求还没想清楚。填得出来，后面所有的取舍都有了依据——包括砍功能。</p>
+
+  <div class="grid two">
+    <div class="card"><h4>坏指标</h4><p>“提升用户体验”“提高效率”“让用户更满意”。无法验证，也无法指导设计。</p></div>
+    <div class="card"><h4>好指标</h4><p>“客服关于物流的工单从每天 50 单降到 20 单”“月度报表准备时间从 2 小时降到 10 分钟”。</p></div>
+  </div>
+
+  <h3>案例：一个“简单”的需求</h3>
+  <div class="compare">
+    <div class="bad-side">
+      <div class="side-label">✕ 直接开工</div>
+      <p class="say"><span class="who">产品：</span>“客户要一个批量删除功能。”</p>
+      <p class="say"><span class="who">你：</span>“好，我排一下期。”</p>
+      <p class="note-under">两周后做完，客户说：“我不是要删，我是要批量归档，删了就找不回来了。”</p>
+    </div>
+    <div class="good-side">
+      <div class="side-label">✓ 先定义</div>
+      <p class="say"><span class="who">你：</span>“他们删掉之后，还需要能查到吗？”</p>
+      <p class="say"><span class="who">产品：</span>“应该要吧，财务可能还要对账。”</p>
+      <p class="say"><span class="who">你：</span>“那其实不是删除，是‘从列表里隐藏但保留记录’。这个改动小很多，而且不会丢数据。要不要先确认一下？”</p>
+      <p class="note-under">一个提问，省掉两周，还避免了一次数据事故。</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 下一次需求评审</span>
+    <h4>在说“怎么做”之前，先问四个问题</h4>
+    <label class="check"><input type="checkbox" data-key="c9-1"><span>你想解决的场景，能举一个具体例子吗？</span></label>
+    <label class="check"><input type="checkbox" data-key="c9-2"><span>现在没有这个功能，你们是怎么做的？</span></label>
+    <label class="check"><input type="checkbox" data-key="c9-3"><span>如果只能解决一半，你最想先要哪一半？</span></label>
+    <label class="check"><input type="checkbox" data-key="c9-4"><span>上线后，我们用什么数字判断它有用？</span></label>
+    <p style="margin-top:12px">把这四个问题存到备忘录里。它们能挡掉你未来 30% 的无效工作。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>用户给的是症状和方案，不是问题。要往下追一层。</li>
+      <li>连续追问要逼近事实：谁、多久一次、现在怎么做、代价多大。</li>
+      <li>把“做不了”翻译成“在什么约束下做不了，除非怎样”。</li>
+      <li>用 JTBD 看功能型、情感型、社交型三种任务。</li>
+      <li>没有成功指标的需求，不要开始做。</li>
+    </ul>
+  </div>
+</article>
+
+<article class="chapter" id="ch10">
+  <header class="ch-head">
+    <div class="ch-num">10</div>
+    <div class="ch-kicker">第十章 · 思维</div>
+    <h2>决策与优先级：<br>不是所有事都值得做好</h2>
+    <p class="ch-lead">工程师的本能是把每件事做到 100 分。但职场里真正稀缺的不是质量，是<strong>把有限的精力放在正确的事情上</strong>。</p>
+  </header>
+
+  <p class="lead-in">一个残酷的换算：把一件不重要的事从 80 分做到 95 分，不如把一件重要的事从 0 做到 60 分。</p>
+
+  <h3>先判断：这个决定可逆吗</h3>
+  <p>贝索斯把决策分成两类，这个分类能帮你省掉大量纠结：</p>
+
+  <div class="grid two">
+    <div class="card">
+      <h4>Type 1 · 不可逆</h4>
+      <p>数据模型、技术栈、组织架构、对外承诺。做错了要花几倍代价挽回。<br><strong>做法：慢一点，多找人，写文档，想清楚最坏情况。</strong></p>
+    </div>
+    <div class="card">
+      <h4>Type 2 · 可逆</h4>
+      <p>接口命名、页面布局、内部工具、一次实验。错了改回来就行。<br><strong>做法：快，找 70% 的信息就动手，用结果修正判断。</strong></p>
+    </div>
+  </div>
+
+  <p>大多数人的问题，是把 Type 2 当 Type 1 来纠结（一个变量名讨论半小时），又把 Type 1 当 Type 2 来草率（拍脑袋选了个数据库）。</p>
+
+  <div class="callout">
+    <span class="label">70% 原则</span>
+    <p>当你掌握 70% 的信息时，就该做决定了。等到 90%，机会通常已经没了。<strong>剩下 30%，靠做完之后快速修正来补。</strong></p>
+  </div>
+
+  <h3>优先级：用二维图代替感觉</h3>
+  <figure class="diagram">
+    <svg viewBox="0 0 560 340" role="img" aria-label="影响与成本四象限">
+      <g font-family="sans-serif">
+        <line x1="70" y1="290" x2="520" y2="290" stroke="var(--line-strong)"/>
+        <line x1="70" y1="290" x2="70" y2="40" stroke="var(--line-strong)"/>
+        <line x1="295" y1="40" x2="295" y2="290" stroke="var(--line)" stroke-dasharray="4 5"/>
+        <line x1="70" y1="165" x2="520" y2="165" stroke="var(--line)" stroke-dasharray="4 5"/>
+
+        <text x="505" y="312" font-size="10.5" fill="var(--muted)" text-anchor="end">实施成本 →</text>
+        <text x="58" y="52" font-size="10.5" fill="var(--muted)" text-anchor="end" transform="rotate(-90 58 52)">影响 →</text>
+
+        <text x="180" y="72" font-size="12.5" font-weight="700" fill="var(--good)" text-anchor="middle">立刻做</text>
+        <text x="180" y="90" font-size="9.5" fill="var(--muted)" text-anchor="middle">高影响 · 低成本</text>
+        <text x="405" y="72" font-size="12.5" font-weight="700" fill="var(--accent)" text-anchor="middle">规划做</text>
+        <text x="405" y="90" font-size="9.5" fill="var(--muted)" text-anchor="middle">高影响 · 高成本</text>
+        <text x="180" y="198" font-size="12.5" font-weight="700" fill="var(--muted)" text-anchor="middle">顺手做</text>
+        <text x="180" y="216" font-size="9.5" fill="var(--faint)" text-anchor="middle">低影响 · 低成本</text>
+        <text x="405" y="198" font-size="12.5" font-weight="700" fill="var(--bad)" text-anchor="middle">不做</text>
+        <text x="405" y="216" font-size="9.5" fill="var(--faint)" text-anchor="middle">低影响 · 高成本</text>
+      </g>
+    </svg>
+    <figcaption>先问“影响有多大”，再问“成本有多高”。顺序反了，就会一直做容易的事。</figcaption>
+  </figure>
+
+  <p>如果非要打分，可以用一个粗糙但有效的公式：</p>
+  <div class="tpl">
+    <div class="tpl-head"><span>RICE 优先级</span><button class="copy">复制</button></div>
+    <pre>RICE = (覆盖人数 × 影响程度 × 信心) ÷ 投入成本
+
+覆盖人数：受影响用户/团队数（1–10）
+影响程度：0.25 微小 / 0.5 一般 / 1 明显 / 2 极大 / 3 颠覆
+信心：100% / 80% / 50%
+投入：人日
+
+例：(8 × 1 × 0.8) ÷ 5 = 1.28</pre>
+  </div>
+  <p>RICE 的价值不在于算出精确数字，而在于<strong>逼你把“感觉重要”拆成四个可讨论的量</strong>。团队吵起来时，通常是因为有人在说影响，有人在说成本。</p>
+
+  <h3>沉没成本：已经付出的，不构成继续的理由</h3>
+  <p>“这个方案我们已经做了两个月了，现在换太可惜。”——两个月是沉没成本，它不会因为你继续投入而回来。</p>
+  <p>正确的问法只有一个：<strong>“如果今天从零开始，我还会选这个方案吗？”</strong></p>
+  <p>如果答案是否定的，那么继续投入的每一天，都是在为过去的错误追加投资。</p>
+
+  <div class="callout warm">
+    <span class="label">一个实用技巧</span>
+    <p>把“要不要继续”换成“如果现在有人拿着同样的方案来找我，我会批准吗”。换一个视角，情绪就退场了。</p>
+  </div>
+
+  <h3>复盘：不是写检讨，是提取可复用的判断</h3>
+  <p>大多数复盘会开成追责会，原因是问题问错了。不要问“谁的错”，要问“哪个环节的假设错了”。</p>
+
+  <ol class="steps">
+    <li><b>预期是什么</b><p>上线前我们预计会发生什么？写下来，不要事后修改记忆。</p></li>
+    <li><b>实际发生了什么</b><p>只写事实和时间线，不写评价。</p></li>
+    <li><b>差异在哪</b><p>哪一部分和预期不一样？是量级不同，还是方向相反？</p></li>
+    <li><b>为什么没预料到</b><p>是信息不足、判断偏差，还是流程缺失？这一层要挖到系统性原因。</p></li>
+    <li><b>什么可以复用</b><p>下次遇到类似情况，哪个动作应该提前做？把它变成清单或自动化。</p></li>
+  </ol>
+
+  <div class="callout plain">
+    <span class="label">复盘的质量标准</span>
+    <p>好的复盘产出的是<strong>流程改动</strong>，不是“以后要更细心”。如果结论落不到具体动作上，这次复盘就白开了。</p>
+  </div>
+
+  <h3>用区间表达不确定性</h3>
+  <p>“这个大概要三天”是一个点估计，几乎一定不准。更专业的说法是：</p>
+  <blockquote>“最乐观两天，最可能四天，如果第三方接口有问题可能要一周。我按四天排，第五天作为缓冲。”</blockquote>
+  <p>区间不是不自信，是<strong>把风险显性化</strong>。老板要的从来不是“准确”，是“可预期”。</p>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 建立决策日志</span>
+    <h4>记录三个正在做的决定</h4>
+    <p>用三行字记下：</p>
+    <label class="check"><input type="checkbox" data-key="c10-1"><span>决定是什么，属于可逆还是不可逆</span></label>
+    <label class="check"><input type="checkbox" data-key="c10-2"><span>我当时的关键假设是什么</span></label>
+    <label class="check"><input type="checkbox" data-key="c10-3"><span>三个月后回来看，这个假设成立吗</span></label>
+    <p style="margin-top:12px">坚持半年，你会发现自己有一类反复出现的判断偏差——那比任何方法论都值钱。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>先分可逆/不可逆，再决定要想多久。</li>
+      <li>70% 信息就行动，剩下的靠快速修正。</li>
+      <li>优先级先看影响，再看成本；RICE 用来把争论拆开。</li>
+      <li>沉没成本不构成继续的理由，问“今天从零还会选吗”。</li>
+      <li>复盘要产出流程改动，不是“以后更细心”。</li>
+    </ul>
+  </div>
+</article>
+
+<article class="chapter" id="ch11">
+  <header class="ch-head">
+    <div class="ch-num">11</div>
+    <div class="ch-kicker">第十一章 · 思维</div>
+    <h2>情绪与内耗：<br>你不是累，你是在跟自己打架</h2>
+    <p class="ch-lead">写了一天的代码，其实没写几行。真正消耗你的，是那些在脑子里循环播放的对话：他那句话什么意思？我是不是搞砸了？我是不是不适合这行？</p>
+  </header>
+
+  <p class="lead-in">情绪不是需要被消灭的敌人，它是<strong>一套报警系统</strong>。问题不在于你有情绪，而在于你把警报当成了事实。</p>
+
+  <h3>情绪 ABC：事件不决定反应，解释才决定</h3>
+  <figure class="diagram">
+    <svg viewBox="0 0 560 220" role="img" aria-label="情绪ABC模型">
+      <g font-family="sans-serif">
+        <rect x="30" y="70" width="130" height="70" rx="8" fill="var(--panel-2)" stroke="var(--line-strong)"/>
+        <text x="95" y="100" font-size="12.5" font-weight="700" fill="var(--ink)" text-anchor="middle">A 事件</text>
+        <text x="95" y="120" font-size="10" fill="var(--muted)" text-anchor="middle">老板说“再改改”</text>
+
+        <rect x="215" y="70" width="130" height="70" rx="8" fill="var(--warm-soft)" stroke="var(--warm)"/>
+        <text x="280" y="100" font-size="12.5" font-weight="700" fill="var(--warm)" text-anchor="middle">B 解释</text>
+        <text x="280" y="120" font-size="10" fill="var(--muted)" text-anchor="middle">“他觉得我不行”</text>
+
+        <rect x="400" y="70" width="130" height="70" rx="8" fill="var(--bad-soft)" stroke="var(--bad)"/>
+        <text x="465" y="100" font-size="12.5" font-weight="700" fill="var(--bad)" text-anchor="middle">C 反应</text>
+        <text x="465" y="120" font-size="10" fill="var(--muted)" text-anchor="middle">焦虑、失眠、想辞职</text>
+
+        <path d="M160,105 L210,105" stroke="var(--line-strong)" stroke-width="1.2" marker-end="url(#ar2)"/>
+        <path d="M345,105 L395,105" stroke="var(--line-strong)" stroke-width="1.2" marker-end="url(#ar2)"/>
+        <defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="var(--line-strong)"/></marker></defs>
+
+        <text x="280" y="182" font-size="10.5" fill="var(--faint)" text-anchor="middle">真正能改的是 B：还有没有别的解释？</text>
+        <text x="280" y="200" font-size="10.5" fill="var(--faint)" text-anchor="middle">“再改改”也可能只是“这个按钮颜色不对”</text>
+      </g>
+    </svg>
+    <figcaption>同一件事，换一个解释，情绪就换了一个方向。这不是自我安慰，是修正信息误差。</figcaption>
+  </figure>
+
+  <p>常见的认知偏差有三种，几乎构成了大部分内耗：</p>
+  <ul>
+    <li><strong>读心术：</strong>“他没回我消息，一定是对我有意见。”——事实可能只是他在开会。</li>
+    <li><strong>灾难化：</strong>“这次汇报讲砸了，我的职业生涯完了。”——把一次事件放大成终身判决。</li>
+    <li><strong>以偏概全：</strong>“这个 bug 我没查出来，我根本不适合做技术。”</li>
+  </ul>
+  <p>打断它们的方法很朴素：<strong>问一句“证据是什么”</strong>。如果找不到证据，那它只是一个想法，不是事实。</p>
+
+  <h3>反刍：越想越难受的循环</h3>
+  <p>反刍和思考的区别是：<strong>思考会产出下一步动作，反刍只会产出更多反刍。</strong></p>
+  <p>如果你已经在同一个场景里想了超过 20 分钟，还没有任何行动，那基本可以判定为反刍。三个打断方法：</p>
+
+  <div class="grid three">
+    <div class="card"><h4>写下来</h4><p>把循环的那句话原样写在纸上。一旦变成文字，它就从“弥漫的情绪”变成了“一个可以审视的句子”。</p></div>
+    <div class="card"><h4>设一个“担忧时间”</h4><p>告诉自己：今晚 8 点专门想 15 分钟。现在先干活。多数时候到了 8 点，你已经不想想了。</p></div>
+    <div class="card"><h4>换身体状态</h4><p>走 10 分钟、洗个脸、做 20 个深蹲。情绪挂在身体上，动身体比讲道理快。</p></div>
+  </div>
+
+  <h3>冒名顶替综合征</h3>
+  <p>“他们迟早会发现我其实什么都不懂。”——这句话，几乎每个认真做事的人都对自己说过。越往上走，越明显，因为你会越来越频繁地进入“不懂的领域”。</p>
+  <p>三个校准方法：</p>
+  <ol class="steps">
+    <li><b>区分“不懂”和“不行”</b><p>不懂某个技术，是信息缺口；不行，是能力缺陷。前者可以补，后者需要证据。你有证据吗？</p></li>
+    <li><b>记录“做成的事”</b><p>开一个文档，只记别人感谢你、你解决了什么。低谷时翻一翻，比自我鼓励有用。</p></li>
+    <li><b>把评价标准从“我懂多少”换成“我解决了什么”</b><p>没有人要求你懂所有细节，大家要的是问题被解决。</p></li>
+  </ol>
+
+  <div class="callout">
+    <span class="label">一个反直觉的事实</span>
+    <p>真正“什么都不懂”的人，通常不会焦虑——他们不知道自己不知道。会焦虑，恰恰说明你的认知边界在扩大。</p>
+  </div>
+
+  <h3>精力管理，比时间管理更重要</h3>
+  <p>你一天有 8 小时工作时间，但真正能写出好代码的可能只有 3 小时。把重要的事放在精力最好的时段，比延长工作时间有效得多。</p>
+  <table>
+    <thead><tr><th style="width:110px">精力状态</th><th>适合做什么</th><th>不适合做什么</th></tr></thead>
+    <tbody>
+      <tr><td><strong>高</strong>（上午）</td><td>设计、重构、难题、写文档</td><td>回消息、开会</td></tr>
+      <tr><td><strong>中</strong>（下午）</td><td>写业务代码、Code Review、协作</td><td>做重大决策</td></tr>
+      <tr><td><strong>低</strong>（傍晚）</td><td>整理、回复、机械性工作</td><td>学习和深度思考</td></tr>
+    </tbody>
+  </table>
+  <p>还有一件事常被忽略：<strong>切换成本</strong>。被打断一次，平均需要 15 分钟才能回到原来的状态。所以保护一整块不被打扰的时间，比多工作两小时更有产出。</p>
+
+  <h3>边界：不会说“不”，就会被默认“可以”</h3>
+  <p>每次你默默接下不属于你的活，你都在训练别人：<em>这件事可以交给他</em>。等到你撑不住时，别人不会觉得你辛苦，只会觉得你“怎么突然不行了”。</p>
+  <div class="tpl">
+    <div class="tpl-head"><span>不伤关系的拒绝</span><button class="copy">复制</button></div>
+    <pre>“我现在手上在做 A（本周必须交付）和 B（大促相关）。
+如果接 C，A 就要延到下周，你能接受吗？
+或者我们看看 C 能不能拆小，我只做最紧急的那部分。”</pre>
+  </div>
+  <p>关键不是拒绝，是<strong>把选择权交回去</strong>。你不是在说“我不干”，你是在说“资源有限，你来排优先级”。</p>
+
+  <h3>倦怠的三个早期信号</h3>
+  <ul>
+    <li><strong>情绪耗竭：</strong>还没开始工作就觉得累，周日晚上开始焦虑。</li>
+    <li><strong>去人格化：</strong>开始用“就这样吧”“反正也没人在意”来描述工作。</li>
+    <li><strong>效能感下降：</strong>以前能轻松搞定的事，现在觉得做不动，并且开始怀疑自己。</li>
+  </ul>
+  <p>出现两个以上，不要靠“再撑一撑”解决。先减载，再谈恢复。倦怠不是意志力问题，是资源耗尽。</p>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 今晚 10 分钟</span>
+    <h4>拆解一个正在消耗你的念头</h4>
+    <label class="check"><input type="checkbox" data-key="c11-1"><span>写下那句循环的话（原话，不要美化）</span></label>
+    <label class="check"><input type="checkbox" data-key="c11-2"><span>它是事实，还是解释？证据是什么？</span></label>
+    <label class="check"><input type="checkbox" data-key="c11-3"><span>还有哪两种解释同样成立？</span></label>
+    <label class="check"><input type="checkbox" data-key="c11-4"><span>如果朋友遇到同样的事，我会对他说什么？</span></label>
+    <p style="margin-top:12px">最后一句是心理咨询里最有效的问题之一：我们对别人永远比对自己宽容，而那种宽容通常更接近事实。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>情绪是报警器，不是事实。改变解释，就能改变反应。</li>
+      <li>反刍不产出行动，用书写、时间盒、换身体状态打断它。</li>
+      <li>冒名顶替感来自认知边界扩大，不是能力不足。</li>
+      <li>管精力而不是管时间，保护整块的深度工作时间。</li>
+      <li>不会拒绝，就会被默认可以。把优先级的选择权交回去。</li>
+    </ul>
+  </div>
+</article>
+
+<div class="part-divider" id="part4">
+  <span class="p-num">PART 04</span>
+  <h2>长期复利</h2>
+  <p>前三年靠努力，后十年靠积累的方向。</p>
+</div>
+
+<article class="chapter" id="ch12">
+  <header class="ch-head">
+    <div class="ch-num">12</div>
+    <div class="ch-kicker">第十二章 · 复利</div>
+    <h2>职业叙事：<br>让别人一句话记住你擅长什么</h2>
+    <p class="ch-lead">如果同事要向别人推荐你，他会怎么说？“技术挺好的”——这句话等于没说。你需要一个更具体的版本。</p>
+  </header>
+
+  <p class="lead-in">个人品牌不是包装，是<strong>让你的专业能力可被检索、可被转述、可被信任</strong>。它的最低标准是：有人遇到某类问题时，会第一个想到你。</p>
+
+  <h3>职业叙事的三层结构</h3>
+  <p>一个好的自我介绍，不是履历复述，而是三层递进：</p>
+
+  <div class="tpl">
+    <div class="tpl-head"><span>三层叙事模板</span><button class="copy">复制</button></div>
+    <pre>【第一层：我做什么】
+“我是做交易系统后端的，主要解决高并发下的数据一致性问题。”
+
+【第二层：我擅长什么】
+“过去两年我主导了三次大促的稳定性改造，比较擅长在不动主链路的前提下做渐进式重构。”
+
+【第三层：证据】
+“最近一次是把支付成功率从 92% 提到 97%，写成了内部文档，现在有三个团队在用。”</pre>
+  </div>
+
+  <p>三层缺一不可：只有第一层，你是岗位说明书；只有第二层，你是自我评价；只有第三层，你是流水账。<strong>三层合起来，才是一个可以被转述的“人设”</strong>——注意，这里的“人设”是褒义，指别人能准确复述你的价值。</p>
+
+  <h3>三种可以积累的资产</h3>
+  <figure class="diagram">
+    <svg viewBox="0 0 560 250" role="img" aria-label="个人品牌的三种资产">
+      <g font-family="sans-serif">
+        <rect x="40" y="50" width="150" height="150" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/>
+        <text x="115" y="86" font-size="13" font-weight="700" fill="var(--accent)" text-anchor="middle">作品</text>
+        <text x="115" y="112" font-size="10" fill="var(--muted)" text-anchor="middle">开源项目 / 系统</text>
+        <text x="115" y="130" font-size="10" fill="var(--muted)" text-anchor="middle">文档 / 工具</text>
+        <text x="115" y="148" font-size="10" fill="var(--muted)" text-anchor="middle">可被看到的成果</text>
+
+        <rect x="205" y="50" width="150" height="150" rx="10" fill="var(--warm-soft)" stroke="var(--warm)" stroke-width="1"/>
+        <text x="280" y="86" font-size="13" font-weight="700" fill="var(--warm)" text-anchor="middle">观点</text>
+        <text x="280" y="112" font-size="10" fill="var(--muted)" text-anchor="middle">文章 / 分享 / 复盘</text>
+        <text x="280" y="130" font-size="10" fill="var(--muted)" text-anchor="middle">你对问题的判断</text>
+        <text x="280" y="148" font-size="10" fill="var(--muted)" text-anchor="middle">可被检索</text>
+
+        <rect x="370" y="50" width="150" height="150" rx="10" fill="var(--good-soft)" stroke="var(--good)" stroke-width="1"/>
+        <text x="445" y="86" font-size="13" font-weight="700" fill="var(--good)" text-anchor="middle">关系</text>
+        <text x="445" y="112" font-size="10" fill="var(--muted)" text-anchor="middle">合作过的人</text>
+        <text x="445" y="130" font-size="10" fill="var(--muted)" text-anchor="middle">愿意为你背书的人</text>
+        <text x="445" y="148" font-size="10" fill="var(--muted)" text-anchor="middle">可被推荐</text>
+
+        <text x="280" y="228" font-size="10.5" fill="var(--faint)" text-anchor="middle">三者互相加强：作品带来观点，观点带来关系，关系带来机会</text>
+      </g>
+    </svg>
+    <figcaption>不要只攒作品。作品没人知道，等于没有；观点没人信，等于噪音。</figcaption>
+  </figure>
+
+  <h3>把经历写成“影响”，而不是“职责”</h3>
+  <p>这是简历和晋升材料里最常见的问题。看两组对比：</p>
+
+  <div class="compare">
+    <div class="bad-side">
+      <div class="side-label">✕ 职责描述</div>
+      <p class="say">负责订单系统的开发与维护；参与架构设计；优化系统性能；配合团队完成需求。</p>
+      <p class="note-under">读完不知道你有多重要，也不知道你做得好不好。</p>
+    </div>
+    <div class="good-side">
+      <div class="side-label">✓ 影响描述</div>
+      <p class="say">主导订单系统拆分，把单库 40 张表按域拆成 3 个服务，发布频率从每周 1 次提升到每天 3 次；大促期间 P99 从 1.2s 降到 240ms。</p>
+      <p class="note-under">有动作、有范围、有数字、有结果。</p>
+    </div>
+  </div>
+
+  <div class="tpl">
+    <div class="tpl-head"><span>STAR + 数字</span><button class="copy">复制</button></div>
+    <pre>S（情境）：大促前订单库成为瓶颈，单表 8000 万行，查询超时。
+T（任务）：在不停止业务的前提下完成拆分，保证大促稳定。
+A（行动）：按业务域拆库，做双写迁移，灰度 3 个业务方，回滚预案演练 2 次。
+R（结果）：P99 1.2s → 240ms，大促零故障，方案被另外 2 个团队复用。</pre>
+  </div>
+
+  <p>如果实在没有数字，就用<strong>范围</strong>和<strong>对比</strong>：“原来需要 3 个人做一周，现在 1 个人半天”“从 0 到 1 搭建”“被 3 个团队采用”。</p>
+
+  <h3>最小可持续的输出节奏</h3>
+  <p>很多人一想到个人品牌，就想到“要写公众号”“要做视频”，然后坚持两周就放弃。更现实的做法是<strong>把输出嵌入工作</strong>：</p>
+
+  <table>
+    <thead><tr><th style="width:120px">频率</th><th>动作</th><th>成本</th></tr></thead>
+    <tbody>
+      <tr><td><strong>每次项目后</strong></td><td>写一份复盘，发在内网/wiki</td><td>1 小时</td></tr>
+      <tr><td><strong>每月</strong></td><td>把一次排查过程整理成一篇短文</td><td>2 小时</td></tr>
+      <tr><td><strong>每季度</strong></td><td>做一次团队内分享，或提交一个开源 PR</td><td>半天</td></tr>
+      <tr><td><strong>每年</strong></td><td>更新一次职业叙事和简历，哪怕不跳槽</td><td>2 小时</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="label">一个重要提醒</span>
+    <p>输出的目的不是“涨粉”，是<strong>迫使自己把经验结构化</strong>。写不清楚，通常是因为没想清楚。哪怕只有 20 个人看，写作本身的收益也已经拿到了。</p>
+  </div>
+
+  <h3>弱连接：机会通常来自不熟的人</h3>
+  <p>社会学里有个反复被验证的结论：<strong>人们的工作机会，更多来自弱连接（不常联系的人），而不是强连接（天天见面的同事）</strong>。因为强连接和你的信息高度重叠，弱连接才连接着不同的圈子。</p>
+  <p>维护弱连接的成本很低：</p>
+  <ul>
+    <li>看到对方领域的好文章，转过去附一句“想到你之前在做的项目”。</li>
+    <li>对方发了新项目，点个赞，说一句具体的认可。</li>
+    <li>一年一次，简单同步一下你在做什么。</li>
+  </ul>
+  <p>不需要刻意经营，只需要<strong>不要断联</strong>。</p>
+
+  <div class="myth">
+    <b>常见误区</b>
+    <p><strong>“等我做出大东西再展示。”</strong>你永远等不到那一天。展示的过程本身就是迭代，早期的粗糙输出会帮你吸引到更好的建议。</p>
+    <p><strong>“自夸不好。”</strong>陈述事实不是自夸。“我把失败率降了 6 个点”是事实，“我很厉害”才是自夸。</p>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 30 分钟</span>
+    <h4>写出你的三层叙事，并找一个人试讲</h4>
+    <label class="check"><input type="checkbox" data-key="c12-1"><span>第一层：我做哪一类问题（不超过 20 字）</span></label>
+    <label class="check"><input type="checkbox" data-key="c12-2"><span>第二层：我最擅长的方式/角度是什么</span></label>
+    <label class="check"><input type="checkbox" data-key="c12-3"><span>第三层：一个带数字的证据</span></label>
+    <label class="check"><input type="checkbox" data-key="c12-4"><span>讲给一个不熟你工作的同事听，问他记住了什么</span></label>
+    <p style="margin-top:12px">如果他记住的和你想的不一样，说明你的叙事还需要改——问题不在他。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>品牌 = 可被检索的专业性，最低标准是“有人遇到这类问题会想到你”。</li>
+      <li>叙事三层：做什么、擅长什么、证据是什么。</li>
+      <li>写影响不写职责：动作、范围、数字、结果。</li>
+      <li>输出嵌入工作：复盘、短文、分享、年度更新。</li>
+      <li>机会多来自弱连接，维护成本只是“不要断联”。</li>
+    </ul>
+  </div>
+</article>
+
+<article class="chapter" id="ch13">
+  <header class="ch-head">
+    <div class="ch-num">13</div>
+    <div class="ch-kicker">第十三章 · 复利</div>
+    <h2>关系网络：<br>别在需要帮忙时才想起别人</h2>
+    <p class="ch-lead">“人脉”这个词被用坏了，听起来像交换名片。但真正有用的关系只有一种：<strong>你们彼此知道对方在做什么，并且愿意在对方开口时花十分钟。</strong></p>
+  </header>
+
+  <p class="lead-in">关系不是资源清单，是<strong>长期的小额存款</strong>。平时不存，急用时取不出来。</p>
+
+  <h3>关系的三种“存款”</h3>
+  <div class="grid three">
+    <div class="card"><h4>信息存款</h4><p>看到对他有用的文章、工具、机会，转过去。不需要寒暄，一句“想到你在做这个”就够。</p></div>
+    <div class="card"><h4>能力存款</h4><p>帮他看一个方案、排查一个 bug、review 一段代码。工程师最值钱的善意是专业时间。</p></div>
+    <div class="card"><h4>情绪存款</h4><p>他项目失败时，不落井下石，也不假惺惺鼓励，只说一句“这事儿换谁都难受”。</p></div>
+  </div>
+
+  <div class="callout">
+    <span class="label">一个判断标准</span>
+    <p>如果你和某人的全部对话都是“在吗，帮我个忙”，那你们不是关系，是交易。交易也没问题，但要知道它会在第一次拒绝时结束。</p>
+  </div>
+
+  <h3>怎么找导师：不要问“能当我导师吗”</h3>
+  <p>这句话门槛太高，对方很难答应——因为它意味着长期承诺。更有效的做法是<strong>一次一个具体问题</strong>：</p>
+
+  <div class="compare">
+    <div class="bad-side">
+      <div class="side-label">✕ 高门槛请求</div>
+      <p class="say">“您好，我很敬佩您，不知道能不能请您做我的导师，指导我的职业发展？”</p>
+      <p class="note-under">对方要想：我要投入多少时间？我了解他吗？拒绝了会不会尴尬？——大概率已读不回。</p>
+    </div>
+    <div class="good-side">
+      <div class="side-label">✓ 低门槛请求</div>
+      <p class="say">“我看了您写的那篇关于服务拆分的文章，我们团队正好在做类似的事，卡在灰度这一步。能不能占用您 20 分钟，只聊这一个问题？我把背景整理成一页发您。”</p>
+      <p class="note-under">对方只需要回答一个是/否，而且知道要付出多少。</p>
+    </div>
+  </div>
+
+  <p>聊完之后，做三件事：<strong>当天发感谢</strong>（提到具体哪句话有用）、<strong>一周后同步进展</strong>（让他知道建议生效了）、<strong>三个月后再联系</strong>（带着新的问题或结果）。</p>
+  <p>绝大多数人只做第一件。做到第三件的人，会慢慢拥有真正的导师关系。</p>
+
+  <h3>怎么成为别人的资源</h3>
+  <p>关系是双向的。如果你只索取，再好的技巧也会耗尽。三个可以主动提供的价值：</p>
+  <ul>
+    <li><strong>做连接者：</strong>“你说的这个问题，我认识一个做过的人，要不要我拉个群？”</li>
+    <li><strong>做翻译者：</strong>帮非技术的人理解技术，帮技术的人理解业务。这个位置天然稀缺。</li>
+    <li><strong>做记录者：</strong>把一次讨论整理成清晰的纪要，发给所有参与者。成本低，记忆点强。</li>
+  </ul>
+
+  <div class="callout warm">
+    <span class="label">一个容易被忽略的细节</span>
+    <p>感谢要具体。<strong>“谢谢你的建议”</strong>是礼貌，<strong>“你上次说先别急着重构，先把监控补上，我照做了，结果真的发现了一个隐藏的慢查询”</strong>是关系。</p>
+  </div>
+
+  <h3>案例：一条没有回音的求助</h3>
+  <p>一位读者给我看过他的消息记录。他给一位资深架构师发了这样一段话：</p>
+  <blockquote>“您好，我是 XX 部门的小李。我最近在做服务拆分，遇到了一些问题，想请教您。不知道您什么时候方便？”</blockquote>
+  <p>消息已读，没有回复。他得出的结论是“大牛都很冷漠”。</p>
+  <p>但问题不在对方。这条消息里有三个致命的信息缺失：<strong>不知道要花多久、不知道要解决什么、不知道拒绝了会怎样</strong>。对方要回复，就得先反问三个问题——而他一天可能收到十条这样的消息。</p>
+  <p>改成下面这样，回复率会完全不同：</p>
+  <div class="tpl">
+    <div class="tpl-head"><span>改写后的求助</span><button class="copy">复制</button></div>
+    <pre>“张老师，我们在做订单库拆分，卡在灰度这一步：
+老库和新库双写时，有一批历史订单的状态对不上。
+我看了您之前分享的迁移方案，里面提到用对账任务兜底，
+想确认一下：这个对账是按天跑还是按小时跑？会不会有漏单？
+
+如果方便，20 分钟就够。我把现状和两次失败的尝试整理成了一页文档：
+【链接】。如果不方便也完全理解，我再自己查查。”</pre>
+  </div>
+  <p>差别不在于礼貌，而在于<strong>你把对方的决策成本降到了最低</strong>：他只需要判断“这个问题我能不能答”，而不是“我要不要开始一段未知长度的对话”。</p>
+
+  <h3>关系不是越多越好</h3>
+  <p>有一个反直觉的结论：真正能在关键时刻帮你的，通常不是通讯录里那 500 个人，而是<strong>10 个左右“知道你在做什么、也愿意为你说句话”的人</strong>。</p>
+  <p>所以与其到处加微信，不如定期问自己三个问题：</p>
+  <ul>
+    <li>过去半年，我帮过谁一个具体的忙？</li>
+    <li>有谁在我遇到问题时，会愿意花 20 分钟？</li>
+    <li>如果我要换一个方向，有几个人能给我真实的信息，而不是客套的鼓励？</li>
+  </ul>
+  <p>这三个问题的答案，才是你的网络，而不是好友数量。</p>
+
+  <h3>结构洞：连接两个不相通的圈子</h3>
+  <p>社会网络研究里有个概念叫“结构洞”：两个群体之间如果没有连接，站在中间的人就拥有信息优势。</p>
+  <p>在公司里，这个位置通常是：既懂业务又懂技术的人、既在研发又和客服熟的人、既做后端又参与前端方案的人。</p>
+  <p>你不需要成为每个领域的专家，只需要<strong>成为两个领域之间那个“说得上话”的人</strong>。</p>
+
+  <h3>一对一咖啡：最低成本的深度连接</h3>
+  <p>比群聊、大会更有效的关系建立方式，是两个人聊 30 分钟。不用刻意，一句邀请就够：</p>
+  <div class="tpl">
+    <div class="tpl-head"><span>邀约模板</span><button class="copy">复制</button></div>
+    <pre>“我最近在做 X，看到你们团队在做 Y，感觉有些地方可以互相借鉴。
+要不要找个 30 分钟聊聊？我请你喝咖啡。
+我这边想请教的是：你们当时怎么解决 Z 的？”</pre>
+  </div>
+  <p>三个要素：<strong>说明为什么找你、给出明确时长、带一个具体问题</strong>。有具体问题，对方就不会觉得这是一次尴尬的社交。</p>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 本周</span>
+    <h4>给三个人发消息，不求任何东西</h4>
+    <p>选三类人各一个：</p>
+    <label class="check"><input type="checkbox" data-key="c13-1"><span>一个很久没联系的前同事（分享一条对他有用的信息）</span></label>
+    <label class="check"><input type="checkbox" data-key="c13-2"><span>一个你佩服但不太熟的人（问一个具体问题，20 分钟）</span></label>
+    <label class="check"><input type="checkbox" data-key="c13-3"><span>一个你曾经帮助过的人（同步一下近况，不推销）</span></label>
+    <p style="margin-top:12px">不要群发，不要模板感。每个人写一句只有你们之间才懂的话。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>关系是长期小额存款，别在需要时才联系。</li>
+      <li>找导师用“一次一个具体问题”，不要一上来就要长期承诺。</li>
+      <li>感谢要具体，并且同步后续进展。</li>
+      <li>做连接者、翻译者、记录者，让自己成为别人的资源。</li>
+      <li>站在两个圈子的交界处，你就拥有信息优势。</li>
+    </ul>
+  </div>
+</article>
+
+<article class="chapter" id="ch14">
+  <header class="ch-head">
+    <div class="ch-num">14</div>
+    <div class="ch-kicker">第十四章 · 复利</div>
+    <h2>学习力：<br>为什么你学了很多，却没变强</h2>
+    <p class="ch-lead">收藏了 200 篇文章，买了 6 门课，技术博客看了不少——但遇到新问题，还是不知道从哪下手。这不是学得不够，是<strong>学习方式不对</strong>。</p>
+  </header>
+
+  <p class="lead-in">技术学习容易产生“我懂了”的错觉，因为看懂代码不等于能写出来。软技能更麻烦：听懂道理不等于做得到，必须<strong>在真实情境里练</strong>。</p>
+
+  <h3>三个区：你该站在哪</h3>
+  <div class="grid three">
+    <div class="card"><h4>舒适区</h4><p>你已经会的事。做起来很顺，但没有成长。重复做，只是熟练，不是进步。</p></div>
+    <div class="card"><h4>学习区</h4><p>稍微够一够能做到。有压力但不至于崩溃。这里是唯一会发生成长的地方。</p></div>
+    <div class="card"><h4>恐慌区</h4><p>远超当前能力。硬闯只会受挫，然后得出“我不适合”的结论。</p></div>
+  </div>
+  <p>大多数人的问题不是不努力，是<strong>一直待在舒适区里重复</strong>：用熟悉的框架做熟悉的业务，写熟悉的代码。十年经验，可能只是一年经验重复了十次。</p>
+
+  <h3>刻意练习的四个条件</h3>
+  <p>“多练”不等于“刻意练习”。真正的刻意练习，必须同时满足：</p>
+  <ol class="steps">
+    <li><b>有明确的小目标</b><p>不是“提升架构能力”，而是“这次能把一个单体拆成两个服务，并保证零停机”。</p></li>
+    <li><b>难度在边缘</b><p>比当前能力高 10%–20%。太简单没成长，太难会放弃。</p></li>
+    <li><b>有即时反馈</b><p>代码有测试和 review，演讲有录像，写作有读者。没有反馈的练习，是在固化错误。</p></li>
+    <li><b>针对子技能</b><p>把“沟通能力”拆成：结构化表达、提问、处理异议。一次只练一个。</p></li>
+  </ol>
+
+  <div class="callout">
+    <span class="label">软技能的特殊性</span>
+    <p>软技能没法“看书学会”，因为它的反馈来自人，而且延迟、模糊。所以你需要的不是更多输入，是<strong>更多低风险的实战</strong>：在会上多说一次、主动写一次文档、约一次 1:1。</p>
+  </div>
+
+  <h3>费曼技巧：用“讲给外行听”检验理解</h3>
+  <p>四步，任何概念都能用：</p>
+  <ul>
+    <li>选一个概念，写在纸顶。</li>
+    <li>用<strong>不含术语</strong>的语言解释它，像讲给一个非技术朋友。</li>
+    <li>卡住的地方，就是你没真懂的地方，回去补。</li>
+    <li>再简化一遍，直到能用一句类比说清。</li>
+  </ul>
+  <p>比如“为什么需要消息队列”，术语版是“解耦、削峰、异步”；费曼版是“下单的人不用等仓库打包完才走，先把单子放进传送带，仓库慢慢处理”。后者才是真懂。</p>
+
+  <h3>知识管理：输入—加工—输出</h3>
+  <p>只输入不加工，等于把别人的书架搬进自己家，一本没读。一个最小可运行的循环：</p>
+
+  <table>
+    <thead><tr><th style="width:80px">环节</th><th>动作</th><th>标准</th></tr></thead>
+    <tbody>
+      <tr><td><strong>输入</strong></td><td>只选和工作强相关的内容，一次一个主题</td><td>能说出“我为什么要学这个”</td></tr>
+      <tr><td><strong>加工</strong></td><td>用自己的话写 3 句摘要，加一个自己的例子</td><td>不复制原文</td></tr>
+      <tr><td><strong>输出</strong></td><td>用在真实项目里，或讲给别人听</td><td>有具体应用场景</td></tr>
+    </tbody>
+  </table>
+
+  <p>判断有没有学会，只有一个标准：<strong>你能不能在没人提示的情况下，把它用出来。</strong></p>
+
+  <h3>从“会做”到“会教”：迁移的分水岭</h3>
+  <p>会做一件事，是掌握了步骤；会教一件事，是理解了<strong>为什么这些步骤有效、在什么条件下失效</strong>。</p>
+  <p>教别人有三个额外好处：</p>
+  <ul>
+    <li>逼你把隐性经验显性化，发现自己其实没想清楚的地方。</li>
+    <li>建立“专家”身份，这是最自然的影响力来源。</li>
+    <li>你会收到问题，而问题会带你去补知识的洞。</li>
+  </ul>
+  <p>所以最好的学习方式，是<strong>学完立刻讲一次</strong>：团队分享、写一篇短文、带一个新人。</p>
+
+  <h3>案例：20 小时，把“不敢提反对意见”练成“能提”</h3>
+  <p>“在会上提反对意见”听起来是一个能力，其实至少是四个子技能：</p>
+  <div class="grid two">
+    <div class="card"><h4>判断</h4><p>这个问题值不值得在会上提，还是应该会后单独说。</p></div>
+    <div class="card"><h4>组织</h4><p>用一句话说清“我的担心 + 具体场景 + 建议”。</p></div>
+    <div class="card"><h4>时机</h4><p>等对方说完，还是立刻打断；在会上，还是会后。</p></div>
+    <div class="card"><h4>承受</h4><p>被反驳、被无视、被贴上“不好合作”的标签时，怎么稳住。</p></div>
+  </div>
+  <p>如果只练“勇气”，你会一直在原地打转。正确的练法是把它拆开，一次只练一个：</p>
+  <ol class="steps">
+    <li><b>第 1 周：只练“组织”</b><p>每次开会前，写一句“我担心 X 场景下会 Y，建议 Z”。不发言，只写。目标是能在 30 秒内写完。</p></li>
+    <li><b>第 2 周：只练“时机”</b><p>在低风险的小会上，等对方说完后接一句：“我补充一个风险。”只做这一个动作。</p></li>
+    <li><b>第 3 周：只练“承受”</b><p>被反驳时，不回击，只说：“这个角度我没考虑到，我回去验证一下。”观察对方的反应，通常没有你想象的那么糟。</p></li>
+    <li><b>第 4 周：组合</b><p>在一次正式评审上完整做一次：判断、组织、选时机、接住反应。会后问一个信任的同事：“我刚才那句话，听起来怎么样？”</p></li>
+  </ol>
+  <p>20 小时不会让你变成谈判专家，但足以让你从“心跳加速、说不出口”变成“能平静地说完一句话”。<strong>软实力就是这样长出来的：不是想通了，是做过了。</strong></p>
+
+  <h3>T 型与第二曲线</h3>
+  <p>早期要深，先有一根足够长的竖线——那是你的立身之本。没有深度，广度只是浮于表面。</p>
+  <p>但到了某个阶段，单一技能的边际收益会下降。这时候需要第二曲线：<strong>用你的深度去连接另一个领域</strong>，比如技术 + 业务、技术 + 管理、技术 + 产品。</p>
+  <p>注意，第二曲线不是“转行”，是<strong>叠加</strong>。你的第一技能不会浪费，它会让你在新领域里有一个别人没有的视角。</p>
+
+  <div class="myth">
+    <b>常见误区</b>
+    <p><strong>“我要先把技术学到顶级，再考虑别的。”</strong>技术没有“顶级”那一天，而且越往上，软实力的权重越大。两条腿走路，比单腿跳到极限更稳。</p>
+    <p><strong>“学软技能就是看鸡汤。”</strong>不是。这本书里的每个模型都可以被验证：你用了 SBI，对方是不是不那么防御了？你用了 SCQA，方案是不是更容易过？</p>
+  </div>
+
+  <div class="exercise">
+    <span class="ex-label">◆ 练习 · 本月</span>
+    <h4>设计一个 20 小时的刻意练习</h4>
+    <label class="check"><input type="checkbox" data-key="c14-1"><span>选一个具体子技能（不是“沟通”，是“在会上提反对意见”）</span></label>
+    <label class="check"><input type="checkbox" data-key="c14-2"><span>设定一个可观察的成功标准</span></label>
+    <label class="check"><input type="checkbox" data-key="c14-3"><span>找一个能给反馈的人</span></label>
+    <label class="check"><input type="checkbox" data-key="c14-4"><span>安排 4 次真实场景，每次结束后记录一句复盘</span></label>
+    <p style="margin-top:12px">20 小时不足以成为专家，但足够让你从“不敢”变成“能做”。而“能做”，就是所有改变的起点。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">本章要点</span>
+    <ul>
+      <li>成长只发生在学习区，重复舒适区只是熟练。</li>
+      <li>刻意练习四条件：小目标、边缘难度、即时反馈、拆子技能。</li>
+      <li>费曼技巧检验真懂：能不能不用术语讲清楚。</li>
+      <li>知识循环：输入、加工、输出，缺一环都无效。</li>
+      <li>学完立刻教一次，是最高效的固化方式。</li>
+    </ul>
+  </div>
+</article>
+
+<article class="chapter" id="cheatsheet">
+  <header class="ch-head">
+    <div class="ch-num">◎</div>
+    <div class="ch-kicker">工具 · 速查</div>
+    <h2>模型速查表</h2>
+    <p class="ch-lead">开会前扫一眼。忘了某个模型怎么用，直接回到对应章节。建议打印这一页贴在工位上。</p>
+  </header>
+
+  <p class="lead-in">所有模型都只是脚手架。真正重要的是：<strong>在正确的场景，想起正确的那个。</strong></p>
+
+  <table class="cheat">
+    <thead><tr><th style="width:32%">模型 / 结构</th><th style="width:24%">用在哪</th><th>一句话记住</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="3">表达</td></tr>
+      <tr><td>金字塔原理</td><td>汇报、文档</td><td>结论先行，以上统下，归类分组，逻辑递进</td></tr>
+      <tr><td>30 秒公式</td><td>会上发言、电梯沟通</td><td>结论 — 依据 — 请求，缺一不可</td></tr>
+      <tr><td>SCQA</td><td>方案汇报、说服</td><td>情境 — 冲突 — 疑问 — 答案</td></tr>
+      <tr><td>问题—选项—建议</td><td>要决策</td><td>不要只带问题，带两个选项和一个建议</td></tr>
+      <tr><td>钩子—承诺—三点—回扣</td><td>演讲、分享</td><td>三个要点，各配一个例子</td></tr>
+      <tr><td>复述—分类—收口</td><td>应对提问</td><td>先确认问题，再决定答不答得了</td></tr>
+
+      <tr class="grp"><td colspan="3">写作</td></tr>
+      <tr><td>设计文档骨架</td><td>技术方案</td><td>最有价值的是“备选方案与取舍”</td></tr>
+      <tr><td>周报三行</td><td>状态同步</td><td>结果 — 计划 — 风险与求助</td></tr>
+      <tr><td>提问模板</td><td>求助</td><td>背景、现象、已尝试、最小复现、我的猜测</td></tr>
+      <tr><td>STAR + 数字</td><td>简历、晋升</td><td>情境、任务、行动、结果，带范围或对比</td></tr>
+
+      <tr class="grp"><td colspan="3">倾听与反馈</td></tr>
+      <tr><td>三层倾听</td><td>所有对话</td><td>事实、情绪、意图，别只回应第一层</td></tr>
+      <tr><td>复述四句</td><td>确认理解</td><td>内容、情绪、意图、归纳分歧</td></tr>
+      <tr><td>SBI</td><td>给反馈</td><td>情境、行为、影响，最后用一个问题收口</td></tr>
+      <tr><td>接受反馈四步</td><td>被批评</td><td>听完、问例子、认一部分、说判断</td></tr>
+
+      <tr class="grp"><td colspan="3">影响与冲突</td></tr>
+      <tr><td>三种货币</td><td>无授权推动</td><td>信息、专业、关系，至少有一张</td></tr>
+      <tr><td>推动四步</td><td>跨团队协作</td><td>共同目标、降低对方成本、小步试点、公开归功</td></tr>
+      <tr><td>立场 / 利益</td><td>谈判、分歧</td><td>问“如果做不到，你最担心什么”</td></tr>
+      <tr><td>BATNA</td><td>谈判前</td><td>想清楚谈不成时你的最佳替代方案</td></tr>
+      <tr><td>五种冲突风格</td><td>选策略</td><td>看事情重要，还是关系重要</td></tr>
+      <tr><td>道歉四段</td><td>修复关系</td><td>事实、影响、不找借口、给出改变</td></tr>
+
+      <tr class="grp"><td colspan="3">向上管理</td></tr>
+      <tr><td>三种汇报</td><td>对老板</td><td>同步、求助、决策，别混在一起</td></tr>
+      <tr><td>坏消息模板</td><td>延期、事故</td><td>结论、原因、影响、两个选项、一个建议</td></tr>
+      <tr><td>区间承诺</td><td>估时</td><td>最乐观、最可能、最坏，再留缓冲</td></tr>
+
+      <tr class="grp"><td colspan="3">思维与决策</td></tr>
+      <tr><td>5 Why + 反事实</td><td>定义问题</td><td>追问到事实；问“永远不做会怎样”</td></tr>
+      <tr><td>约束翻译</td><td>说“做不了”</td><td>在什么约束下做不了，除非怎样</td></tr>
+      <tr><td>JTBD</td><td>理解需求</td><td>用户雇这个功能，是要完成什么任务</td></tr>
+      <tr><td>可逆 / 不可逆</td><td>决策</td><td>可逆的快做，不可逆的慢做</td></tr>
+      <tr><td>RICE</td><td>排优先级</td><td>覆盖 × 影响 × 信心 ÷ 成本</td></tr>
+      <tr><td>复盘五问</td><td>项目结束</td><td>预期、实际、差异、为什么没料到、什么可复用</td></tr>
+
+      <tr class="grp"><td colspan="3">情绪与长期</td></tr>
+      <tr><td>情绪 ABC</td><td>内耗</td><td>事件不变，改变解释就能改变反应</td></tr>
+      <tr><td>反刍打断</td><td>过度思考</td><td>写下来、设担忧时间、换身体状态</td></tr>
+      <tr><td>叙事三层</td><td>自我介绍</td><td>做什么、擅长什么、证据是什么</td></tr>
+      <tr><td>刻意练习四条件</td><td>学新技能</td><td>小目标、边缘难度、即时反馈、拆子技能</td></tr>
+      <tr><td>费曼技巧</td><td>检验理解</td><td>不用术语，讲给外行听</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout good">
+    <span class="label">最后一句</span>
+    <p>不要试图同时用上所有模型。一次只练一个，练到它在压力下还能自动出现，才算真的学会。</p>
+  </div>
+</article>
+
+<article class="chapter" id="assessment">
+  <header class="ch-head">
+    <div class="ch-num">◎</div>
+    <div class="ch-kicker">工具 · 自评</div>
+    <h2>五维软实力自评</h2>
+    <p class="ch-lead">20 道题，大约 3 分钟。不要想“应该怎样”，按你<strong>最近三个月的真实表现</strong>打分。结果只保存在你自己的浏览器里。</p>
+  </header>
+
+  <div class="assess">
+    <div class="assess-head">
+      <h3>开始评估</h3>
+      <p>1 = 几乎不符合 · 3 = 有时如此 · 5 = 经常如此</p>
+    </div>
+    <div class="assess-body">
+      <div id="questions">
+        <div class="q" data-dim="express">
+          <div class="q-text"><span class="dim">表达</span>发言时，我通常先说结论，再解释原因。</div>
+          <div class="scale">
+            <label><input type="radio" name="q1" value="1"><span>1</span></label>
+            <label><input type="radio" name="q1" value="2"><span>2</span></label>
+            <label><input type="radio" name="q1" value="3"><span>3</span></label>
+            <label><input type="radio" name="q1" value="4"><span>4</span></label>
+            <label><input type="radio" name="q1" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="express">
+          <div class="q-text"><span class="dim">表达</span>我能把技术问题讲给非技术的人听懂。</div>
+          <div class="scale">
+            <label><input type="radio" name="q2" value="1"><span>1</span></label>
+            <label><input type="radio" name="q2" value="2"><span>2</span></label>
+            <label><input type="radio" name="q2" value="3"><span>3</span></label>
+            <label><input type="radio" name="q2" value="4"><span>4</span></label>
+            <label><input type="radio" name="q2" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="express">
+          <div class="q-text"><span class="dim">表达</span>我写的文档/消息，别人很少追问“你到底想说什么”。</div>
+          <div class="scale">
+            <label><input type="radio" name="q3" value="1"><span>1</span></label>
+            <label><input type="radio" name="q3" value="2"><span>2</span></label>
+            <label><input type="radio" name="q3" value="3"><span>3</span></label>
+            <label><input type="radio" name="q3" value="4"><span>4</span></label>
+            <label><input type="radio" name="q3" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="express">
+          <div class="q-text"><span class="dim">表达</span>在会议上，我能在 1 分钟内把观点说清楚。</div>
+          <div class="scale">
+            <label><input type="radio" name="q4" value="1"><span>1</span></label>
+            <label><input type="radio" name="q4" value="2"><span>2</span></label>
+            <label><input type="radio" name="q4" value="3"><span>3</span></label>
+            <label><input type="radio" name="q4" value="4"><span>4</span></label>
+            <label><input type="radio" name="q4" value="5"><span>5</span></label>
+          </div>
+        </div>
+
+        <div class="q" data-dim="collab">
+          <div class="q-text"><span class="dim">协作</span>别人说话时，我会先复述确认，再表达不同意见。</div>
+          <div class="scale">
+            <label><input type="radio" name="q5" value="1"><span>1</span></label>
+            <label><input type="radio" name="q5" value="2"><span>2</span></label>
+            <label><input type="radio" name="q5" value="3"><span>3</span></label>
+            <label><input type="radio" name="q5" value="4"><span>4</span></label>
+            <label><input type="radio" name="q5" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="collab">
+          <div class="q-text"><span class="dim">协作</span>指出别人问题时，我能就事论事，不评价人品。</div>
+          <div class="scale">
+            <label><input type="radio" name="q6" value="1"><span>1</span></label>
+            <label><input type="radio" name="q6" value="2"><span>2</span></label>
+            <label><input type="radio" name="q6" value="3"><span>3</span></label>
+            <label><input type="radio" name="q6" value="4"><span>4</span></label>
+            <label><input type="radio" name="q6" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="collab">
+          <div class="q-text"><span class="dim">协作</span>别人指出我的问题时，我能先听完，不急着解释。</div>
+          <div class="scale">
+            <label><input type="radio" name="q7" value="1"><span>1</span></label>
+            <label><input type="radio" name="q7" value="2"><span>2</span></label>
+            <label><input type="radio" name="q7" value="3"><span>3</span></label>
+            <label><input type="radio" name="q7" value="4"><span>4</span></label>
+            <label><input type="radio" name="q7" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="collab">
+          <div class="q-text"><span class="dim">协作</span>遇到分歧时，我会先找双方共同的利益，而不是争对错。</div>
+          <div class="scale">
+            <label><input type="radio" name="q8" value="1"><span>1</span></label>
+            <label><input type="radio" name="q8" value="2"><span>2</span></label>
+            <label><input type="radio" name="q8" value="3"><span>3</span></label>
+            <label><input type="radio" name="q8" value="4"><span>4</span></label>
+            <label><input type="radio" name="q8" value="5"><span>5</span></label>
+          </div>
+        </div>
+
+        <div class="q" data-dim="influence">
+          <div class="q-text"><span class="dim">影响</span>我能推动不归我管的团队配合一件事。</div>
+          <div class="scale">
+            <label><input type="radio" name="q9" value="1"><span>1</span></label>
+            <label><input type="radio" name="q9" value="2"><span>2</span></label>
+            <label><input type="radio" name="q9" value="3"><span>3</span></label>
+            <label><input type="radio" name="q9" value="4"><span>4</span></label>
+            <label><input type="radio" name="q9" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="influence">
+          <div class="q-text"><span class="dim">影响</span>向领导汇报时，我会带着选项和建议，而不只是问题。</div>
+          <div class="scale">
+            <label><input type="radio" name="q10" value="1"><span>1</span></label>
+            <label><input type="radio" name="q10" value="2"><span>2</span></label>
+            <label><input type="radio" name="q10" value="3"><span>3</span></label>
+            <label><input type="radio" name="q10" value="4"><span>4</span></label>
+            <label><input type="radio" name="q10" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="influence">
+          <div class="q-text"><span class="dim">影响</span>坏事发生时，我会尽早说，而不是拖到最后一刻。</div>
+          <div class="scale">
+            <label><input type="radio" name="q11" value="1"><span>1</span></label>
+            <label><input type="radio" name="q11" value="2"><span>2</span></label>
+            <label><input type="radio" name="q11" value="3"><span>3</span></label>
+            <label><input type="radio" name="q11" value="4"><span>4</span></label>
+            <label><input type="radio" name="q11" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="influence">
+          <div class="q-text"><span class="dim">影响</span>别人愿意主动找我合作，或来征求我的判断。</div>
+          <div class="scale">
+            <label><input type="radio" name="q12" value="1"><span>1</span></label>
+            <label><input type="radio" name="q12" value="2"><span>2</span></label>
+            <label><input type="radio" name="q12" value="3"><span>3</span></label>
+            <label><input type="radio" name="q12" value="4"><span>4</span></label>
+            <label><input type="radio" name="q12" value="5"><span>5</span></label>
+          </div>
+        </div>
+
+        <div class="q" data-dim="thinking">
+          <div class="q-text"><span class="dim">思维</span>接到需求时，我会先问“要解决什么问题”，而不是直接估时。</div>
+          <div class="scale">
+            <label><input type="radio" name="q13" value="1"><span>1</span></label>
+            <label><input type="radio" name="q13" value="2"><span>2</span></label>
+            <label><input type="radio" name="q13" value="3"><span>3</span></label>
+            <label><input type="radio" name="q13" value="4"><span>4</span></label>
+            <label><input type="radio" name="q13" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="thinking">
+          <div class="q-text"><span class="dim">思维</span>做决定前，我能分清它是可逆的还是不可逆的。</div>
+          <div class="scale">
+            <label><input type="radio" name="q14" value="1"><span>1</span></label>
+            <label><input type="radio" name="q14" value="2"><span>2</span></label>
+            <label><input type="radio" name="q14" value="3"><span>3</span></label>
+            <label><input type="radio" name="q14" value="4"><span>4</span></label>
+            <label><input type="radio" name="q14" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="thinking">
+          <div class="q-text"><span class="dim">思维</span>我会主动砍掉低价值的事，而不是把每件事都做到 100 分。</div>
+          <div class="scale">
+            <label><input type="radio" name="q15" value="1"><span>1</span></label>
+            <label><input type="radio" name="q15" value="2"><span>2</span></label>
+            <label><input type="radio" name="q15" value="3"><span>3</span></label>
+            <label><input type="radio" name="q15" value="4"><span>4</span></label>
+            <label><input type="radio" name="q15" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="thinking">
+          <div class="q-text"><span class="dim">思维</span>项目结束后，我会复盘“哪个假设错了”，而不只是庆祝或追责。</div>
+          <div class="scale">
+            <label><input type="radio" name="q16" value="1"><span>1</span></label>
+            <label><input type="radio" name="q16" value="2"><span>2</span></label>
+            <label><input type="radio" name="q16" value="3"><span>3</span></label>
+            <label><input type="radio" name="q16" value="4"><span>4</span></label>
+            <label><input type="radio" name="q16" value="5"><span>5</span></label>
+          </div>
+        </div>
+
+        <div class="q" data-dim="resilience">
+          <div class="q-text"><span class="dim">韧性</span>被否定或批评后，我能较快回到正常工作状态。</div>
+          <div class="scale">
+            <label><input type="radio" name="q17" value="1"><span>1</span></label>
+            <label><input type="radio" name="q17" value="2"><span>2</span></label>
+            <label><input type="radio" name="q17" value="3"><span>3</span></label>
+            <label><input type="radio" name="q17" value="4"><span>4</span></label>
+            <label><input type="radio" name="q17" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="resilience">
+          <div class="q-text"><span class="dim">韧性</span>我能在情绪上来时，先暂停，而不是立刻回复或反击。</div>
+          <div class="scale">
+            <label><input type="radio" name="q18" value="1"><span>1</span></label>
+            <label><input type="radio" name="q18" value="2"><span>2</span></label>
+            <label><input type="radio" name="q18" value="3"><span>3</span></label>
+            <label><input type="radio" name="q18" value="4"><span>4</span></label>
+            <label><input type="radio" name="q18" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="resilience">
+          <div class="q-text"><span class="dim">韧性</span>我能对不合理的要求说不，并给出替代方案。</div>
+          <div class="scale">
+            <label><input type="radio" name="q19" value="1"><span>1</span></label>
+            <label><input type="radio" name="q19" value="2"><span>2</span></label>
+            <label><input type="radio" name="q19" value="3"><span>3</span></label>
+            <label><input type="radio" name="q19" value="4"><span>4</span></label>
+            <label><input type="radio" name="q19" value="5"><span>5</span></label>
+          </div>
+        </div>
+        <div class="q" data-dim="resilience">
+          <div class="q-text"><span class="dim">韧性</span>我知道自己的精力节律，并把重要的事放在状态好的时段。</div>
+          <div class="scale">
+            <label><input type="radio" name="q20" value="1"><span>1</span></label>
+            <label><input type="radio" name="q20" value="2"><span>2</span></label>
+            <label><input type="radio" name="q20" value="3"><span>3</span></label>
+            <label><input type="radio" name="q20" value="4"><span>4</span></label>
+            <label><input type="radio" name="q20" value="5"><span>5</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="assess-foot">
+        <button class="btn btn-primary" id="calcBtn">生成我的雷达图</button>
+        <button class="icon-btn" id="resetBtn">重置</button>
+        <span style="font-size:12px;color:var(--faint)" id="hint">还有 20 题未作答</span>
+      </div>
+
+      <div class="result" id="result">
+        <div class="result-grid">
+          <div><canvas id="radar" width="560" height="560" role="img" aria-label="五维软实力雷达图"></canvas></div>
+          <div>
+            <h4 id="resultTitle">你的五维画像</h4>
+            <p id="resultDesc"></p>
+            <div id="scoreList" style="margin-top:12px"></div>
+            <p style="margin-top:14px" id="resultTip"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout plain">
+    <span class="label">怎么读这个结果</span>
+    <p>这不是考试，没有及格线。它的用途只有一个：<strong>找出你最先该补的那一维</strong>。不要五项一起练，选最低的那项，挑一章，练一个月。</p>
+    <p>另外，分数低不代表你差，可能只代表你还没开始注意这件事。自评的价值在于把模糊的感觉变成可比较的数字。</p>
+  </div>
+</article>
+
+<article class="chapter" id="plan">
+  <header class="ch-head">
+    <div class="ch-num">◎</div>
+    <div class="ch-kicker">工具 · 训练</div>
+    <h2>30 天训练计划</h2>
+    <p class="ch-lead">每天 15–20 分钟，只练一个动作。不要贪多——软实力的关键是形成条件反射，而不是知道更多名词。</p>
+  </header>
+
+  <p class="lead-in">建议按顺序做。每周只聚焦一个主题，周末复盘一次。如果某天没做，跳过即可，不要从头再来。</p>
+
+  <table class="plan">
+    <thead><tr><th style="width:92px">周次</th><th style="width:72px">天</th><th>动作</th><th style="width:130px">产出</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="6"><strong>第 1 周</strong><br><span style="font-size:12px;color:var(--muted)">说清楚</span></td><td>1</td><td>把最近一条长消息改成“结论—依据—请求”</td><td>一条改写</td></tr>
+      <tr><td>2</td><td>站会发言控制在 30 秒内</td><td>一次实践</td></tr>
+      <tr><td>3</td><td>给一个需求写“问题—选项—建议”</td><td>一页纸</td></tr>
+      <tr><td>4</td><td>把一个技术概念讲给非技术同事听</td><td>3 句话</td></tr>
+      <tr><td>5</td><td>拒绝一个不合理请求，给出替代方案</td><td>一次对话</td></tr>
+      <tr><td>6–7</td><td>复盘：这周哪句话最有效？为什么？</td><td>100 字</td></tr>
+
+      <tr><td rowspan="6"><strong>第 2 周</strong><br><span style="font-size:12px;color:var(--muted)">写明白</span></td><td>8</td><td>给正在做的项目写 5 行背景说明</td><td>文档开头</td></tr>
+      <tr><td>9</td><td>写周报：结果、计划、风险</td><td>三行</td></tr>
+      <tr><td>10</td><td>用提问模板在群里问一个问题</td><td>一次提问</td></tr>
+      <tr><td>11</td><td>把一份旧文档删掉 30% 的字</td><td>改稿</td></tr>
+      <tr><td>12</td><td>给一个设计决策补“备选方案”一节</td><td>一段</td></tr>
+      <tr><td>13–14</td><td>复盘：别人读完有没有追问？追问了什么？</td><td>100 字</td></tr>
+
+      <tr><td rowspan="6"><strong>第 3 周</strong><br><span style="font-size:12px;color:var(--muted)">听得懂</span></td><td>15</td><td>一次对话只提问，不建议</td><td>一次实践</td></tr>
+      <tr><td>16</td><td>用 SBI 给一条具体反馈</td><td>一次对话</td></tr>
+      <tr><td>17</td><td>被批评时，先问一个具体例子</td><td>一次实践</td></tr>
+      <tr><td>18</td><td>在分歧中问“你最担心发生什么”</td><td>一次对话</td></tr>
+      <tr><td>19</td><td>和一个人约 20 分钟，只问不讲</td><td>一次咖啡</td></tr>
+      <tr><td>20–21</td><td>复盘：哪次对话让你改变了判断？</td><td>100 字</td></tr>
+
+      <tr><td rowspan="6"><strong>第 4 周</strong><br><span style="font-size:12px;color:var(--muted)">推得动</span></td><td>22</td><td>为一件推不动的事画利益相关者地图</td><td>一张图</td></tr>
+      <tr><td>23</td><td>一对一沟通一个关键反对者</td><td>一次对话</td></tr>
+      <tr><td>24</td><td>把一个“做不了”翻译成“约束 + 条件”</td><td>一句话</td></tr>
+      <tr><td>25</td><td>给老板发一次带选项的求助</td><td>一条消息</td></tr>
+      <tr><td>26</td><td>写你的三层职业叙事</td><td>三句话</td></tr>
+      <tr><td>27–30</td><td>做一次五维自评，对比 30 天前；选下一项继续</td><td>一份计划</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout good">
+    <span class="label">坚持不下去怎么办</span>
+    <p>把标准降到“每天做一个动作”，而不是“每天完成一项任务”。哪怕只是在会上多说了一句结论，也算。<strong>连续性比强度重要。</strong></p>
+  </div>
+</article>
+
+<article class="chapter" id="books">
+  <header class="ch-head">
+    <div class="ch-num">◎</div>
+    <div class="ch-kicker">工具 · 延伸</div>
+    <h2>书单与延伸</h2>
+    <p class="ch-lead">不用全读。每个方向挑一本，读完能用上一个动作，就值了。</p>
+  </header>
+
+  <table>
+    <thead><tr><th style="width:150px">书名</th><th style="width:112px">对应章节</th><th>一句话理由</th></tr></thead>
+    <tbody>
+      <tr><td><strong>《金字塔原理》</strong></td><td>第 1 章</td><td>结构化表达的源头，前半本足够用，后半本可跳过。</td></tr>
+      <tr><td><strong>《写作是门手艺》</strong></td><td>第 2 章</td><td>中文语境下最实用的写作训练书，讲怎么把话说短。</td></tr>
+      <tr><td><strong>《演讲的力量》</strong></td><td>第 3 章</td><td> TED 前掌门人写的，核心是“只讲一个想法”。</td></tr>
+      <tr><td><strong>《非暴力沟通》</strong></td><td>第 4、6 章</td><td>观察、感受、需要、请求，SBI 的心理学版本。</td></tr>
+      <tr><td><strong>《影响力》</strong></td><td>第 5 章</td><td>理解互惠、承诺、社会认同，也学会防被操纵。</td></tr>
+      <tr><td><strong>《关键对话》</strong></td><td>第 6、7 章</td><td>高风险对话的操作手册，适合处理冲突和绩效沟通。</td></tr>
+      <tr><td><strong>《谈判力》</strong></td><td>第 7 章</td><td>立场与利益、BATNA 的原始出处，薄且硬。</td></tr>
+      <tr><td><strong>《卓有成效的管理者》</strong></td><td>第 8、10 章</td><td>时间、优先级、决策，向上管理也适用。</td></tr>
+      <tr><td><strong>《思考，快与慢》</strong></td><td>第 9、10 章</td><td>了解自己的判断偏差，读起来慢，但值得。</td></tr>
+      <tr><td><strong>《倦怠社会》</strong></td><td>第 11 章</td><td>解释“为什么越自由越累”，篇幅很短。</td></tr>
+      <tr><td><strong>《远见》</strong></td><td>第 12、13 章</td><td>把职业生涯分成三个阶段看，缓解短期焦虑。</td></tr>
+      <tr><td><strong>《刻意练习》</strong></td><td>第 14 章</td><td>拆穿“一万小时”的误读，讲清楚什么是有效练习。</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="label">阅读建议</span>
+    <p>一次只读一本，读完写 300 字：<strong>这本书里，我下周会用哪一个动作？</strong>写不出来，就换一本。读书的产出不是“读完”，是“改变了一个行为”。</p>
+  </div>
+
+  <div class="takeaway">
+    <span class="label">写在最后</span>
+    <p style="font-size:15.5px;line-height:1.9;color:var(--ink-2)">软实力最不公平的地方在于：它没有明确的进度条，你练了三个月可能没人发现。<br>但它也最公平：<strong>所有你以为的“天赋”，背后都是别人练过而你没练过的动作。</strong></p>
+    <p style="font-size:15.5px;line-height:1.9;color:var(--ink-2)">从今天开始，只做一件事：下一次开口前，先想清楚“我希望对方听完做什么”。</p>
+  </div>
+
+  <div class="footer">
+    <p><strong>程序员软实力手册</strong> · 14 章 · 为普通工程师而写</p>
+    <p>本页所有自评数据仅保存在你的浏览器本地（localStorage），不会上传。可自由打印、分享、修改。</p>
+    <p>建议阅读顺序：序章 → 第 1 章 → 第 2 章 → 五维自评 → 按最弱项补课。</p>
+  </div>
+</article>
+
+<!--@@NEXT@@-->
+    </div>
+  </main>
+</div>
+<button class="totop" id="totop" aria-label="回到顶部">↑</button>
+<script>
+(function(){
+  'use strict';
+  var $ = function(s, r){ return (r||document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
+  var store = {
+    get: function(k, d){ try{ var v = localStorage.getItem('ssb:'+k); return v===null?d:JSON.parse(v); }catch(e){ return d; } },
+    set: function(k, v){ try{ localStorage.setItem('ssb:'+k, JSON.stringify(v)); }catch(e){} }
+  };
+
+  /* ---------- 主题 ---------- */
+  var root = document.documentElement;
+  var themeBtn = $('#themeBtn');
+  var savedTheme = store.get('theme', null);
+  if(savedTheme){ root.setAttribute('data-theme', savedTheme); }
+  function syncThemeLabel(){
+    themeBtn.innerHTML = root.getAttribute('data-theme') === 'dark'
+      ? '☀ <span class="btn-label">日间</span>'
+      : '◐ <span class="btn-label">夜间</span>';
+  }
+  syncThemeLabel();
+  themeBtn.addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    store.set('theme', next);
+    syncThemeLabel();
+    if(lastScores) drawRadar(lastScores);
+  });
+
+  /* ---------- 打印 ---------- */
+  $('#printBtn').addEventListener('click', function(){ window.print(); });
+
+  /* ---------- 侧边栏（移动端） ---------- */
+  var sidebar = $('#sidebar');
+  $('#menuBtn').addEventListener('click', function(e){
+    e.stopPropagation();
+    sidebar.classList.toggle('open');
+  });
+  sidebar.addEventListener('click', function(e){
+    if(e.target.closest('a') && window.innerWidth <= 960) sidebar.classList.remove('open');
+  });
+  document.addEventListener('click', function(e){
+    if(window.innerWidth <= 960 && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target.id !== 'menuBtn'){
+      sidebar.classList.remove('open');
+    }
+  });
+
+  /* ---------- 阅读进度 ---------- */
+  var progress = $('#progress');
+  var totop = $('#totop');
+  function onScroll(){
+    var st = window.pageYOffset || document.documentElement.scrollTop;
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (h > 0 ? Math.min(100, st / h * 100) : 0) + '%';
+    totop.classList.toggle('show', st > 700);
+    spy();
+    markRead();
+  }
+  totop.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+
+  /* ---------- 目录高亮 ---------- */
+  var links = $$('.sidebar a[href^="#"]');
+  var sections = links.map(function(a){ return document.getElementById(a.getAttribute('href').slice(1)); }).filter(Boolean);
+  var currentId = '';
+  function spy(){
+    var pos = window.scrollY + 140;
+    var active = sections[0];
+    for(var i=0;i<sections.length;i++){
+      if(sections[i].offsetTop <= pos) active = sections[i];
+    }
+    if(!active) return;
+    if(active.id !== currentId){
+      currentId = active.id;
+      links.forEach(function(a){
+        a.classList.toggle('active', a.getAttribute('href') === '#'+currentId);
+      });
+    }
+  }
+
+  /* ---------- 已读标记 ---------- */
+  var readSet = store.get('read', []);
+  if(!Array.isArray(readSet)) readSet = [];
+  function markRead(){
+    var changed = false;
+    $$('article.chapter[id]').forEach(function(sec){
+      var b = sec.getBoundingClientRect();
+      if(b.bottom < window.innerHeight * 0.45 && readSet.indexOf(sec.id) === -1){
+        readSet.push(sec.id); changed = true;
+      }
+    });
+    if(changed){
+      store.set('read', readSet);
+      paintRead();
+    }
+  }
+  function paintRead(){
+    links.forEach(function(a){
+      var id = a.getAttribute('href').slice(1);
+      a.classList.toggle('done', readSet.indexOf(id) > -1);
+    });
+  }
+  paintRead();
+
+  /* ---------- 上一章 / 下一章 ---------- */
+  var arts = $$('main article.chapter[id]');
+  arts.forEach(function(art, i){
+    var prev = arts[i-1], next = arts[i+1];
+    var nav = document.createElement('nav');
+    nav.className = 'chnav';
+    function make(el, dir, cls){
+      if(!el) return;
+      var h = el.querySelector('h2');
+      var title = h ? h.textContent.replace(/\s+/g, ' ').trim() : el.id;
+      var a = document.createElement('a');
+      a.href = '#' + el.id;
+      a.className = cls;
+      a.innerHTML = '<span class="dir">' + dir + '</span><span class="t">' + title + '</span>';
+      nav.appendChild(a);
+    }
+    make(prev, '← 上一节', 'prev');
+    make(next, '下一节 →', 'next');
+    var foot = art.querySelector('.footer');
+    if(foot) art.insertBefore(nav, foot); else art.appendChild(nav);
+  });
+
+  /* ---------- 清单持久化 ---------- */
+  $$('input.checkbox, .check input[type="checkbox"]').forEach(function(cb){
+    var key = cb.getAttribute('data-key');
+    if(!key) return;
+    if(store.get('check:'+key, false)) cb.checked = true;
+    cb.addEventListener('change', function(){
+      store.set('check:'+key, cb.checked);
+    });
+  });
+
+  /* ---------- 复制话术 ---------- */
+  $$('.tpl .copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var pre = btn.closest('.tpl').querySelector('pre');
+      var text = pre ? pre.innerText : '';
+      var done = function(){
+        var old = btn.textContent;
+        btn.textContent = '已复制';
+        btn.classList.add('ok');
+        setTimeout(function(){ btn.textContent = old; btn.classList.remove('ok'); }, 1600);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(function(){ fallback(text, done); });
+      } else { fallback(text, done); }
+    });
+  });
+  function fallback(text, done){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); }catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  /* ---------- 自评 ---------- */
+  var DIMS = [
+    {key:'express', name:'表达', color:'#2c5d7c', chapters:'第 1–4 章'},
+    {key:'collab', name:'协作', color:'#2f6b4f', chapters:'第 4、6、7 章'},
+    {key:'influence', name:'影响', color:'#b45f3b', chapters:'第 5、8 章'},
+    {key:'thinking', name:'思维', color:'#a8823a', chapters:'第 9、10 章'},
+    {key:'resilience', name:'韧性', color:'#6b5b95', chapters:'第 11 章'}
+  ];
+  var qs = $$('#questions .q');
+  var hint = $('#hint');
+  var calcBtn = $('#calcBtn');
+  var resetBtn = $('#resetBtn');
+  var result = $('#result');
+  var lastScores = null;
+
+  function answeredCount(){
+    var n = 0;
+    qs.forEach(function(q){
+      if(q.querySelector('input[type="radio"]:checked')) n++;
+    });
+    return n;
+  }
+  function updateHint(){
+    var n = answeredCount();
+    hint.textContent = n === qs.length ? '已完成，可以生成结果' : '还有 ' + (qs.length - n) + ' 题未作答';
+  }
+  $$('#questions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', updateHint);
+  });
+
+  function collect(){
+    var sums = {}, counts = {};
+    DIMS.forEach(function(d){ sums[d.key] = 0; counts[d.key] = 0; });
+    qs.forEach(function(q){
+      var dim = q.getAttribute('data-dim');
+      var checked = q.querySelector('input[type="radio"]:checked');
+      if(checked){ sums[dim] += parseInt(checked.value, 10); counts[dim]++; }
+    });
+    return DIMS.map(function(d){
+      return counts[d.key] ? sums[d.key] / counts[d.key] : 0;
+    });
+  }
+
+  calcBtn.addEventListener('click', function(){
+    var n = answeredCount();
+    if(n < qs.length){
+      hint.textContent = '还差 ' + (qs.length - n) + ' 题，补齐更准确';
+      hint.style.color = 'var(--warm)';
+      var firstEmpty = qs.filter(function(q){ return !q.querySelector('input[type="radio"]:checked'); })[0];
+      if(firstEmpty) firstEmpty.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    hint.style.color = '';
+    var scores = collect();
+    lastScores = scores;
+    drawRadar(scores);
+    renderResult(scores);
+    result.classList.add('show');
+    store.set('scores', scores);
+    result.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+  resetBtn.addEventListener('click', function(){
+    $$('#questions input[type="radio"]').forEach(function(r){ r.checked = false; });
+    result.classList.remove('show');
+    lastScores = null;
+    store.set('scores', null);
+    updateHint();
+  });
+
+  function renderResult(scores){
+    var max = 0, min = 5;
+    scores.forEach(function(v){ if(v > max) max = v; if(v < min) min = v; });
+    var topIdx = scores.indexOf(max), lowIdx = scores.indexOf(min);
+    var avg = scores.reduce(function(a,b){ return a+b; }, 0) / scores.length;
+
+    var title = '你的五维画像';
+    var desc = '';
+    if(avg >= 4.2){
+      title = '整体成熟：你已经在用体系做事';
+      desc = '大多数场景你都有稳定的处理方式。接下来的重点不是“学更多”，而是把这些做法沉淀成可复用的方法，并影响身边的人。';
+    } else if(avg >= 3.2){
+      title = '基础扎实：还差几个关键动作';
+      desc = '你已经有意识，但在压力下容易退回旧习惯。选一个最弱的维度，做 30 天的单点训练，效果会比泛读明显。';
+    } else if(avg >= 2.2){
+      title = '正在起步：先把一个场景打通';
+      desc = '不必全面开花。挑一个你每周都会遇到的高频场景（比如站会发言、写周报），只练那一个，直到不用想。';
+    } else {
+      title = '起点较低：这不是问题，是方向清楚';
+      desc = '自评低往往意味着你之前没把注意力放在这上面，而不是能力差。从第 1 章开始，每周只练一个动作。';
+    }
+    $('#resultTitle').textContent = title;
+    $('#resultDesc').textContent = desc;
+
+    var list = $('#scoreList');
+    list.innerHTML = '';
+    DIMS.forEach(function(d, i){
+      var row = document.createElement('div');
+      row.className = 'score-row';
+      row.innerHTML = '<span>' + d.name + '</span><b>' + scores[i].toFixed(1) + ' / 5</b>';
+      list.appendChild(row);
+    });
+
+    $('#resultTip').innerHTML = '最强项：<strong>' + DIMS[topIdx].name + '</strong>（' + scores[topIdx].toFixed(1) + '） · 优先补：<strong>' + DIMS[lowIdx].name + '</strong>（' + scores[lowIdx].toFixed(1) + '）<br>建议从 ' + DIMS[lowIdx].chapters + ' 开始，配合 30 天计划第 ' + (lowIdx === 0 ? '1' : lowIdx === 1 ? '3' : lowIdx === 2 ? '4' : lowIdx === 3 ? '4' : '3') + ' 周。';
+  }
+
+  function cssVar(name){
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  function drawRadar(scores){
+    var c = $('#radar');
+    if(!c) return;
+    var ctx = c.getContext('2d');
+    var W = 560, H = 560, cx = 280, cy = 285, R = 168;
+    ctx.clearRect(0, 0, W, H);
+
+    var lineColor = cssVar('--line-strong') || '#d3ccbd';
+    var textColor = cssVar('--ink') || '#1b2028';
+    var muted = cssVar('--muted') || '#6b7280';
+    var accent = cssVar('--accent') || '#2c5d7c';
+    var n = 5, start = -Math.PI / 2;
+
+    function pt(i, r){
+      var a = start + i * 2 * Math.PI / n;
+      return [cx + Math.cos(a) * r, cy + Math.sin(a) * r];
+    }
+
+    // 网格
+    for(var ring = 1; ring <= 5; ring++){
+      ctx.beginPath();
+      for(var i = 0; i < n; i++){
+        var p = pt(i, R * ring / 5);
+        if(i === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = ring === 5 ? lineColor : lineColor;
+      ctx.globalAlpha = ring === 5 ? 0.9 : 0.45;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    // 轴线
+    for(var j = 0; j < n; j++){
+      var e = pt(j, R);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(e[0], e[1]);
+      ctx.strokeStyle = lineColor;
+      ctx.globalAlpha = 0.5;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    // 数据
+    var pts = scores.map(function(v, i){ return pt(i, R * Math.max(v, 0.15) / 5); });
+    ctx.beginPath();
+    pts.forEach(function(p, i){ if(i === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]); });
+    ctx.closePath();
+    ctx.fillStyle = accent;
+    ctx.globalAlpha = 0.18;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = accent;
+    ctx.lineWidth = 2.2;
+    ctx.stroke();
+
+    // 数据点
+    pts.forEach(function(p){
+      ctx.beginPath();
+      ctx.arc(p[0], p[1], 6, 0, Math.PI * 2);
+      ctx.fillStyle = accent;
+      ctx.fill();
+      ctx.strokeStyle = cssVar('--panel') || '#fff';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+    });
+
+    // 标签
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    DIMS.forEach(function(d, i){
+      var a = start + i * 2 * Math.PI / n;
+      var lx = cx + Math.cos(a) * (R + 50);
+      var ly = cy + Math.sin(a) * (R + 46);
+      ctx.fillStyle = textColor;
+      ctx.font = '700 26px "PingFang SC", sans-serif';
+      ctx.fillText(d.name, lx, ly - 14);
+      ctx.fillStyle = muted;
+      ctx.font = '500 20px "PingFang SC", sans-serif';
+      ctx.fillText(scores[i].toFixed(1), lx, ly + 14);
+    });
+  }
+
+  // 恢复上次结果
+  var savedScores = store.get('scores', null);
+  if(Array.isArray(savedScores) && savedScores.length === 5 && savedScores.every(function(v){ return v > 0; })){
+    lastScores = savedScores;
+    drawRadar(savedScores);
+    renderResult(savedScores);
+    result.classList.add('show');
+  }
+
+  updateHint();
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', function(){
+    if(lastScores) drawRadar(lastScores);
+  });
+})();
+</script>
+</body>
+</html>
