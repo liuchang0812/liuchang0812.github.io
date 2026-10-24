@@ -1,0 +1,944 @@
+/* ==========================================================================
+   读书与编程 —— 自定义样式
+   在 PaperMod 之后加载（assets/css/extended/ 会被自动拼进 stylesheet）
+   ========================================================================== */
+
+:root {
+  /* 版面：中文正文一行 40 字左右最舒服，1024px 太宽 */
+  --main-width: 780px;
+  --nav-width: 780px;
+  --content-gap: 22px;
+
+  /* 唯一的一点颜色：赭石。只用在强调处，别的地方保持黑白 */
+  --accent: #a4472e;
+  --accent-soft: rgba(164, 71, 46, 0.18);
+  --hairline: rgb(232, 232, 227);
+
+  /* 统一的暖白底色，比纯白更适合长时间读中文 */
+  --theme: #fcfcfa;
+  --entry: #fcfcfa;
+}
+
+.dark {
+  --accent: #d98a72;
+  --accent-soft: rgba(217, 138, 114, 0.14);
+  --hairline: rgb(58, 59, 62);
+}
+
+/* --------------------------------------------------------------------------
+   1. 基础排版
+   -------------------------------------------------------------------------- */
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: inherit;
+}
+
+/* 键盘可见的焦点环 */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. 正文
+   -------------------------------------------------------------------------- */
+
+.post-content {
+  line-height: 1.78;
+  letter-spacing: 0.01em;
+}
+
+.post-content p,
+.post-content ul,
+.post-content ol {
+  margin-bottom: 1.1em;
+}
+
+.post-content li {
+  margin-bottom: 0.35em;
+}
+
+.post-content li > p {
+  margin-bottom: 0.4em;
+}
+
+/* 标题：给 h2 一条赭石竖线，作为全站唯一的装饰语言 */
+.post-content h1 {
+  font-size: 32px;
+  margin: 2em auto 1em;
+}
+
+.post-content h2 {
+  font-size: 25px;
+  line-height: 1.45;
+  margin: 2.2em 0 0.9em;
+  padding-left: 14px;
+  border-left: 3px solid var(--accent);
+  letter-spacing: 0;
+}
+
+.post-content h3 {
+  font-size: 20px;
+  margin: 1.9em 0 0.7em;
+}
+
+.post-content h4 {
+  font-size: 17px;
+  margin: 1.6em 0 0.6em;
+}
+
+.post-content h2 + h3 {
+  margin-top: 1em;
+}
+
+/* 链接：细下划线，hover 时变成赭石 */
+.post-content a {
+  box-shadow: 0 1px 0 var(--tertiary);
+  transition: color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.post-content a:hover {
+  color: var(--accent);
+  box-shadow: 0 1px 0 var(--accent);
+}
+
+/* 引用 */
+.post-content blockquote {
+  margin: 1.6em 0;
+  padding: 14px 20px;
+  border-inline-start: 3px solid var(--tertiary);
+  background: var(--code-bg);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--secondary);
+}
+
+.post-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* 分隔线 */
+.post-content hr {
+  height: 1px;
+  border: 0;
+  background: var(--hairline);
+  margin: 2.4em 0;
+}
+
+/* 表格 */
+.post-content table {
+  font-size: 15px;
+  border-collapse: collapse;
+  margin: 1.6em 0;
+  width: 100%;
+}
+
+.post-content th,
+.post-content td {
+  border: 1px solid var(--hairline);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.post-content th {
+  background: var(--code-bg);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   3. 代码
+   -------------------------------------------------------------------------- */
+
+.post-content pre,
+.post-content pre code {
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+
+.highlight,
+.post-content pre {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.post-content pre {
+  padding: 16px 18px;
+}
+
+.post-content code:not(pre code) {
+  font-size: 0.88em;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: var(--code-bg);
+}
+
+/* 复制按钮：安静一点，别一直浮在那儿 */
+.copy-code {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.highlight:hover .copy-code,
+.copy-code:focus-visible {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   4. 目录
+   -------------------------------------------------------------------------- */
+
+.toc {
+  margin: 6px 0 34px;
+  padding: 0 0 0 16px;
+  border: 0;
+  border-left: 2px solid var(--hairline);
+  background: transparent;
+  border-radius: 0;
+}
+
+.dark .toc {
+  background: transparent;
+}
+
+.toc details summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-inline-start: 0;
+  padding: 2px 0;
+  font-size: 14px;
+  color: var(--secondary);
+  cursor: pointer;
+  list-style: none;
+}
+
+.toc details summary::-webkit-details-marker {
+  display: none;
+}
+
+.toc details summary::before {
+  content: "＋";
+  font-size: 12px;
+  color: var(--accent);
+}
+
+.toc details[open] summary::before {
+  content: "－";
+}
+
+.toc .details {
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.toc .toc-count {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.toc .inner {
+  margin: 10px 0 0;
+  padding: 0;
+  font-size: 14px;
+  opacity: 1;
+}
+
+.toc ul {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0;
+}
+
+.toc li ul {
+  padding-inline-start: 14px;
+  margin-top: 4px;
+}
+
+.toc li {
+  line-height: 1.9;
+}
+
+.toc a {
+  color: var(--secondary);
+  box-shadow: none;
+}
+
+.toc a:hover {
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   5. 列表页：从「卡片堆」改成「分隔线列表」，更像一本目录
+   -------------------------------------------------------------------------- */
+
+.post-entry {
+  margin-bottom: 0;
+  padding: 26px 2px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--hairline);
+  border-radius: 0;
+  transition: none;
+}
+
+.post-entry:active {
+  transform: none;
+}
+
+.post-entry:last-of-type {
+  border-bottom: 0;
+}
+
+.entry-header h2 {
+  font-size: 21px;
+  line-height: 1.45;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.post-entry:hover .entry-header h2 {
+  color: var(--accent);
+}
+
+.entry-content {
+  margin: 9px 0 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--secondary);
+  -webkit-line-clamp: 2;
+}
+
+.entry-footer {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--secondary);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 列表页底色与正文统一，去掉主题默认的浅灰 */
+.list,
+.dark.list {
+  background: var(--theme);
+}
+
+/* 首页顶部自我介绍 */
+.home-info {
+  min-height: 0;
+  margin: 18px 0 34px;
+  padding: 0 2px 34px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.home-info .entry-header h1 {
+  font-size: 38px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.home-info .entry-content {
+  margin-top: 14px;
+  font-size: 16.5px;
+  line-height: 1.85;
+  color: var(--secondary);
+}
+
+.home-info .social-icons {
+  margin-top: 20px;
+}
+
+.home-info .social-icons a {
+  margin-inline-end: 16px;
+  opacity: 0.75;
+  transition: opacity 0.15s ease;
+}
+
+.home-info .social-icons a:hover {
+  opacity: 1;
+}
+
+/* 分页 */
+.pagination a {
+  background: transparent;
+  color: var(--secondary);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 4px 18px;
+  line-height: 30px;
+  font-size: 13.5px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.pagination a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* 回到顶部：别用一块灰饼 */
+.top-link {
+  width: 36px;
+  height: 36px;
+  padding: 11px;
+  bottom: 32px;
+  right: 28px;
+  background: var(--theme);
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  color: var(--secondary);
+  transition: opacity 0.25s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.top-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   6. 文章页
+   -------------------------------------------------------------------------- */
+
+.post-title {
+  font-size: 36px;
+  line-height: 1.32;
+  letter-spacing: -0.015em;
+  margin-bottom: 8px;
+}
+
+.post-description {
+  font-size: 16px;
+  color: var(--secondary);
+  line-height: 1.7;
+  margin-top: 12px;
+}
+
+.post-meta {
+  font-size: 13.5px;
+  margin-top: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.post-updated {
+  margin-inline-start: 6px;
+  opacity: 0.75;
+}
+
+.post-updated::before {
+  content: "·";
+  margin-inline-end: 6px;
+  opacity: 0.6;
+}
+
+.breadcrumbs {
+  font-size: 13.5px;
+  margin-bottom: 6px;
+}
+
+.breadcrumbs a {
+  font-size: 13.5px;
+  color: var(--secondary);
+}
+
+/* 标签 */
+.post-tags {
+  margin-top: 44px;
+}
+
+.post-tags a {
+  display: inline-block;
+  font-size: 13px;
+  padding: 4px 12px;
+  line-height: 1.5;
+  background: transparent;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  color: var(--secondary);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.post-tags a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: transparent;
+}
+
+/* 相关文章 */
+.related {
+  margin-top: 48px;
+  padding-top: 26px;
+  border-top: 1px solid var(--hairline);
+}
+
+.related-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--secondary);
+  margin-bottom: 14px;
+}
+
+.related-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.related-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 0;
+}
+
+.related-list a {
+  font-size: 16px;
+  box-shadow: none;
+}
+
+.related-list a:hover {
+  color: var(--accent);
+}
+
+.related-date {
+  font-size: 12.5px;
+  color: var(--secondary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* 上一篇 / 下一篇 */
+.paginav {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  border-radius: 0;
+  margin-top: 8px;
+  padding-top: 18px;
+}
+
+.paginav a {
+  padding: 6px 0;
+  border-radius: 0;
+}
+
+.paginav a:hover {
+  background: transparent;
+  color: var(--accent);
+}
+
+.paginav .title {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--secondary);
+}
+
+.paginav .prev,
+.paginav .next {
+  color: var(--primary);
+}
+
+/* --------------------------------------------------------------------------
+   7. 搜索页
+   -------------------------------------------------------------------------- */
+
+#searchbox input {
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--primary);
+  background: var(--theme);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  transition: border-color 0.15s ease;
+}
+
+#searchbox input::placeholder {
+  color: var(--secondary);
+  opacity: 0.75;
+}
+
+#searchbox input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+#searchResults {
+  margin: 8px 0 0;
+}
+
+#searchResults li {
+  margin: 0;
+  padding: 20px 2px;
+  border-radius: 0;
+  font-weight: 400;
+}
+
+#searchResults li:active {
+  transform: none;
+}
+
+#searchResults .search-result {
+  position: relative;
+  border-bottom: 1px solid var(--hairline);
+}
+
+#searchResults .search-result .entry-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+#searchResults .search-result .entry-content {
+  margin-top: 6px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  -webkit-line-clamp: 2;
+}
+
+#searchResults .search-result:hover .entry-header h2 {
+  color: var(--accent);
+}
+
+#searchResults .search-meta {
+  font-size: 12.5px;
+  color: var(--secondary);
+  letter-spacing: 0.04em;
+  padding: 4px 2px 10px;
+  border-bottom: 0;
+}
+
+#searchResults .search-empty {
+  color: var(--secondary);
+  font-size: 15px;
+  padding: 24px 2px;
+}
+
+mark {
+  background: var(--accent-soft);
+  color: inherit;
+  padding: 0 1px;
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   8. 标签云
+   -------------------------------------------------------------------------- */
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.tag-cloud .tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 6px 14px;
+  font-size: 14.5px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  color: var(--primary);
+  box-shadow: none;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.tag-cloud .tag span {
+  font-size: 11.5px;
+  color: var(--secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.tag-cloud .tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   8. 归档页
+   -------------------------------------------------------------------------- */
+
+.archive-year {
+  margin-bottom: 46px;
+}
+
+.archive-year-header {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.archive-year-header sup {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--secondary);
+  top: 0;
+}
+
+.archive-month {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 0 18px;
+  margin-bottom: 10px;
+}
+
+.archive-month-header {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--secondary);
+  letter-spacing: 0.04em;
+  margin: 0;
+  padding-top: 10px;
+  white-space: nowrap;
+}
+
+.archive-posts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.archive-entry {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.archive-entry:last-child {
+  border-bottom: 0;
+}
+
+.archive-entry time {
+  flex: none;
+  width: 42px;
+  font-size: 12.5px;
+  color: var(--secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.archive-entry a {
+  font-size: 16px;
+  box-shadow: none;
+  transition: color 0.15s ease;
+}
+
+.archive-entry a:hover {
+  color: var(--accent);
+}
+
+.archive-draft {
+  font-size: 11px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 0 5px;
+  margin-inline-start: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   9. 404
+   -------------------------------------------------------------------------- */
+
+/* 主题把 .not-found 写成了绝对定位的 flex 大字，这里全部还原 */
+.not-found {
+  position: static;
+  display: block;
+  height: auto;
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 40px 2px 20px;
+}
+
+.nf-code {
+  font-size: 84px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+
+.nf-title {
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+
+.nf-desc {
+  color: var(--secondary);
+  line-height: 1.8;
+  font-size: 15.5px;
+}
+
+.nf-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 28px 0 44px;
+}
+
+.nf-btn {
+  font-size: 14px;
+  padding: 9px 18px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  color: var(--primary);
+  box-shadow: none;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.nf-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.nf-btn.primary {
+  background: var(--primary);
+  color: var(--theme);
+  border-color: var(--primary);
+}
+
+.nf-btn.primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.nf-recent h2 {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--secondary);
+  margin-bottom: 12px;
+}
+
+.nf-recent ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nf-recent li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 15.5px;
+}
+
+.nf-recent li:last-child {
+  border-bottom: 0;
+}
+
+.nf-recent span {
+  color: var(--secondary);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   10. 移动端
+   -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 768px) {
+  .nav {
+    line-height: 52px;
+  }
+
+  .logo a {
+    font-size: 20px;
+  }
+
+  #menu a {
+    font-size: 15px;
+  }
+
+  #menu li + li {
+    margin-inline-start: 15px;
+  }
+
+  .logo,
+  #menu {
+    margin: auto 16px;
+  }
+
+  .post-title {
+    font-size: 27px;
+  }
+
+  .home-info .entry-header h1 {
+    font-size: 30px;
+  }
+
+  .post-content {
+    line-height: 1.75;
+  }
+
+  .post-content h2 {
+    font-size: 21px;
+    margin-top: 1.9em;
+  }
+
+  .post-content h3 {
+    font-size: 18px;
+  }
+
+  .entry-header h2 {
+    font-size: 19px;
+  }
+
+  /* 代码块在窄屏上会横向滚动，加一点阴影提示「右边还有」 */
+  .highlight {
+    box-shadow: inset -14px 0 12px -12px rgba(0, 0, 0, 0.45);
+  }
+
+  .archive-month {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .archive-month-header {
+    padding-top: 18px;
+    margin-bottom: 2px;
+  }
+
+  .archive-year-header {
+    font-size: 22px;
+  }
+
+  .post-tags {
+    margin-top: 36px;
+  }
+
+  .related {
+    margin-top: 36px;
+  }
+}

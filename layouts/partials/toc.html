@@ -1,0 +1,17 @@
+{{- /* 目录：仅在标题足够多时出现，默认折叠。
+       使用 Hugo 原生 .TableOfContents，层级由 config 的 markup.tableOfContents 控制。 */ -}}
+{{- $toc := .TableOfContents -}}
+{{- $count := len (findRE "<li>" $toc) -}}
+{{- if ge $count 3 -}}
+<nav class="toc" aria-label="文章目录">
+    <details{{ if (.Param "TocOpen") }} open{{ end }}>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">{{- i18n "toc" | default "目录" }}</span>
+            <span class="toc-count">{{ $count }} 节</span>
+        </summary>
+        <div class="inner">
+            {{- $toc -}}
+        </div>
+    </details>
+</nav>
+{{- end -}}

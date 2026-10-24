@@ -1,0 +1,8 @@
+{{- /* 移动端浏览器地址栏配色，跟随明暗模式 */ -}}
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfa">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1d1e20">
+
+{{- /* 只有 frontmatter 里写了 math: true 的文章才加载 KaTeX */ -}}
+{{- if .Params.math }}
+{{ partial "mathjax.html" . }}
+{{- end }}

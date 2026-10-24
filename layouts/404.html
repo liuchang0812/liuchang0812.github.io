@@ -1,0 +1,26 @@
+{{- define "main" }}
+<div class="not-found">
+  <p class="nf-code">404</p>
+  <h1 class="nf-title">这一页不存在</h1>
+  <p class="nf-desc">
+    链接可能已经失效，或者文章被我改过地址。<br>
+    试试下面的入口，或者直接搜索。
+  </p>
+  <div class="nf-actions">
+    <a class="nf-btn primary" href="{{ "" | absURL }}">回到首页</a>
+    <a class="nf-btn" href="{{ "search/" | absURL }}">搜索文章</a>
+    <a class="nf-btn" href="{{ "archives/" | absURL }}">时间轴</a>
+  </div>
+  <div class="nf-recent">
+    <h2>最近写的</h2>
+    <ul>
+      {{- range first 5 (where site.RegularPages "Section" "posts") }}
+      <li>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <span>{{ .Date.Format "2006-01-02" }}</span>
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+</div>
+{{- end }}{{/* end main */ -}}

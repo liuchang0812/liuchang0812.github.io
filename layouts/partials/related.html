@@ -1,0 +1,15 @@
+{{- /* 相关文章：按标签 + 时间相近度推荐，最多 3 篇 */ -}}
+{{- $related := site.RegularPages.Related . | first 3 -}}
+{{- with $related }}
+<aside class="related">
+    <h2 class="related-title">相关文章</h2>
+    <ul class="related-list">
+        {{- range . }}
+        <li>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            <span class="related-date">{{ .Date.Format "2006-01-02" }}</span>
+        </li>
+        {{- end }}
+    </ul>
+</aside>
+{{- end }}
