@@ -1,11 +1,10 @@
 ---
-title: "2023 02 读书分享:置身事内、永久记录、他改变了中国"
+title: "2023 02 读书分享：置身事内、永久记录、他改变了中国"
 date: 2023-03-03T20:06:29+08:00
 lastmod: 2023-03-03T20:06:29+08:00
 author: ["Chang Liu"]
 tags:
-- book
-- read
+- 读书
 categories:
 - read
 description: "分享一下最近读的书"
@@ -15,7 +14,7 @@ slug: ""
 draft: false # 是否为草稿
 comments: true
 showToc: true # 显示目录
-TocOpen: true # 自动展开目录
+TocOpen: false # 目录默认折叠
 hidemeta: false # 是否隐藏文章的元信息，如发布日期、作者等
 disableShare: true # 底部不显示分享栏
 showbreadcrumbs: true #顶部显示当前路径

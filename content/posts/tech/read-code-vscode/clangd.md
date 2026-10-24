@@ -3,10 +3,9 @@ title: "现代化的源码阅读方法"
 date: 2024-11-18T22:05:42+08:00
 lastmod: 2024-11-18T22:05:42+08:00
 author: ["Chang Liu"]
-tags: 
+tags:
 - clangd
 - lsp
-- leveldb
 categories:
 - tech
 description: "现代化的源码阅读方法"
@@ -16,7 +15,7 @@ slug: ""
 draft: false # 是否为草稿
 comments: true
 showToc: true # 显示目录
-TocOpen: true # 自动展开目录
+TocOpen: false # 目录默认折叠
 hidemeta: false # 是否隐藏文章的元信息，如发布日期、作者等
 disableShare: true # 底部不显示分享栏
 showbreadcrumbs: true #顶部显示当前路径

@@ -1,11 +1,10 @@
 ---
-title: "2022 04 读书分享:尘劫"
+title: "2022 04 读书分享：尘劫"
 date: 2022-05-09T20:06:29+08:00
 lastmod: 2022-05-09T20:06:29+08:00
 author: ["Chang Liu"]
 tags:
-- book
-- read
+- 读书
 categories:
 - read
 description: ""
@@ -15,7 +14,7 @@ slug: ""
 draft: false # 是否为草稿
 comments: true
 showToc: true # 显示目录
-TocOpen: true # 自动展开目录
+TocOpen: false # 目录默认折叠
 hidemeta: false # 是否隐藏文章的元信息，如发布日期、作者等
 disableShare: true # 底部不显示分享栏
 showbreadcrumbs: true #顶部显示当前路径

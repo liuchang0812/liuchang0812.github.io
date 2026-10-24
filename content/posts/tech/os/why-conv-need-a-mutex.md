@@ -1,5 +1,5 @@
 ---
-title: "Why Does Conv Need a Mutex"
+title: "条件变量为什么需要 mutex"
 date: 2022-06-23T17:29:52+08:00
 lastmod: 2022-06-23T17:29:52+08:00
 author: ["Chang Liu"]
@@ -15,7 +15,7 @@ slug: ""
 draft: false # 是否为草稿
 comments: true
 showToc: true # 显示目录
-TocOpen: true # 自动展开目录
+TocOpen: false # 目录默认折叠
 hidemeta: false # 是否隐藏文章的元信息，如发布日期、作者等
 disableShare: true # 底部不显示分享栏
 showbreadcrumbs: true #顶部显示当前路径

@@ -3,9 +3,8 @@ title: "自动微分系统实现"
 date: 2025-04-28T23:49:51+08:00
 lastmod: 2025-04-28T23:49:51+08:00
 author: ["Chang Liu"]
-tags: 
-- ml
-- tech
+tags:
+- ai
 categories:
 - tech
 summary: "学习一下怎么实现机器学习框架🚀"
@@ -15,7 +14,7 @@ draft: false # 是否为草稿
 math: true # 包含公式，加载 KaTeX
 comments: true
 showToc: true # 显示目录
-TocOpen: true # 自动展开目录
+TocOpen: false # 目录默认折叠
 hidemeta: false # 是否隐藏文章的元信息，如发布日期、作者等
 disableShare: true # 底部不显示分享栏
 showbreadcrumbs: true #顶部显示当前路径

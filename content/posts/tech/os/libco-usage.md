@@ -1,11 +1,11 @@
 ---
-title: "libco usage"
+title: "libco 协程库使用笔记"
 date: 2022-09-06T21:00:54+08:00
 lastmod: 2022-09-06T21:00:54+08:00
 author: ["Chang Liu"]
 categories:
 - tech
-tags: 
+tags:
 - os
 - libco
 description: "this note shares libco coroutine usage"
@@ -15,7 +15,7 @@ slug: ""
 draft: false # 是否为草稿
 comments: true
 showToc: false # 显示目录
-TocOpen: true # 自动展开目录
+TocOpen: false # 目录默认折叠
 hidemeta: false # 是否隐藏文章的元信息，如发布日期、作者等
 disableShare: true # 底部不显示分享栏
 showbreadcrumbs: true #顶部显示当前路径

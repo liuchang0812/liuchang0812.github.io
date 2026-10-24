@@ -1,0 +1,12 @@
+{
+  "name": "liuchang0812-blog",
+  "private": true,
+  "type": "module",
+  "description": "构建脚本（Hugo 负责站点本身，这里只放辅助工具）",
+  "scripts": {
+    "og": "node scripts/gen-og.mjs"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}
