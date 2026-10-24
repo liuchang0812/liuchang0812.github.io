@@ -1,11 +1,16 @@
 baseURL: 'https://www.liuchang0812.com/'
 languageCode: zh-cn
+defaultContentLanguage: zh-cn
 title: 读书与编程
 theme: PaperMod
 enableInlineShortcodes: true
 enableEmoji: true
 enableRobotsTXT: true
 hasCJKLanguage: true
+capitalizeListTitles: false # 标签名保持原样（os 而不是 Os）
+
+pagination:
+  pagerSize: 12
 
 outputs:
   home:
@@ -14,46 +19,83 @@ outputs:
     - JSON
 
 params:
-  social: true
-  disableSpecial1stPost: true
+  env: production
+  description: "刘畅的个人博客：读书笔记、技术文章与生活随笔。"
+  keywords: ["刘畅", "读书笔记", "技术博客", "Golang", "分布式系统", "LevelDB", "操作系统"]
+  author: 刘畅
+  DateFormat: "2006-01-02"
+  defaultTheme: auto
+  disableThemeToggle: false
+
+  # 阅读体验
   ShowCodeCopyButtons: true
-  ShowPostNavLinks: true
   ShowReadingTime: true
   ShowToc: true
   TocOpen: false
-  DateFormat: "2006-01-02"
-  env: production
-  
+  ShowBreadcrumbs: true
+  ShowPostNavLinks: true
+  ShowShareButtons: false
+  hideAuthor: true
+  disableSpecial1stPost: true
+
+  mainSections: ["posts"]
+
+  homeInfoParams:
+    Title: "写代码，也读书。"
+    Content: "我是刘畅，做后端与分布式系统。这里放着读书笔记、技术文章，和一些还没想清楚的问题。"
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/liuchang0812"
+    - name: rss
+      url: "/index.xml"
+
   fuseOpts:
-      isCaseSensitive: false
-      shouldSort: true
-      location: 0
-      distance: 1000
-      threshold: 1
-      minMatchCharLength: 0
-      keys: ["title", "permalink", "summary"]      
+    isCaseSensitive: false
+    shouldSort: true
+    includeScore: true
+    location: 0
+    distance: 10000
+    threshold: 0.35
+    minMatchCharLength: 1
+    keys: ["title", "permalink", "summary", "content"]
 
 markup:
   highlight:
-        codeFences: true  
-        guessSyntax: true
-        lineNos: false
-        style: darcula
-    
+    codeFences: true
+    guessSyntax: true
+    lineNos: false
+    style: darcula
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
+    ordered: false
+
+# 相关文章：同标签 + 时间相近
+related:
+  includeNewer: true
+  threshold: 60
+  toLower: true
+  indices:
+    - name: tags
+      weight: 100
+    - name: date
+      weight: 10
+
 menu:
   main:
     - name: 🙋🏻‍♂️关于
       url: /about/
       weight: 4
-      
+
     - name: ⏱时间轴
       url: /archives/
       weight: 3
-      
+
     - name: 🔍搜索
       url: /search/
       weight: 2
-      
+
     - identifier: posts
       name: 📚文章
       url: posts

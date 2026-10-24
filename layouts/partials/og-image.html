@@ -1,0 +1,13 @@
+{{- /* Resolve a social-share image for a page:
+       1. per-post card generated into assets/og/<file>.png
+       2. site-wide fallback card (static/og-default.png) */ -}}
+{{- $img := "" -}}
+{{- with .File -}}
+  {{- with resources.Get (printf "og/%s.png" .BaseFileName) -}}
+    {{- $img = .Permalink -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $img -}}
+  {{- $img = "og-default.png" | absURL -}}
+{{- end -}}
+{{- return $img -}}
