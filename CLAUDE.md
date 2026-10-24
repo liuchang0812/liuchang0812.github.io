@@ -108,6 +108,7 @@ archetype 模板位于 `archetypes/default.md`，已包含 `summary` 占位字�
 | `layouts/partials/extend_head.html` | theme-color + KaTeX 按需加载 |
 | `assets/css/extended/custom.css` | 全部自定义样式（版心、字号、颜色、列表、代码块） |
 | `assets/js/fastsearch.js` | 站内搜索（替换主题的 Fuse 实现） |
+| `assets/js/fuse.basic.min.js` | 空文件，把主题那份 15KB 的 Fuse 从 `search.js` 里顶掉（我们不用它了） |
 
 样式改动都写在 `assets/css/extended/custom.css`，它会在主题 CSS 之后加载，直接覆盖即可，不要改 `themes/PaperMod/assets/css/`。
 
@@ -133,12 +134,19 @@ node scripts/gen-og.mjs raft   # 只生成文件名含 raft 的
 - Hugo 版本：0.152.2（extended）
 - 构建到 `./public` 目录
 - 使用 peaceiris/actions-gh-pages 部署到 GitHub Pages
+- `concurrency` 按分支分组并 `cancel-in-progress`，连推多个 commit 只部署最后一个
+- PR 只跑构建验证，`Deploy` 步骤带 `if: github.event_name != 'pull_request'`，不会往 gh-pages 推东西
 
 **手动构建和部署：**
 ```bash
 hugo --minify
 # 输出在 ./public 目录
 ```
+
+**推送失败时：** 若 `git push` 因网络问题（`CONNECT tunnel failed`）不通，但 `api.github.com` 可访问，
+可用仓库根目录外的 `replay.py`，通过 `gh api` 的 Git Data API 逐个重建 blob → tree → commit 再快进分支。
+注意 commit 对象逐字节敏感（message 尾随换行、author 时区），脚本直接解析 `git cat-file commit` 的原始对象，
+重建出来的 SHA 与本地完全一致。
 
 ## 主题自定义
 
